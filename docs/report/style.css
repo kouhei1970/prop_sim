@@ -313,3 +313,7 @@ table.data.wide td:last-child { color: var(--muted); line-height: 1.6; }
 table.data td.good { color: var(--accent); font-weight: 600; white-space: nowrap; }
 table.data td.bad  { color: var(--warn);   font-weight: 600; white-space: nowrap; }
 table.data td.muted-cell { color: var(--muted); font-weight: 600; white-space: nowrap; }
+h4 { font-size: 0.82rem; font-family: var(--mono); letter-spacing: 0.1em;
+     text-transform: uppercase; color: var(--muted); font-weight: 500;
+     margin: 1.8rem 0 0.5rem; }
+table.data .est { color: var(--warn); }

@@ -105,6 +105,9 @@
     "duct_bore_mm": 36.2,
     "tip_gap_mm": 2.4950000000000006,
     "tip_gap_over_radius_pct": 15.988465235501444,
+    "duct_gap_mm": 9.761940777125583,
+    "duct_spacing_ratio": 1.2696668722962867,
+    "footprint_mm": 82.1619407771256,
     "power_change_pct": -5.793189814813959
   },
   "dynamic": {

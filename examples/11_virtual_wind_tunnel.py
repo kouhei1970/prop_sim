@@ -412,6 +412,10 @@ def part_c2(hover_rpm):
         "tip_gap_over_radius_pct": float(
             100.0 * (DUCT_BORE_M - rotor.geometry.diameter)
             / rotor.geometry.diameter),
+        # 隣り合うダクトどうしのすきま (肉厚は不明なので内径基準の上限)
+        "duct_gap_mm": float((DIAGONAL_M / np.sqrt(2.0) - DUCT_BORE_M) * 1e3),
+        "duct_spacing_ratio": float(DIAGONAL_M / np.sqrt(2.0) / DUCT_BORE_M),
+        "footprint_mm": float((DIAGONAL_M / np.sqrt(2.0) + DUCT_BORE_M) * 1e3),
     }
     summary["shroud"]["power_change_pct"] = float(
         100.0 * (summary["shroud"]["power_no_tip_loss_w"]
