@@ -33,6 +33,12 @@ from .airfoil import (
     TabulatedAirfoil,
 )
 from .atmosphere import SEA_LEVEL, Atmosphere
+from .calibration import (
+    CalibrationResult,
+    ThrustMeasurement,
+    calibrate,
+    compare_hypotheses,
+)
 from .frames import COMPONENT_NAMES, Wrench
 from .geometry import PropellerGeometry, from_diameter_pitch
 from .inflow import InflowField
@@ -72,6 +78,10 @@ __all__ = [
     "LOW_RE_THIN",
     "Atmosphere",
     "SEA_LEVEL",
+    "ThrustMeasurement",
+    "CalibrationResult",
+    "calibrate",
+    "compare_hypotheses",
     "Wrench",
     "COMPONENT_NAMES",
     "PropellerGeometry",

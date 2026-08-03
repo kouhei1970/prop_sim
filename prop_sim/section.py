@@ -180,6 +180,8 @@ def airfoil_from_section(
     cl_min: float | None = None,
     cd_k: float = 0.060,
     aspect_ratio: float = 3.0,
+    reynolds_lift_slope: float = 0.06,
+    reynolds_lift_floor: float = 0.30,
     name: str | None = None,
 ) -> LinearAirfoil:
     """断面形状 + Reynolds 数から :class:`LinearAirfoil` を作る.
@@ -202,6 +204,11 @@ def airfoil_from_section(
         指定しなければキャンバから推定する.
     cd_k:
         cd = cd0 + cd_k (cl - cl_i)^2 の係数.
+    reynolds_lift_slope, reynolds_lift_floor:
+        基準 Re から外れたときの揚力の目減り
+        ``cl *= 1 - slope * log10(Re_ref/Re)`` (下限 ``floor``).
+        Re が 1e4 を大きく下回る領域では層流剥離で急激に性能が落ちるため,
+        実測推力から較正するのが確実 (:mod:`prop_sim.calibration`).
 
     Returns
     -------
@@ -248,4 +255,6 @@ def airfoil_from_section(
         aspect_ratio=aspect_ratio,
         reynolds_ref=reynolds_ref,
         reynolds_exponent=reynolds_exponent,
+        reynolds_lift_slope=reynolds_lift_slope,
+        reynolds_lift_floor=reynolds_lift_floor,
     )

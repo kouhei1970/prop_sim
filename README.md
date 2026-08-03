@@ -89,6 +89,7 @@ python -m prop_sim dynamic --diameter 10 --pitch 4.7 --rpm 7000 \
 | `examples/06_measurement_error_budget.py` | 計測系の誤差要因の切り分け |
 | `examples/07_stampfly_1209.py` | StampFly 1209 (31 mm 4 枚) の性能推定と計測要求 |
 | `examples/08_algorithm_comparison.py` | Lv0〜LvS の総当たり比較（精度・コスト・BEMT の誤差分解） |
+| `examples/09_calibrate_to_measurement.py` | 実測推力による較正と仮説の切り分け |
 
 ```bash
 python examples/01_static_thrust_sweep.py     # → results/ に CSV と PNG
@@ -142,6 +143,12 @@ python examples/01_static_thrust_sweep.py     # → results/ に CSV と PNG
 - 感度誤差・オフセット・ランダムウォーク・温度ドリフト
 - 構造共振（チャネルごとの 2 次系）
 - 抗エイリアスフィルタ、サンプリング、A/D 量子化・飽和
+
+**較正**（`prop_sim.calibration`）
+
+- 実測推力（1 点でも可）にモデルを合わせ込む
+- 取付角 / キャンバ効率 / Reynolds 依存 / 抗力倍率 を調整パラメータに選べる
+- `compare_hypotheses` で「1 点では区別できない仮説」の外挿の食い違いを定量化
 
 **後処理**（`prop_sim.postproc`）
 

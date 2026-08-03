@@ -75,7 +75,9 @@ class Airfoil(ABC):
 
     # 補正パラメータ (サブクラスで上書き可)
     reynolds_ref: float = 5.0e5
-    reynolds_exponent: float = 0.2
+    reynolds_exponent: float = 0.2          # 抗力の Re 依存 cd ~ Re^-n
+    reynolds_lift_slope: float = 0.06       # 揚力の Re 依存 (下記参照)
+    reynolds_lift_floor: float = 0.70       # 揚力低下の下限
     mach_divergence: float = 0.72
     compressibility: bool = True
 
@@ -90,11 +92,19 @@ class Airfoil(ABC):
         cl, cd, cm = self._base_coefficients(alpha)
 
         if reynolds is not None and self.reynolds_exponent:
-            re = np.clip(np.asarray(reynolds, dtype=float), 1.0e3, None)
-            # 低 Re では抗力が増え, 揚力傾斜がわずかに落ちる
+            re = np.clip(np.asarray(reynolds, dtype=float), 1.0e2, None)
+            # 抗力: 層流摩擦と剥離泡で cd ~ Re^-reynolds_exponent
             scale = (self.reynolds_ref / re) ** self.reynolds_exponent
-            cd = cd * np.clip(scale, 0.4, 6.0)
-            cl = cl * np.clip(1.0 - 0.06 * np.log10(self.reynolds_ref / re), 0.7, 1.05)
+            cd = cd * np.clip(scale, 0.4, 20.0)
+            # 揚力: 層流剥離で有効キャンバ・揚力傾斜が落ちる.
+            #   cl *= 1 - reynolds_lift_slope * log10(Re_ref / Re)
+            # Re が 1 桁下がるごとに reynolds_lift_slope だけ揚力が減る,
+            # という単純な線形則. 係数は実測推力から較正するのが確実
+            # (prop_sim.calibration).
+            cl = cl * np.clip(
+                1.0 - self.reynolds_lift_slope * np.log10(self.reynolds_ref / re),
+                self.reynolds_lift_floor, 1.05,
+            )
 
         if mach is not None and self.compressibility:
             ma = np.clip(np.asarray(mach, dtype=float), 0.0, 0.95)
@@ -138,6 +148,8 @@ class LinearAirfoil(Airfoil):
     aspect_ratio: float = 8.0
     reynolds_ref: float = 5.0e5
     reynolds_exponent: float = 0.2
+    reynolds_lift_slope: float = 0.06
+    reynolds_lift_floor: float = 0.70
 
     def __post_init__(self) -> None:
         self.alpha0 = np.deg2rad(self.alpha0_deg)
@@ -236,6 +248,8 @@ class TabulatedAirfoil(Airfoil):
     aspect_ratio: float = 8.0
     reynolds_ref: float = 5.0e5
     reynolds_exponent: float = 0.2
+    reynolds_lift_slope: float = 0.06
+    reynolds_lift_floor: float = 0.70
     _extended: tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray] = field(
         init=False, repr=False
     )
