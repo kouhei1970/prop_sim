@@ -19,6 +19,13 @@
 アンバランス ──┘                            (干渉/共振/ノイズ)
 ```
 
+## レポート
+
+**[StampFly 1209 仮想風洞試験レポート](https://kouhei1970.github.io/prop_sim/report/)**
+— 静止推力だけでなく前進飛行・機体運動での 6 分力を掃引し、飛行制御系の設計に
+使える係数・微係数・周波数にまとめたもの。ページは `docs/` 以下にあり、
+図と数値は `examples/11_virtual_wind_tunnel.py` → `docs/report/build.py` で再生成できる。
+
 ## インストール
 
 ```bash
@@ -93,6 +100,7 @@ python -m prop_sim dynamic --diameter 10 --pitch 4.7 --rpm 7000 \
 | `examples/08_algorithm_comparison.py` | Lv0〜LvS の総当たり比較（精度・コスト・BEMT の誤差分解） |
 | `examples/09_calibrate_to_measurement.py` | 実測推力による較正と仮説の切り分け |
 | `examples/10_cfd_airfoil_polar.py` | OpenFOAM で翼断面のポーラを解き経験式と比較 |
+| `examples/11_virtual_wind_tunnel.py` | 仮想風洞試験（レポート用の図と数値を生成） |
 
 ```bash
 python examples/01_static_thrust_sweep.py     # → results/ に CSV と PNG

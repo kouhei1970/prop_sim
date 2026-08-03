@@ -1,0 +1,485 @@
+<header class="masthead">
+  <p class="eyebrow">prop_sim / virtual wind tunnel</p>
+  <h1>StampFly 1209 プロペラ<br>仮想風洞試験レポート</h1>
+  <p class="deck">
+    31&nbsp;mm・4 枚のマイクロプロペラの <strong>6 分力 (F<sub>x</sub>, F<sub>y</sub>, F<sub>z</sub>,
+    M<sub>x</sub>, M<sub>y</sub>, M<sub>z</sub>)</strong> を、静止だけでなく
+    <strong>前進飛行・機体運動を含めて</strong>数値的に掃引し、
+    飛行制御系の設計にそのまま使える形の係数・微係数・周波数に落とした報告。
+  </p>
+  <dl class="meta">
+    <div><dt>供試体</dt><dd>StampFly 1209 (φ{{meta.diameter_mm|.2f}}&nbsp;mm, {{meta.n_blades|d}} 枚)</dd></div>
+    <div><dt>空力モデル</dt><dd>翼素運動量理論 + 実測断面翼型</dd></div>
+    <div><dt>機体諸元</dt><dd>{{meta.mass_g|.1f}}&nbsp;g / {{meta.n_rotor|d}} 発</dd></div>
+    <div><dt>較正</dt><dd class="flag">未適用</dd></div>
+  </dl>
+</header>
+
+<section class="readouts" aria-label="主要な結果">
+  <div class="readout">
+    <p class="k">ホバー回転数 / 1 発</p>
+    <p class="v">{{static.hover_rpm|,.0f}}<span class="u">rpm</span></p>
+    <p class="n">{{static.hover_thrust_gf|.2f}} gf、軸動力 {{static.hover_power_w|.2f}} W、FM {{static.hover_fm|.3f}}</p>
+  </div>
+  <div class="readout">
+    <p class="k">推力定数 k<sub>T</sub></p>
+    <p class="v">{{static.k_t_e|s}}<span class="u">N·s²</span></p>
+    <p class="n">T = k<sub>T</sub>Ω²、20k–45k rpm で ±1 % 以内</p>
+  </div>
+  <div class="readout">
+    <p class="k">推力応答の時定数</p>
+    <p class="v">{{dynamic.t63_ms|.1f}}<span class="u">ms</span></p>
+    <p class="n">回転数を階段状に変えたときの 63 % 到達 (≈{{dynamic.bandwidth_hz|.0f}} Hz)</p>
+  </div>
+  <div class="readout">
+    <p class="k">ブレード通過周波数</p>
+    <p class="v">{{vibration.bpf_hz|,.0f}}<span class="u">Hz</span></p>
+    <p class="n">4/rev。1/rev は {{vibration.f_rev_hz|.0f}} Hz</p>
+  </div>
+</section>
+
+<section class="panel caution">
+  <h2>この報告の読み方</h2>
+  <p>
+    ここに載っている数字は<strong>計算結果であって実測ではない</strong>。
+    形状（平面形・翼断面）だけが実機の写真からの実測で、空力は翼素運動量理論による推定。
+    実測推力との突き合わせは <strong>1 点（1&nbsp;209&nbsp;rad/s で 1&nbsp;gf）しか無く、
+    較正は意図的に適用していない</strong>。1 点では「取付角がずれている」仮説と
+    「低 Reynolds 数で揚力が落ちている」仮説を区別できず、
+    どちらを選ぶかでホバー回転数の予測が 23 % 変わるためである。
+  </p>
+  <p>
+    したがって<strong>絶対値は ±20 % 程度の幅を見込んで読んでほしい</strong>。
+    一方で、この報告の主眼である
+    <em>「速度が付くと推力がどう変わるか」「どの微係数がどの桁か」「何 Hz に何が出るか」</em>
+    といった<strong>相対量・構造的な性質は、絶対値よりずっと頑健</strong>である。
+    制御系の設計では後者の方が効くことが多い。
+  </p>
+</section>
+
+<nav class="matrix" aria-label="試験マトリクス">
+  <h2>試験マトリクス</h2>
+  <table>
+    <thead>
+      <tr><th>Run</th><th>内容</th><th>掃引した量</th><th>取り出す量</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><a href="#run-a">A</a></td><td>静止推力試験</td><td>回転数 6k–45k rpm</td><td>k<sub>T</sub>, k<sub>Q</sub>, FM</td></tr>
+      <tr><td><a href="#run-b">B</a></td><td>風洞掃引</td><td>対気速度 0–10 m/s × 流入角 0–90°</td><td>F<sub>z</sub>, F<sub>x</sub>, M<sub>y</sub></td></tr>
+      <tr><td><a href="#run-c">C</a></td><td>微小擾乱</td><td>Ω, w, u, q を微小変化</td><td>線形微係数</td></tr>
+      <tr><td><a href="#run-d">D</a></td><td>回転数ステップ</td><td>+10 % 階段入力</td><td>時定数・帯域</td></tr>
+      <tr><td><a href="#run-e">E</a></td><td>時間領域の変動</td><td>6 m/s, 流入角 75°</td><td>次数スペクトル</td></tr>
+      <tr><td><a href="#run-f">F</a></td><td>機体つり合い</td><td>前進速度 0–8 m/s</td><td>回転数・動力・モーメント</td></tr>
+    </tbody>
+  </table>
+</nav>
+
+<!-- ================================================================= RUN A -->
+<section class="run" id="run-a">
+  <div class="rail"><span class="run-id">Run A</span><span class="sym">k<sub>T</sub>, k<sub>Q</sub></span></div>
+  <div class="body">
+    <h2>静止推力特性 — Ω² 則はどこまで信じてよいか</h2>
+    <figure>
+      {{fig:static.svg}}
+      <figcaption>左: 推力と k<sub>T</sub>Ω² 近似。中: Ω² 則からのずれ。右: 推力効率と figure of merit。点線はホバー点。</figcaption>
+    </figure>
+    <p>
+      飛行制御では推力とトルクを <code>T = k<sub>T</sub>Ω²</code>、<code>Q = k<sub>Q</sub>Ω²</code> と置くのが普通である。
+      20 000–45 000 rpm で同定すると
+    </p>
+    <table class="data">
+      <tbody>
+        <tr><th>k<sub>T</sub></th><td class="num">{{static.k_t_e|s}}</td><td>N·s²</td><td>T = k<sub>T</sub>Ω² (Ω は rad/s)</td></tr>
+        <tr><th>k<sub>Q</sub></th><td class="num">{{static.k_q_e|s}}</td><td>N·m·s²</td><td>Q = k<sub>Q</sub>Ω²</td></tr>
+        <tr><th>k<sub>Q</sub>/k<sub>T</sub></th><td class="num">{{static.k_q_over_k_t_mm|.3f}}</td><td>mm</td><td>ヨー操作力／推力の交換比</td></tr>
+      </tbody>
+    </table>
+    <p>
+      <strong>ただしこの Ω² 則は低回転で破れる。</strong>
+      15 000 rpm で {{static.quad_law_error_pct_at_15000|+.1f}} %、8 000 rpm では
+      {{static.quad_law_error_pct_at_8000|+.1f}} % ずれる。
+      原因は Reynolds 数で、ホバー点でも r/R = 0.75 の翼素で
+      Re ≈ {{static.re_075_hover|,.0f}} しかない。回転数を下げるとさらに落ちて翼型性能が悪化するため、
+      推力は Ω² より速く減る。
+    </p>
+    <div class="implication">
+      <h3>制御系への含意</h3>
+      <ul>
+        <li>ホバー付近を線形化して使う分には k<sub>T</sub> 一定でよい。</li>
+        <li><strong>低スロットル域では推力が想定より出ない。</strong>
+          姿勢制御が下側に飽和しかけたとき、モデルベースの配分則は
+          「もっと下がるはず」の推力を前提にしてしまう。着陸接地直前や
+          急降下からの引き起こしで効いてくる。</li>
+        <li>アイドル回転数を高めに取る、あるいは低回転域だけ k<sub>T</sub> を
+          テーブル化するのが現実的な対策。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================= RUN B -->
+<section class="run" id="run-b">
+  <div class="rail"><span class="run-id">Run B</span><span class="sym">V, α</span></div>
+  <div class="body">
+    <h2>前進飛行 — 速度が付くと 6 分力はこう変わる</h2>
+    <p>
+      回転数をホバー値 ({{static.hover_rpm|,.0f}} rpm) に固定したまま、対気速度と流入角を掃引する。
+      流入角はシャフト軸と進行方向のなす角で、<strong>0° = 真上昇、90° = 真横</strong>。
+      水平前進中の機体は前傾しているので、実際には 90° より少し小さい角度で流入する。
+    </p>
+    <figure>
+      {{fig:forward.svg}}
+      <figcaption>流入角ごとの、対気速度に対する推力比・面内力・ハブモーメント。</figcaption>
+    </figure>
+    <figure>
+      {{fig:map.svg}}
+      <figcaption>対気速度 × 流入角の 2 次元マップ。左の赤い領域が推力の増える並進揚力域、青が推力の落ちる上昇域。</figcaption>
+    </figure>
+
+    <h3>1. 推力は流入角で増えも減りもする</h3>
+    <table class="data wide">
+      <thead><tr><th>条件</th><th class="num">J</th><th class="num">F<sub>z</sub>/F<sub>z0</sub></th><th class="num">F<sub>x</sub> [gf]</th><th class="num">M<sub>x</sub> [μN·m]</th><th class="num">M<sub>y</sub> [μN·m]</th></tr></thead>
+      <tbody>
+        <tr><td>真上昇 4 m/s</td><td class="num">{{forward.axial_4.j|.3f}}</td><td class="num">{{forward.axial_4.fz_ratio|.3f}}</td><td class="num">{{forward.axial_4.fx_gf|.2f}}</td><td class="num">{{forward.axial_4.mx_unm|.0f}}</td><td class="num">{{forward.axial_4.my_unm|.0f}}</td></tr>
+        <tr><td>真上昇 8 m/s</td><td class="num">{{forward.axial_8.j|.3f}}</td><td class="num">{{forward.axial_8.fz_ratio|.3f}}</td><td class="num">{{forward.axial_8.fx_gf|.2f}}</td><td class="num">{{forward.axial_8.mx_unm|.0f}}</td><td class="num">{{forward.axial_8.my_unm|.0f}}</td></tr>
+        <tr><td>流入角 60° 4 m/s</td><td class="num">{{forward.tilt60_4.j|.3f}}</td><td class="num">{{forward.tilt60_4.fz_ratio|.3f}}</td><td class="num">{{forward.tilt60_4.fx_gf|.2f}}</td><td class="num">{{forward.tilt60_4.mx_unm|.0f}}</td><td class="num">{{forward.tilt60_4.my_unm|.0f}}</td></tr>
+        <tr><td>流入角 60° 8 m/s</td><td class="num">{{forward.tilt60_8.j|.3f}}</td><td class="num">{{forward.tilt60_8.fz_ratio|.3f}}</td><td class="num">{{forward.tilt60_8.fx_gf|.2f}}</td><td class="num">{{forward.tilt60_8.mx_unm|.0f}}</td><td class="num">{{forward.tilt60_8.my_unm|.0f}}</td></tr>
+        <tr><td>真横 4 m/s</td><td class="num">{{forward.edge_4.j|.3f}}</td><td class="num">{{forward.edge_4.fz_ratio|.3f}}</td><td class="num">{{forward.edge_4.fx_gf|.2f}}</td><td class="num">{{forward.edge_4.mx_unm|.0f}}</td><td class="num">{{forward.edge_4.my_unm|.0f}}</td></tr>
+        <tr><td>真横 8 m/s</td><td class="num">{{forward.edge_8.j|.3f}}</td><td class="num">{{forward.edge_8.fz_ratio|.3f}}</td><td class="num">{{forward.edge_8.fx_gf|.2f}}</td><td class="num">{{forward.edge_8.mx_unm|.0f}}</td><td class="num">{{forward.edge_8.my_unm|.0f}}</td></tr>
+      </tbody>
+    </table>
+    <p>
+      <strong>真上昇 8 m/s で推力が {{forward.axial_8.fz_loss_pct|.0f}} % 落ちる。</strong>
+      前進率 J = {{forward.axial_8.j|.2f}} に達し、翼素の迎角が全体に下がるためである。
+      逆に<strong>真横 8 m/s では推力が {{forward.edge_8.fz_gain_pct|+.0f}} % 増える</strong>（並進揚力）。
+      ロータが自分の後流から逃げるので誘導速度が下がり、同じ回転数でも迎角が回復する。
+    </p>
+    <div class="implication">
+      <h3>制御系への含意</h3>
+      <ul>
+        <li><strong>上昇と水平移動で高度ループのゲインが逆方向にずれる。</strong>
+          上昇時は推力不足側（負のフィードバックが強まる = 自然な減衰）、
+          水平移動時は推力過剰側（高度が浮きやすい）。
+          水平加速の開始と同時に高度が持ち上がる挙動はこれで説明できる。</li>
+        <li>この推力比は<strong>回転数によらずほぼ前進率 J だけで決まる</strong>ので、
+          <code>k<sub>T</sub>(J)</code> の 1 次元テーブルとして実装できる。</li>
+      </ul>
+    </div>
+
+    <h3>2. 面内力とハブモーメント — 姿勢ループから見えば外乱</h3>
+    <p>
+      斜め流入では、進行方向側のブレードと後退側のブレードで相対速度が違う。
+      1 回転のあいだに翼素荷重が変動し、その平均としてディスク面内の力
+      <strong>F<sub>x</sub>（H 力）</strong>と<strong>ハブモーメント M<sub>x</sub>, M<sub>y</sub></strong> が残る。
+    </p>
+    <p>
+      表を見ると、1 発あたりでは <strong>進行方向と直交する M<sub>x</sub> の方が大きい</strong>。
+      真横 8 m/s で M<sub>x</sub> = {{forward.edge_8.mx_unm|.0f}} μN·m、M<sub>y</sub> = {{forward.edge_8.my_unm|.0f}} μN·m で、
+      比は {{forward.edge_8.mx_over_my|.1f}} 倍ある。前進側のブレードと後退側のブレードで
+      相対速度が違うことによる左右の揚力差（進行方向に直交する軸まわり）が主で、
+      流入分布の前後差による前後軸まわりの成分はそれより小さい。
+      ヒンジを持つヘリコプタのローターならフラッピングが 90° 遅れてこれをピッチに変換するが、
+      マイクロプロペラは実質剛体なので<strong>空力の非対称がそのままハブモーメントとして出る</strong>。
+    </p>
+    <h3>3. 4 発では M<sub>x</sub> が消えて M<sub>y</sub> だけが残る</h3>
+    <p>
+      ここが機体設計上いちばん重要な点である。回転方向を反転すると 6 分力は
+      x–z 面に関して<strong>厳密に鏡映</strong>になる
+      （F<sub>y</sub>, M<sub>x</sub>, M<sub>z</sub> が符号反転、F<sub>x</sub>, F<sub>z</sub>, M<sub>y</sub> は不変。
+      本パッケージのテストで検証済み）。
+      クアッドは CW 2 発・CCW 2 発なので、
+    </p>
+    <table class="data">
+      <tbody>
+        <tr><th>M<sub>x</sub>（ロール）</th><td>逆回転ペアで<strong>打ち消し合う</strong></td></tr>
+        <tr><th>M<sub>y</sub>（ピッチ）</th><td>4 発ぶん<strong>そのまま足し合わさる</strong></td></tr>
+      </tbody>
+    </table>
+    <p>
+      つまり 1 発では小さかった M<sub>y</sub> の方が機体レベルでは効く。
+      真横 8 m/s なら 4 発合計で {{forward.edge_8.my_4rotor_unm|.0f}} μN·m、
+      ホバー時の空力トルク 1 発ぶん（{{static.hover_torque_mnm|.3f}} mN·m）の
+      {{forward.edge_8.my_over_torque_pct|.0f}} %（1 発あたり）に相当する。
+    </p>
+    <div class="implication">
+      <h3>制御系への含意</h3>
+      <ul>
+        <li>ハブモーメントは機体からは<strong>速度にほぼ比例するピッチモーメント外乱</strong>
+          として見える。一種の風見安定であり、姿勢ループが速度ループと結合する。
+          内側ループだけで設計すると外側で予想外の位相が付く。</li>
+        <li>この項は<strong>位置制御のステップ応答に効く</strong>。
+          前進を始めた瞬間に機首が起きようとし、姿勢ループがそれを打ち消す間に
+          速度応答が遅れる。下の ∂M<sub>y</sub>/∂u をフィードフォワードで打ち消せる。</li>
+        <li><strong>ロール軸は打ち消しに頼っている</strong>ので、4 発の回転数が揃わない
+          （旋回中・姿勢制御中は必ず揃わない）とロール外乱が残る。
+          高速前進しながらのロール操作でクセが出るのはこれが一因になりうる。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================= RUN C -->
+<section class="run" id="run-c">
+  <div class="rail"><span class="run-id">Run C</span><span class="sym">∂/∂x</span></div>
+  <div class="body">
+    <h2>ホバー点まわりの線形微係数</h2>
+    <p>
+      制御則を設計するときに実際に使うのはこの表である。
+      ホバー点（1 発 {{static.hover_thrust_gf|.2f}} gf, {{static.hover_rpm|,.0f}} rpm）まわりで
+      各入力を微小変化させ、6 分力の変化を差分で取った。
+    </p>
+    <table class="data wide">
+      <thead><tr><th>微係数</th><th class="num">値</th><th>単位</th><th>意味 / 使いどころ</th></tr></thead>
+      <tbody>
+        <tr>
+          <th>∂F<sub>z</sub>/∂Ω</th><td class="num">{{derivatives.dT_domega_e|s}}</td><td>N·s</td>
+          <td>推力ゲイン。理論値 2T/Ω = {{derivatives.dT_domega_norm_e|s}} と一致し、Ω² 則の局所整合が取れている</td>
+        </tr>
+        <tr>
+          <th>∂M<sub>z</sub>/∂Ω</th><td class="num">{{derivatives.dQ_domega_e|s}}</td><td>N·m·s</td>
+          <td>ヨー操作力ゲイン。4 発の差動で使う</td>
+        </tr>
+        <tr>
+          <th>∂F<sub>z</sub>/∂w</th><td class="num">{{derivatives.dT_dw|.4f}}</td><td>N/(m/s)</td>
+          <td><strong>ヒーブ減衰</strong>。上昇すると推力が減る自然な負帰還</td>
+        </tr>
+        <tr>
+          <th>Z<sub>w</sub> (4 発 / 機体質量)</th><td class="num">{{derivatives.heave_damping_4rotor|.2f}}</td><td>1/s</td>
+          <td>高度ループの開ループ極。時定数 {{derivatives.heave_tau_s|.2f}} s の 1 次遅れ相当</td>
+        </tr>
+        <tr>
+          <th>∂F<sub>x</sub>/∂u</th><td class="num">{{derivatives.dFx_du|.5f}}</td><td>N/(m/s)</td>
+          <td>H 力による速度減衰</td>
+        </tr>
+        <tr>
+          <th>X<sub>u</sub> (4 発 / 機体質量)</th><td class="num">{{derivatives.dFx_du_4rotor|.3f}}</td><td>1/s</td>
+          <td><strong>ロータ由来の速度減衰</strong>。機体の空気抵抗とは別に効く</td>
+        </tr>
+        <tr>
+          <th>∂M<sub>y</sub>/∂u</th><td class="num">{{derivatives.dMy_du_e|s}}</td><td>N·m/(m/s)</td>
+          <td><strong>速度 → ピッチ結合</strong>。4 発で {{derivatives.dMy_du_4rotor_unm|.0f}} μN·m/(m/s)</td>
+        </tr>
+        <tr>
+          <th>∂M<sub>y</sub>/∂q</th><td class="num">{{derivatives.dMy_dq_e|s}}</td><td>N·m·s</td>
+          <td>ピッチレート減衰。ジャイロモーメントを含む</td>
+        </tr>
+        <tr>
+          <th>J<sub>z</sub>Ω</th><td class="num">{{derivatives.spin_momentum_e|s}}</td><td>N·m·s</td>
+          <td>ロータの角運動量。機体角速度と直交してジャイロモーメントを生む</td>
+        </tr>
+        <tr>
+          <th>差動 ±500 rpm のロール</th><td class="num">{{derivatives.roll_moment_dn500_mnm|.3f}}</td><td>mN·m</td>
+          <td>アーム長 {{meta.arm_mm|.0f}} mm 想定。姿勢操作力の見積り</td>
+        </tr>
+        <tr>
+          <th>差動 ±2000 rpm のロール</th><td class="num">{{derivatives.roll_moment_dn2000_mnm|.3f}}</td><td>mN·m</td>
+          <td>同上</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="implication">
+      <h3>使い方</h3>
+      <ul>
+        <li><strong>高度ループ</strong>: Z<sub>w</sub> = {{derivatives.heave_damping_4rotor|.2f}} 1/s は
+          「何もしなくても上昇速度が {{derivatives.heave_tau_s|.2f}} s で頭打ちになる」ことを意味する。
+          この極より十分速い帯域を狙わないと、積分項が効きすぎて上下に揺れる。</li>
+        <li><strong>速度ループ</strong>: X<sub>u</sub> はロータだけの寄与で、機体の抗力を加えるとさらに大きくなる。
+          ホバー保持で速度が勝手に減衰する量として効く。</li>
+        <li><strong>姿勢ループ</strong>: ∂M<sub>y</sub>/∂u をフィードフォワードで打ち消すと、
+          前進開始時のピッチ外乱が減って位置制御の応答が素直になる。</li>
+        <li><strong>ジャイロ</strong>: J<sub>z</sub>Ω = {{derivatives.spin_momentum_e|s}} N·m·s なので、
+          ピッチレート 10 rad/s でロール方向に {{derivatives.gyro_at_10|.0f}} μN·m が出る。
+          これはホバーの空力トルクの {{derivatives.gyro_at_10_pct|.0f}} % で、
+          <strong>速い姿勢運動ではロール・ピッチが強く連成する</strong>。
+          4 発は回転方向が逆のペアなので機体全体では大半が打ち消し合うが、
+          回転数が違えば残差が出る。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================= RUN D -->
+<section class="run" id="run-d">
+  <div class="rail"><span class="run-id">Run D</span><span class="sym">τ</span></div>
+  <div class="body">
+    <h2>過渡応答 — 姿勢ループの帯域は何で決まるか</h2>
+    <figure>
+      {{fig:step.svg}}
+      <figcaption>回転数を +10 % 階段状に変えたときの推力と反トルク。灰色は瞬時値、青は 1 回転移動平均。</figcaption>
+    </figure>
+    <p>
+      回転数が瞬時に変わっても推力はすぐには変わらない。ロータの後流（誘導速度）が
+      新しい平衡に移るまでに時間がかかるためで、これを<strong>動的インフロー</strong>という。
+      時定数は Pitt–Peters 系の見かけ質量から
+      τ = 0.85/(4νΩ) = <strong>{{derivatives.inflow_tau_ms|.2f}} ms</strong>（遮断 {{derivatives.inflow_bw_hz|.0f}} Hz）。
+    </p>
+    <table class="data">
+      <tbody>
+        <tr><th>63 % 到達時間</th><td class="num">{{dynamic.t63_ms|.2f}}</td><td>ms</td></tr>
+        <tr><th>等価帯域</th><td class="num">{{dynamic.bandwidth_hz|.0f}}</td><td>Hz</td></tr>
+        <tr><th>行き過ぎ量</th><td class="num">{{dynamic.overshoot_pct|.1f}}</td><td>%</td></tr>
+        <tr><th>推力 (前 → 後)</th><td class="num">{{dynamic.thrust_before_gf|.2f}} → {{dynamic.thrust_after_gf|.2f}}</td><td>gf</td></tr>
+      </tbody>
+    </table>
+    <div class="implication">
+      <h3>制御系への含意</h3>
+      <ul>
+        <li>空力側の遅れは {{dynamic.t63_ms|.1f}} ms 程度で、<strong>実機ではモータ・ESC の
+          回転数応答（数十 ms）の方が支配的</strong>である。つまり姿勢ループの帯域を
+          決めているのはプロペラではなく駆動系。</li>
+        <li>逆に言うと、<strong>モータの応答を速くすれば {{dynamic.bandwidth_hz|.0f}} Hz 付近までは
+          プロペラが足を引っ張らない</strong>。この機体規模でレート制御を 100 Hz 級で
+          回せる根拠になる。</li>
+        <li>反トルクには回転慣性による項 −J<sub>z</sub>dΩ/dt が重なる。
+          回転数を急変させるとヨー方向に一時的な逆トルクが出る。
+          <strong>スロットル急変時のヨー外れ</strong>はこれ。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================= RUN E -->
+<section class="run" id="run-e">
+  <div class="rail"><span class="run-id">Run E</span><span class="sym">n/rev</span></div>
+  <div class="body">
+    <h2>変動成分 — IMU とノッチフィルタの設計に効く周波数</h2>
+    <figure>
+      {{fig:vibration.svg}}
+      <figcaption>左: 6 m/s・流入角 75° でのハブ荷重の変動分。右: 推力の次数スペクトル。</figcaption>
+    </figure>
+    <p>
+      斜め流入ではブレード 1 枚あたりの荷重は 1 回転に 1 回変動するが、
+      4 枚合わせたハブ荷重には <strong>4 の倍数の次数だけが残る</strong>
+      （回転系 → 静止系の次数変換）。したがって機体が受ける振動の主成分は
+      <strong>4/rev = {{vibration.bpf_hz|,.0f}} Hz</strong> であって、1/rev ではない。
+    </p>
+    <table class="data wide">
+      <thead><tr><th>成分</th><th class="num">周波数</th><th class="num">振幅</th><th>出どころ</th></tr></thead>
+      <tbody>
+        <tr><td>1/rev</td><td class="num">{{vibration.f_rev_hz|,.0f}} Hz</td><td class="num">{{vibration.imbalance_1rev_mn_per_um|.2f}} mN / μm</td><td>質量アンバランス（重心ずれ 1 μm あたり）</td></tr>
+        <tr><td>4/rev (BPF)</td><td class="num">{{vibration.bpf_hz|,.0f}} Hz</td><td class="num">{{vibration.fz_4rev_gf|.4f}} gf</td><td>斜め流入による空力変動（平均推力の {{vibration.fz_4rev_pct|.2f}} %）</td></tr>
+        <tr><td>4/rev モーメント</td><td class="num">{{vibration.bpf_hz|,.0f}} Hz</td><td class="num">{{vibration.mx_4rev_unm|.1f}} μN·m</td><td>同上、M<sub>x</sub></td></tr>
+      </tbody>
+    </table>
+    <div class="implication">
+      <h3>制御系への含意</h3>
+      <ul>
+        <li><strong>ノッチは 1/rev ではなく 4/rev に置く。</strong>
+          ホバーで {{vibration.bpf_hz|,.0f}} Hz、スロットル全開では 2 500 Hz を超える。
+          回転数追従型のノッチ（ダイナミックノッチ）でないと外し続ける。</li>
+        <li><strong>IMU のサンプリングとエイリアシング。</strong>
+          1 kHz サンプリングだと {{vibration.bpf_hz|,.0f}} Hz は折り返して
+          {{vibration.alias_1khz|.0f}} Hz 付近の偽信号になり、姿勢推定に直接漏れる。
+          アナログ側のアンチエイリアスフィルタか、より高いサンプリングが要る。</li>
+        <li><strong>質量アンバランスは 1/rev で出る。</strong>
+          Ω² に比例するので高回転で急に効き、重心ずれ 10 μm でホバー推力の 24 % に達する。
+          スペクトルで 1/rev が立っていればアンバランス、4/rev なら空力、と切り分けられる。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================= RUN F -->
+<section class="run" id="run-f">
+  <div class="rail"><span class="run-id">Run F</span><span class="sym">4×</span></div>
+  <div class="body">
+    <h2>機体レベル — 水平飛行のつり合い</h2>
+    <p>
+      4 発合わせて {{meta.mass_g|.1f}} g を支えながら水平に飛ぶ状態を解く。
+      機体の抗力（C<sub>D</sub>A = {{vehicle.cd_a|.4f}} m² と仮定）と推力の水平成分がつり合う
+      前傾角を求め、その姿勢で必要な推力が出る回転数を逆算した。
+    </p>
+    <figure>
+      {{fig:vehicle.svg}}
+      <figcaption>前進速度に対する、つり合い回転数・必要軸動力・ハブモーメント合計。</figcaption>
+    </figure>
+    <table class="data wide">
+      <thead><tr><th class="num">速度 [m/s]</th><th class="num">前傾 [deg]</th><th class="num">回転数 [rpm]</th><th class="num">軸動力 合計 [W]</th><th class="num">ΣM<sub>y</sub> [mN·m]</th></tr></thead>
+      <tbody>{{rows:vehicle}}</tbody>
+    </table>
+    <div class="implication">
+      <h3>制御系への含意</h3>
+      <ul>
+        <li>前進速度が上がっても<strong>必要回転数はほとんど増えない</strong>。
+          並進揚力で推力が上がる分と、前傾で必要推力が増える分がかなり相殺する。
+          「前進すると電池が持たない」の主因はプロペラではなく機体の抗力と姿勢角である。</li>
+        <li><strong>ΣM<sub>y</sub> は速度とともに単調に増える。</strong>
+          これは姿勢ループが定常的に打ち消し続けなければならないバイアスで、
+          結果として 4 発の回転数に定常差が付く。その分だけ操作余裕が削られる。</li>
+        <li>この表は<strong>フィードフォワードのテーブルとして直接使える</strong>。
+          速度指令から前傾角と基準回転数を先に与えれば、フィードバックの仕事が減る。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== 限界 -->
+<section class="panel">
+  <h2>この結果の限界と、次に測るべきこと</h2>
+  <h3>1. 較正が 1 点しかない</h3>
+  <p>
+    <strong>回転数を変えた推力を 2〜3 点測れば決着する。</strong>
+    20 000 rpm と 30 000 rpm を測れば、「取付角ずれ」仮説と「低 Re」仮説は
+    30〜60 % 食い違うので区別できる。それまでは較正を当てない方針としている。
+  </p>
+  <h3>2. 翼型の抗力は過小評価の可能性がある</h3>
+  <p>
+    同梱の 2 次元 CFD（OpenFOAM、円柱 Re = 20/40 の既知解で検証済み）で
+    実測断面を Re = 12 000・迎角 4° で解いたところ、
+    <strong>c<sub>l</sub> は経験式より 10 % 低く、c<sub>d</sub> は 70 % 高い</strong>という結果が出た。
+    ただしこの断面は Re = 12 000 で定常解を持たず（周期 6.5 s のリミットサイクル）、
+    迎角 0° と 8° は統計的に収束しなかったため、ポーラ全体としてはまだ確定していない。
+    2 次元計算は剥離せん断層の 3 次元不安定を表現できず剥離を過大に出す傾向があるので、
+    この 70 % もいくらか誇張されている可能性がある。
+  </p>
+  <h3>3. モデルそのものの限界</h3>
+  <ul>
+    <li>翼素運動量理論は後流の旋回を無視するため<strong>推力を約 4 % 過大評価</strong>する
+      （揚力線 + 渦後流モデルとの比較で定量化済み）。</li>
+    <li>ボルテックスリング状態（降下率 ≈ 誘導速度）では運動量理論が成立しない。
+      急降下時の推力は信用できない。</li>
+    <li>多ロータ間の干渉、機体との干渉は入っていない。
+      実機の 4 発は互いの後流を吸うので、単独ロータより効率が落ちる。</li>
+    <li>動的失速を入れていないので、非常に速い姿勢運動での過渡は再現しない。</li>
+  </ul>
+  <h3>4. 実測で優先的に埋めるべき順番</h3>
+  <ol>
+    <li><strong>推力 vs 回転数を 3 点以上</strong> — 較正が決まり、絶対値の幅が一気に縮む</li>
+    <li><strong>トルク（または電流）</strong> — 抗力側が決まり、FM と必要動力が確定する</li>
+    <li><strong>風洞での斜め流入 6 分力</strong> — ハブモーメントと H 力の実測。
+      本パッケージが再現しようとしている試験そのもの</li>
+    <li><strong>回転数ステップの推力波形</strong> — 動的インフローの時定数の検証</li>
+  </ol>
+</section>
+
+<!-- ============================================================== 再現 -->
+<section class="panel repro">
+  <h2>再現方法</h2>
+  <p>この報告の図と数値はすべて次のコマンドで再生成できる。乱数は使っていないので結果は決定的である。</p>
+  <pre><code>git clone https://github.com/kouhei1970/prop_sim
+cd prop_sim &amp;&amp; pip install -e ".[plot]"
+
+python examples/11_virtual_wind_tunnel.py   # 図と data/summary.json を生成
+python docs/report/build.py                 # このページを生成</code></pre>
+  <p>
+    生データは <a href="data/">data/</a> に CSV で置いてある
+    （静止掃引、流入角ごとの前進飛行、ステップ応答）。
+    <code>data/summary.json</code> には本文中の数値がすべて入っている。
+  </p>
+  <table class="data wide">
+    <thead><tr><th>関連ドキュメント</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://github.com/kouhei1970/prop_sim/blob/main/docs/STAMPFLY_1209.md">STAMPFLY_1209.md</a></td><td>形状の実測、性能推定、計測要求仕様</td></tr>
+      <tr><td><a href="https://github.com/kouhei1970/prop_sim/blob/main/docs/MODELS.md">MODELS.md</a></td><td>空力モデル Lv0–Lv4 の比較と限界</td></tr>
+      <tr><td><a href="https://github.com/kouhei1970/prop_sim/blob/main/docs/CFD.md">CFD.md</a></td><td>OpenFOAM による 2 次元翼型 CFD と検証</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<footer class="colophon">
+  <p>
+    prop_sim — 無人機プロペラ 6 分力試験シミュレータ /
+    <a href="https://github.com/kouhei1970/prop_sim">github.com/kouhei1970/prop_sim</a>
+  </p>
+  <p class="gen">生成: {{meta.generated|s}} ／ モデル: {{meta.model|s}} ／ 較正: 未適用</p>
+</footer>
