@@ -114,13 +114,24 @@ def test_bubble_penalty_scales_drag():
 # ------------------------------------------------------- StampFly の断面
 def test_stampfly_section_matches_photo_measurement():
     p = STAMPFLY_1209_SECTION.thin_airfoil_properties()
-    assert p.thickness_max == pytest.approx(0.117, abs=0.005)
-    assert p.camber_max == pytest.approx(0.066, abs=0.005)
-    assert 0.35 < p.camber_max_x < 0.55
-    assert 0.10 < p.thickness_max_x < 0.25
-    assert p.alpha0_deg == pytest.approx(-5.4, abs=0.7)
-    assert 0.6 < p.cl_ideal < 0.95
-    assert -0.20 < p.cm_ac < -0.05
+    assert p.thickness_max == pytest.approx(0.087, abs=0.006)
+    assert p.camber_max == pytest.approx(0.067, abs=0.006)
+    assert 0.42 < p.camber_max_x < 0.58
+    assert 0.15 < p.thickness_max_x < 0.28
+    assert p.alpha0_deg == pytest.approx(-6.9, abs=0.8)
+    assert 0.8 < p.cl_ideal < 1.1
+    assert -0.25 < p.cm_ac < -0.10
+
+
+def test_stampfly_section_lower_surface_hugs_chord_near_leading_edge():
+    """前縁付近の下面はほぼ翼弦線に乗る (影を断面と誤検出しないこと)."""
+    s = STAMPFLY_1209_SECTION.resample(200)
+    lower = np.interp([0.05, 0.10, 0.20], s.x, s.lower)
+    assert np.all(lower > -0.02)
+    assert np.all(np.abs(lower) < 0.02)
+    # 上面は逆にしっかり盛り上がっている
+    upper = np.interp([0.05, 0.10, 0.20], s.x, s.upper)
+    assert np.all(upper > 0.04)
 
 
 def test_stampfly_airfoil_is_reasonable_at_low_reynolds():
