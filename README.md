@@ -6,6 +6,8 @@
 - 空力モデルは **Lv0（Ct/Cq 多項式）から Lv3（揚力線+渦後流）まで**を実装し、
   同じインターフェイスで差し替えられる。既定は **翼素運動量理論 (BEMT)**。
   外部 CFD/実測データの取り込み口もある → [docs/MODELS.md](docs/MODELS.md)
+- 翼断面の **2 次元 CFD (OpenFOAM)** を同梱。低 Re の翼型ポーラを経験式では
+  なく計算で決められる（円柱の既知解で検証済み）→ [docs/CFD.md](docs/CFD.md)
 - **静的データ**（回転数・風速・流入角の掃引）と
   **動的データ**（時間領域、1/rev・B/rev・過渡応答）の両方を出力
 - 「真値」だけでなく **6 分力計を通した計測値**（軸間干渉・ノイズ・
@@ -90,6 +92,7 @@ python -m prop_sim dynamic --diameter 10 --pitch 4.7 --rpm 7000 \
 | `examples/07_stampfly_1209.py` | StampFly 1209 (31 mm 4 枚) の性能推定と計測要求 |
 | `examples/08_algorithm_comparison.py` | Lv0〜LvS の総当たり比較（精度・コスト・BEMT の誤差分解） |
 | `examples/09_calibrate_to_measurement.py` | 実測推力による較正と仮説の切り分け |
+| `examples/10_cfd_airfoil_polar.py` | OpenFOAM で翼断面のポーラを解き経験式と比較 |
 
 ```bash
 python examples/01_static_thrust_sweep.py     # → results/ に CSV と PNG
@@ -135,6 +138,12 @@ python examples/01_static_thrust_sweep.py     # → results/ に CSV と PNG
 - 質量アンバランス（静・偶力） → 1/rev の `U Omega^2`
 - ブレード間のピッチ差・取付方位ずれ（空力アンバランス）
 - BLDC モータ（Kv, 巻線抵抗, 無負荷電流）+ ESC + ベアリング損失
+
+**CFD**（`prop_sim.cfd`、OpenFOAM）
+
+- 翼断面まわりの 2 次元格子生成（自前の O 型格子 → `polyMesh` 直接出力）
+- 層流 `simpleFoam` / `pimpleFoam`、壁面荷重の積分（圧力/粘性の内訳つき）
+- 円柱 Re = 20 / 40 で文献値と 1 % 以内で一致することを確認済み
 
 **計測系**
 
@@ -212,7 +221,7 @@ BEMT 自体の限界（ボルテックスリング状態、大流入角、多ロ
 ## 開発
 
 ```bash
-python -m pytest -q
+python -m pytest -q      # 198 件。OpenFOAM が無くても全部通る
 ```
 
 テストは数値の一致だけでなく、運動量理論との整合、rpm^2 則、回転方向の
