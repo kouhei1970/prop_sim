@@ -147,6 +147,7 @@ python examples/01_static_thrust_sweep.py     # → results/ に CSV と PNG
 **較正**（`prop_sim.calibration`）
 
 - 実測推力（1 点でも可）にモデルを合わせ込む
+  — *`stampfly_1209` プリセットには現時点で較正を適用していない*
 - 取付角 / キャンバ効率 / Reynolds 依存 / 抗力倍率 を調整パラメータに選べる
 - `compare_hypotheses` で「1 点では区別できない仮説」の外挿の食い違いを定量化
 
