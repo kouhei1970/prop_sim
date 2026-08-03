@@ -92,6 +92,18 @@
     "yaw_moment_dn2000_mnm": 0.1848454130945322,
     "lever_x_mm": 22.980970388562792
   },
+  "shroud": {
+    "thrust_gain_pct": 4.4413983347962205,
+    "fm_open": 0.6713735295102486,
+    "fm_no_tip_loss": 0.7144608140659243,
+    "hover_rpm_open": 27309.071958065033,
+    "hover_rpm_no_tip_loss": 26732.028305530548,
+    "hover_rpm_change_pct": -2.113010846434382,
+    "power_open_w": 0.9323453995978815,
+    "power_no_tip_loss_w": 0.8783328608694906,
+    "ideal_duct_thrust_gain_pct": 25.99210498948732,
+    "power_change_pct": -5.793189814813959
+  },
   "dynamic": {
     "step_pct": 10.0,
     "overshoot_pct": 3.6503756984588076,

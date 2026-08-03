@@ -367,6 +367,47 @@ def part_c(hover_rpm):
     summary["derivatives"]["lever_x_mm"] = float(lever * 1e3)
 
 
+# ======================== C2. シュラウド (プロペラガード) の効き幅
+def part_c2(hover_rpm):
+    """翼端損失を切った場合との差を出す.
+
+    StampFly はプロペラが薄い筒状のリングでガードされている。本パッケージは
+    開放ロータのモデルなのでシュラウドは扱えないが、シュラウドの効果のうち
+    **翼端渦の抑制**だけは「Prandtl の翼端損失を切る」ことで上限を見積もれる。
+    実際のガードは翼端すきまが有限なのでこの一部しか回収できない。
+    """
+    print("C2. シュラウドの効き幅 (翼端損失の上限)")
+    notip = ps.BEMT(tip_loss=False)
+    op = ps.OperatingPoint(rpm=hover_rpm)
+    a, b = model.solve(rotor, op), notip.solve(rotor, op)
+
+    def find(m, gf=HOVER_GF):
+        lo, hi = 2000.0, 60000.0
+        for _ in range(24):
+            mid = 0.5 * (lo + hi)
+            th = m.solve(rotor, ps.OperatingPoint(rpm=mid)).thrust / G * 1e3
+            lo, hi = (mid, hi) if th < gf else (lo, mid)
+        return 0.5 * (lo + hi)
+
+    r_a, r_b = find(model), find(notip)
+    op_a, op_b = ps.OperatingPoint(rpm=r_a), ps.OperatingPoint(rpm=r_b)
+    summary["shroud"] = {
+        "thrust_gain_pct": float(100.0 * (b.thrust / a.thrust - 1.0)),
+        "fm_open": float(a.coefficients(rotor, op)["FM"]),
+        "fm_no_tip_loss": float(b.coefficients(rotor, op)["FM"]),
+        "hover_rpm_open": float(r_a),
+        "hover_rpm_no_tip_loss": float(r_b),
+        "hover_rpm_change_pct": float(100.0 * (r_b / r_a - 1.0)),
+        "power_open_w": float(model.solve(rotor, op_a).power(op_a)),
+        "power_no_tip_loss_w": float(notip.solve(rotor, op_b).power(op_b)),
+        # 理想ダクト (収縮なし) の運動量理論による同動力での推力比 (2*sigma)^(1/3)
+        "ideal_duct_thrust_gain_pct": float(100.0 * (2.0 ** (1.0 / 3.0) - 1.0)),
+    }
+    summary["shroud"]["power_change_pct"] = float(
+        100.0 * (summary["shroud"]["power_no_tip_loss_w"]
+                 / summary["shroud"]["power_open_w"] - 1.0))
+
+
 # ================================================== D. 過渡応答
 def part_d(hover_rpm):
     print("D. 過渡応答")
@@ -534,6 +575,7 @@ def main():
     hover_rpm = part_a()
     part_b(hover_rpm)
     part_c(hover_rpm)
+    part_c2(hover_rpm)
     part_d(hover_rpm)
     part_e(hover_rpm)
     part_f(hover_rpm)
