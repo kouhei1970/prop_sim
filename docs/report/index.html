@@ -71,6 +71,49 @@
   </p>
 </section>
 
+<section class="panel" id="frame">
+  <h2>座標系と符号 — 制御コードに写す前に必ず確認</h2>
+  <p>
+    本報告の 6 分力は <strong>prop_sim のハブ座標系</strong>で表してある。
+  </p>
+  <div class="table-scroll"><table class="data wide">
+    <tbody>
+      <tr><th>z 軸</th><td>シャフト軸。<strong>推力が正</strong>になる向き（= 通常飛行では上）</td></tr>
+      <tr><th>x 軸</th><td>方位角 ψ = 0 の基準方向（ディスク面内）</td></tr>
+      <tr><th>y 軸</th><td>z × x で決まる右手系</td></tr>
+    </tbody>
+  </table></div>
+  <p>
+    x を機首方向に合わせると <code>y = z × x</code> は<strong>左</strong>を向くので、
+    この系は <strong>FLU（前・左・上）</strong>になる。
+    多くの飛行制御ファームウェアが使う <strong>FRD / NED（前・右・下）とは y と z が反転</strong>している。
+    軸の対応（x = ロール, y = ピッチ, z = ヨー）は同じだが、<strong>正の向きが一部逆になる</strong>。
+  </p>
+  <div class="table-scroll"><table class="data wide">
+    <thead><tr><th>成分</th><th>軸</th><th>本報告（FLU）で正が意味するもの</th><th>FRD 慣習との比較</th></tr></thead>
+    <tbody>
+      <tr><th>M<sub>x</sub></th><td>ロール</td><td>+y(左) → +z(上) = 左が上がる = 右ロール</td><td><strong>一致</strong></td></tr>
+      <tr><th>M<sub>y</sub></th><td>ピッチ</td><td>+z(上) → +x(前) = <strong>機首下げ</strong></td><td><strong>逆</strong>（FRD の + は機首上げ）</td></tr>
+      <tr><th>M<sub>z</sub></th><td>ヨー</td><td>+x(前) → +y(左) = <strong>機首左</strong></td><td><strong>逆</strong>（FRD の + は機首右）</td></tr>
+    </tbody>
+  </table></div>
+  <p>
+    <strong>FRD 系に写すときは F<sub>y</sub>, F<sub>z</sub>, M<sub>y</sub>, M<sub>z</sub> の符号を反転する</strong>
+    （x 軸まわりに 180° 回した関係）。ロール成分だけはそのままでよい。
+  </p>
+  <p>
+    本文中で「機首を起こす」「風上に向く」といった物理的な向きを述べるときは、
+    座標系によらない<strong>実際の運動</strong>で書いてある。数値の符号は上表で読み替えること。
+    たとえば真横 8 m/s で M<sub>y</sub> = -76 μN·m は負なので、
+    FLU では<strong>機首上げ</strong>を意味する。
+  </p>
+  <p>
+    前進飛行の条件は <code>inflow_angle_deg = 90</code>, <code>inflow_azimuth_deg = 0</code>、
+    すなわち機体速度ベクトルが <code>v_hub = (V, 0, 0)</code> = <strong>+x 方向へ前進</strong>。
+    <code>inflow_angle_deg = 0</code> は <code>v_hub = (0, 0, V)</code> = 推力方向へ前進（真上昇）である。
+  </p>
+</section>
+
 <nav class="matrix" aria-label="試験マトリクス">
   <h2>試験マトリクス</h2>
   <table>
@@ -78,6 +121,7 @@
       <tr><th>Run</th><th>内容</th><th>掃引した量</th><th>取り出す量</th></tr>
     </thead>
     <tbody>
+      <tr><td><a href="#frame">—</a></td><td>座標系と符号</td><td>—</td><td>FLU / FRD の換算</td></tr>
       <tr><td><a href="#run-a">A</a></td><td>静止推力試験</td><td>回転数 6k–45k rpm</td><td>k<sub>T</sub>, k<sub>Q</sub>, FM</td></tr>
       <tr><td><a href="#run-b">B</a></td><td>風洞掃引</td><td>対気速度 0–10 m/s × 流入角 0–90°</td><td>F<sub>z</sub>, F<sub>x</sub>, M<sub>y</sub></td></tr>
       <tr><td><a href="#run-c">C</a></td><td>微小擾乱</td><td>Ω, w, u, q を微小変化</td><td>線形微係数</td></tr>
