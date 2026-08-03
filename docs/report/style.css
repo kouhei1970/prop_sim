@@ -300,3 +300,12 @@ table.data.wide td:last-child { color: var(--muted); line-height: 1.6; }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+.note {
+  font-size: 0.83rem; color: var(--muted); margin: 0 0 0.8rem;
+  padding-left: 0.75rem; border-left: 2px solid var(--rule);
+}
+.unit-note {
+  font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0;
+  text-transform: none; font-weight: 400; color: var(--muted);
+}

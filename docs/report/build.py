@@ -65,6 +65,20 @@ def derive(s: dict) -> dict:
     dv["dMx_dq_e"] = eng(dv["dMx_dq"])
     dv["dMx_dq_aero_e"] = eng(dv["dMx_dq_aero"])
     dv["gyro_dominance"] = abs(dv["dMx_dq"]) / abs(dv["dMy_dq"])
+
+    # --- StampFly のファーム系 (FRD) への換算 -------------------------------
+    # ハブ系 (FLU) とは x 軸まわり 180 度の関係なので y, z 成分と
+    # 角速度 q, r が反転する。微係数は反転が 2 回起きて相殺する場合がある。
+    dv["dMy_du_frd"] = -dv["dMy_du"]              # My だけ反転
+    dv["dMy_du_frd_e"] = eng(dv["dMy_du_frd"])
+    dv["dMy_du_4rotor_frd_unm"] = -dv["dMy_du_4rotor_unm"]
+    dv["dMx_dq_frd"] = -dv["dMx_dq"]              # q だけ反転
+    dv["dMx_dq_frd_e"] = eng(dv["dMx_dq_frd"])
+    dv["dMy_dq_frd_e"] = eng(dv["dMy_dq"])        # 2 回反転して不変
+    dv["dFx_du_frd"] = dv["dFx_du"]               # 不変
+    dv["dT_dw_frd"] = dv["dT_dw"]                 # 2 回反転して不変
+    dv["spin_momentum_frd_e"] = eng(dv["spin_momentum"])
+    st["hover_torque_frd_mnm"] = -st["hover_torque_mnm"]
     dv["heave_tau_s"] = 1.0 / abs(dv["heave_damping_4rotor"])
     dv["gyro_at_10"] = abs(dv["spin_momentum"]) * 10.0 * 1e6
     dv["gyro_at_10_pct"] = 100.0 * dv["gyro_at_10"] / (st["hover_torque_mnm"] * 1e3)
@@ -81,6 +95,9 @@ def derive(s: dict) -> dict:
             st["hover_torque_mnm"] * 1e3)
         d["mx_over_my"] = abs(d["mx_unm"]) / max(abs(d["my_unm"]), 1e-12)
         d["my_4rotor_unm"] = 4.0 * abs(d["my_unm"])
+        d["mx_frd_unm"] = d["mx_unm"] or 0.0      # ロールは不変
+        d["my_frd_unm"] = -d["my_unm"] or 0.0     # ピッチは反転 (-0.0 を潰す)
+        d["my_4rotor_frd_unm"] = -4.0 * d["my_unm"] or 0.0
 
     vb["fz_4rev_pct"] = 100.0 * vb["fz_4rev_gf"] / vb["fz_mean_gf"]
     f, fs = vb["bpf_hz"], 1000.0
@@ -98,6 +115,11 @@ def lookup(s: dict, path: str):
     return cur
 
 
+def _z(x: float, tol: float = 1e-9) -> float:
+    """符号つきゼロ (-0.000 表示) を潰す."""
+    return 0.0 if abs(x) < tol else x
+
+
 def vehicle_rows(s: dict) -> str:
     out = []
     for r in s["vehicle"]["rows"]:
@@ -107,7 +129,8 @@ def vehicle_rows(s: dict) -> str:
             f'<td class="num">{r["theta_deg"]:.1f}</td>'
             f'<td class="num">{r["rpm"]:,.0f}</td>'
             f'<td class="num">{r["power_w"]:.2f}</td>'
-            f'<td class="num">{r["my_total_mnm"]:.3f}</td>'
+            # FRD では My の符号が反転する (正 = 機首上げ)
+            f'<td class="num">{_z(-r["my_total_mnm"]):.3f}</td>'
             "</tr>"
         )
     return "\n".join(out)

@@ -72,45 +72,46 @@
 </section>
 
 <section class="panel" id="frame">
-  <h2>座標系と符号 — 制御コードに写す前に必ず確認</h2>
+  <h2>座標系と符号 — StampFly（FRD）への換算</h2>
   <p>
-    本報告の 6 分力は <strong>prop_sim のハブ座標系</strong>で表してある。
+    シミュレータが出力する 6 分力は <strong>prop_sim のハブ座標系</strong>で表されている。
+    z がシャフト軸で<strong>推力が正</strong>（= 通常飛行では上）、x が方位角 ψ = 0 の基準方向、
+    y = z × x で右手系。x を機首に合わせると y は<strong>左</strong>を向くので、この系は
+    <strong>FLU（前・左・上）</strong>になる。
+  </p>
+  <p>
+    <strong>StampFly のファームウェアは FRD（前・右・下）</strong>なので、両者は
+    <strong>x 軸まわりに 180° 回した関係</strong>にある。軸の対応
+    （x = ロール, y = ピッチ, z = ヨー）は同じだが、<strong>y と z の成分は符号が反転</strong>する。
   </p>
   <div class="table-scroll"><table class="data wide">
+    <thead><tr><th>成分</th><th>軸</th><th>FLU → FRD</th><th>FRD での正の意味</th></tr></thead>
     <tbody>
-      <tr><th>z 軸</th><td>シャフト軸。<strong>推力が正</strong>になる向き（= 通常飛行では上）</td></tr>
-      <tr><th>x 軸</th><td>方位角 ψ = 0 の基準方向（ディスク面内）</td></tr>
-      <tr><th>y 軸</th><td>z × x で決まる右手系</td></tr>
+      <tr><th>F<sub>x</sub></th><td>前後</td><td>そのまま</td><td>前向き</td></tr>
+      <tr><th>F<sub>y</sub></th><td>左右</td><td><strong>符号反転</strong></td><td>右向き</td></tr>
+      <tr><th>F<sub>z</sub></th><td>上下</td><td><strong>符号反転</strong></td><td>下向き（<strong>推力は負</strong>になる）</td></tr>
+      <tr><th>M<sub>x</sub></th><td>ロール</td><td>そのまま</td><td>右ロール（右が下がる）</td></tr>
+      <tr><th>M<sub>y</sub></th><td>ピッチ</td><td><strong>符号反転</strong></td><td>機首上げ</td></tr>
+      <tr><th>M<sub>z</sub></th><td>ヨー</td><td><strong>符号反転</strong></td><td>機首右</td></tr>
     </tbody>
   </table></div>
   <p>
-    x を機首方向に合わせると <code>y = z × x</code> は<strong>左</strong>を向くので、
-    この系は <strong>FLU（前・左・上）</strong>になる。
-    多くの飛行制御ファームウェアが使う <strong>FRD / NED（前・右・下）とは y と z が反転</strong>している。
-    軸の対応（x = ロール, y = ピッチ, z = ヨー）は同じだが、<strong>正の向きが一部逆になる</strong>。
-  </p>
-  <div class="table-scroll"><table class="data wide">
-    <thead><tr><th>成分</th><th>軸</th><th>本報告（FLU）で正が意味するもの</th><th>FRD 慣習との比較</th></tr></thead>
-    <tbody>
-      <tr><th>M<sub>x</sub></th><td>ロール</td><td>+y(左) → +z(上) = 左が上がる = 右ロール</td><td><strong>一致</strong></td></tr>
-      <tr><th>M<sub>y</sub></th><td>ピッチ</td><td>+z(上) → +x(前) = <strong>機首下げ</strong></td><td><strong>逆</strong>（FRD の + は機首上げ）</td></tr>
-      <tr><th>M<sub>z</sub></th><td>ヨー</td><td>+x(前) → +y(左) = <strong>機首左</strong></td><td><strong>逆</strong>（FRD の + は機首右）</td></tr>
-    </tbody>
-  </table></div>
-  <p>
-    <strong>FRD 系に写すときは F<sub>y</sub>, F<sub>z</sub>, M<sub>y</sub>, M<sub>z</sub> の符号を反転する</strong>
-    （x 軸まわりに 180° 回した関係）。ロール成分だけはそのままでよい。
+    <strong>微分量は「反転が 2 回起きて相殺する」ものがあるので注意</strong>。
+    たとえば ∂F<sub>z</sub>/∂w は F<sub>z</sub> も w も反転するので値が変わらないが、
+    ∂M<sub>y</sub>/∂u は M<sub>y</sub> だけが反転するので符号が変わる。
+    Run C の表には<strong>両方の系での値を併記</strong>してある。
   </p>
   <p>
-    本文中で「機首を起こす」「風上に向く」といった物理的な向きを述べるときは、
-    座標系によらない<strong>実際の運動</strong>で書いてある。数値の符号は上表で読み替えること。
-    たとえば真横 8 m/s で M<sub>y</sub> = -76 μN·m は負なので、
-    FLU では<strong>機首上げ</strong>を意味する。
+    以降、本文で「機首を起こす」「右に転がる」といった向きを述べるときは
+    座標系によらない<strong>実際の運動</strong>で書き、モーメントの数値は
+    <strong>FRD</strong>（StampFly のファームと同じ系）で示す。
+    付属の CSV / <code>summary.json</code> は<strong>ハブ系のまま</strong>なので、
+    読み込む際は上表で変換すること。
   </p>
   <p>
-    前進飛行の条件は <code>inflow_angle_deg = 90</code>, <code>inflow_azimuth_deg = 0</code>、
-    すなわち機体速度ベクトルが <code>v_hub = (V, 0, 0)</code> = <strong>+x 方向へ前進</strong>。
-    <code>inflow_angle_deg = 0</code> は <code>v_hub = (0, 0, V)</code> = 推力方向へ前進（真上昇）である。
+    掃引条件との対応: <code>inflow_angle_deg = 90</code>, <code>inflow_azimuth_deg = 0</code> が
+    <strong>+x 方向へ前進</strong>（機体速度 <code>v_hub = (V, 0, 0)</code>）、
+    <code>inflow_angle_deg = 0</code> が<strong>真上昇</strong>（<code>v_hub = (0, 0, V)</code>）である。
   </p>
 </section>
 
@@ -195,15 +196,16 @@
     </figure>
 
     <h3>1. 推力は流入角で増えも減りもする</h3>
+    <p class="note">モーメントは <strong>FRD</strong>（M<sub>x</sub> 正 = 右ロール、M<sub>y</sub> 正 = 機首上げ）。前進方向は +x。</p>
     <div class="table-scroll"><table class="data wide">
       <thead><tr><th>条件</th><th class="num">J</th><th class="num">F<sub>z</sub>/F<sub>z0</sub></th><th class="num">F<sub>x</sub> [gf]</th><th class="num">M<sub>x</sub> [μN·m]</th><th class="num">M<sub>y</sub> [μN·m]</th></tr></thead>
       <tbody>
         <tr><td>真上昇 4 m/s</td><td class="num">0.282</td><td class="num">0.807</td><td class="num">0.00</td><td class="num">0</td><td class="num">0</td></tr>
         <tr><td>真上昇 8 m/s</td><td class="num">0.563</td><td class="num">0.539</td><td class="num">0.00</td><td class="num">0</td><td class="num">0</td></tr>
-        <tr><td>流入角 60° 4 m/s</td><td class="num">0.141</td><td class="num">0.943</td><td class="num">-0.43</td><td class="num">-112</td><td class="num">-58</td></tr>
-        <tr><td>流入角 60° 8 m/s</td><td class="num">0.282</td><td class="num">0.897</td><td class="num">-0.92</td><td class="num">-243</td><td class="num">-62</td></tr>
-        <tr><td>真横 4 m/s</td><td class="num">0.000</td><td class="num">1.035</td><td class="num">-0.48</td><td class="num">-119</td><td class="num">-87</td></tr>
-        <tr><td>真横 8 m/s</td><td class="num">0.000</td><td class="num">1.100</td><td class="num">-0.93</td><td class="num">-265</td><td class="num">-76</td></tr>
+        <tr><td>流入角 60° 4 m/s</td><td class="num">0.141</td><td class="num">0.943</td><td class="num">-0.43</td><td class="num">-112</td><td class="num">58</td></tr>
+        <tr><td>流入角 60° 8 m/s</td><td class="num">0.282</td><td class="num">0.897</td><td class="num">-0.92</td><td class="num">-243</td><td class="num">62</td></tr>
+        <tr><td>真横 4 m/s</td><td class="num">0.000</td><td class="num">1.035</td><td class="num">-0.48</td><td class="num">-119</td><td class="num">87</td></tr>
+        <tr><td>真横 8 m/s</td><td class="num">0.000</td><td class="num">1.100</td><td class="num">-0.93</td><td class="num">-265</td><td class="num">76</td></tr>
       </tbody>
     </table></div>
     <p>
@@ -233,8 +235,9 @@
       <strong>F<sub>x</sub>（H 力）</strong>と<strong>ハブモーメント M<sub>x</sub>, M<sub>y</sub></strong> が残る。
     </p>
     <p>
-      表を見ると、1 発あたりでは <strong>進行方向と直交する M<sub>x</sub> の方が大きい</strong>。
-      真横 8 m/s で M<sub>x</sub> = -265 μN·m、M<sub>y</sub> = -76 μN·m で、
+      表を見ると、1 発あたりでは <strong>進行方向と直交する M<sub>x</sub>（ロール）の方が大きい</strong>。
+      真横 8 m/s で M<sub>x</sub> = -265 μN·m（左ロール）、
+      M<sub>y</sub> = +76 μN·m（機首上げ）で、
       比は 3.5 倍ある。前進側のブレードと後退側のブレードで
       相対速度が違うことによる左右の揚力差（進行方向に直交する軸まわり）が主で、
       流入分布の前後差による前後軸まわりの成分はそれより小さい。
@@ -257,7 +260,7 @@
     </table></div>
     <p>
       つまり 1 発では小さかった M<sub>y</sub> の方が機体レベルでは効く。
-      真横 8 m/s なら 4 発合計で 306 μN·m、
+      真横 8 m/s なら 4 発合計で +306 μN·m（機首上げ）、
       ホバー時の空力トルク 1 発ぶん（0.326 mN·m）の
       23 %（1 発あたり）に相当する。
     </p>
@@ -287,59 +290,76 @@
       制御則を設計するときに実際に使うのはこの表である。
       ホバー点（1 発 9.20 gf, 27,309 rpm）まわりで
       各入力を微小変化させ、6 分力の変化を差分で取った。
+      <strong>ハブ系（FLU）と StampFly のファーム系（FRD）の両方</strong>を併記する。
+      符号が反転するものと、反転が 2 回起きて<strong>不変になる</strong>ものがあるので注意。
     </p>
     <div class="table-scroll"><table class="data wide">
-      <thead><tr><th>微係数</th><th class="num">値</th><th>単位</th><th>意味 / 使いどころ</th></tr></thead>
+      <thead><tr><th>微係数</th><th class="num">ハブ系 (FLU)</th><th class="num">FRD</th><th>単位</th><th>意味 / 使いどころ</th></tr></thead>
       <tbody>
         <tr>
-          <th>∂F<sub>z</sub>/∂Ω</th><td class="num">6.416e-5</td><td>N·s</td>
+          <th>∂F<sub>z</sub>/∂Ω</th><td class="num">6.416e-5</td>
+          <td class="num">符号反転</td><td>N·s</td>
           <td>推力ゲイン。理論値 2T/Ω = 6.310e-5 と一致し、Ω² 則の局所整合が取れている</td>
         </tr>
         <tr>
-          <th>∂M<sub>z</sub>/∂Ω</th><td class="num">2.206e-7</td><td>N·m·s</td>
+          <th>∂M<sub>z</sub>/∂Ω</th><td class="num">2.206e-7</td>
+          <td class="num">符号反転</td><td>N·m·s</td>
           <td>ヨー操作力ゲイン。4 発の差動で使う</td>
         </tr>
         <tr>
-          <th>∂F<sub>z</sub>/∂w</th><td class="num">-0.0033</td><td>N/(m/s)</td>
-          <td><strong>ヒーブ減衰</strong>。上昇すると推力が減る自然な負帰還</td>
+          <th>∂F<sub>z</sub>/∂w</th><td class="num">-0.00334</td>
+          <td class="num">-0.00334</td><td>N/(m/s)</td>
+          <td><strong>ヒーブ減衰</strong>。F<sub>z</sub> と w が両方反転して<strong>値は不変</strong>。
+              降下すると推力が増える自然な負帰還</td>
         </tr>
         <tr>
-          <th>Z<sub>w</sub> (4 発 / 機体質量)</th><td class="num">-0.36</td><td>1/s</td>
+          <th>Z<sub>w</sub> (4 発 / 機体質量)</th><td class="num">-0.363</td>
+          <td class="num">-0.363</td><td>1/s</td>
           <td>高度ループの開ループ極。時定数 2.76 s の 1 次遅れ相当</td>
         </tr>
         <tr>
-          <th>∂F<sub>x</sub>/∂u</th><td class="num">-0.00119</td><td>N/(m/s)</td>
-          <td>H 力による速度減衰</td>
+          <th>∂F<sub>x</sub>/∂u</th><td class="num">-0.00119</td>
+          <td class="num">-0.00119</td><td>N/(m/s)</td>
+          <td>H 力による速度減衰。<strong>不変</strong></td>
         </tr>
         <tr>
-          <th>X<sub>u</sub> (4 発 / 機体質量)</th><td class="num">-0.129</td><td>1/s</td>
+          <th>X<sub>u</sub> (4 発 / 機体質量)</th><td class="num">-0.129</td>
+          <td class="num">-0.129</td><td>1/s</td>
           <td><strong>ロータ由来の速度減衰</strong>。機体の空気抵抗とは別に効く</td>
         </tr>
         <tr>
-          <th>∂M<sub>y</sub>/∂u</th><td class="num">-2.471e-5</td><td>N·m/(m/s)</td>
-          <td><strong>速度 → ピッチ結合</strong>。4 発で -99 μN·m/(m/s)</td>
+          <th>∂M<sub>y</sub>/∂u</th><td class="num">-2.471e-5</td>
+          <td class="num"><strong>2.471e-5</strong></td><td>N·m/(m/s)</td>
+          <td><strong>速度 → ピッチ結合</strong>。FRD で正 = <strong>前進すると機首上げ</strong>。
+              4 発で +99 μN·m/(m/s)</td>
         </tr>
         <tr>
-          <th>∂M<sub>y</sub>/∂q</th><td class="num">-7.777e-7</td><td>N·m·s</td>
-          <td><strong>空力の</strong>ピッチレート減衰（同軸）</td>
+          <th>∂M<sub>y</sub>/∂q</th><td class="num">-7.777e-7</td>
+          <td class="num">-7.777e-7</td><td>N·m·s</td>
+          <td><strong>空力の</strong>ピッチレート減衰（同軸）。M<sub>y</sub> と q が両方反転して<strong>不変</strong></td>
         </tr>
         <tr>
-          <th>∂M<sub>x</sub>/∂q</th><td class="num">-4.775e-5</td><td>N·m·s</td>
+          <th>∂M<sub>x</sub>/∂q</th><td class="num">-4.775e-5</td>
+          <td class="num"><strong>4.775e-5</strong></td><td>N·m·s</td>
           <td><strong>ジャイロによる軸間結合</strong>。ピッチレートがロールを生む。
-              空力ぶんは 9.995e-9 で 61 倍の差があり、
-              ほぼ全部がジャイロ</td>
+              空力ぶんは 9.995e-9 しかなく
+              61 倍の差でほぼ全部がジャイロ。
+              FRD では <code>+J<sub>z</sub>Ω</code> に一致する</td>
         </tr>
         <tr>
-          <th>−J<sub>z</sub>Ω</th><td class="num">-4.776e-5</td><td>N·m·s</td>
-          <td>ロータの角運動量。∂M<sub>x</sub>/∂q と一致することで
+          <th>J<sub>z</sub>Ω</th><td class="num">4.776e-5</td>
+          <td class="num">4.776e-5</td><td>N·m·s</td>
+          <td>ロータの角運動量。∂M<sub>x</sub>/∂q と大きさが一致することで
               ジャイロ項が正しく入っていることが確認できる</td>
         </tr>
         <tr>
-          <th>差動 ±500 rpm のロール</th><td class="num">0.272</td><td>mN·m</td>
+          <th>差動 ±500 rpm のロール</th><td class="num">0.272</td>
+          <td class="num">同左</td><td>mN·m</td>
           <td>アーム長 40 mm 想定。姿勢操作力の見積り</td>
         </tr>
         <tr>
-          <th>差動 ±2000 rpm のロール</th><td class="num">1.088</td><td>mN·m</td>
+          <th>差動 ±2000 rpm のロール</th><td class="num">1.088</td>
+          <td class="num">同左</td><td>mN·m</td>
           <td>同上</td>
         </tr>
       </tbody>
@@ -352,11 +372,15 @@
           この極より十分速い帯域を狙わないと、積分項が効きすぎて上下に揺れる。</li>
         <li><strong>速度ループ</strong>: X<sub>u</sub> はロータだけの寄与で、機体の抗力を加えるとさらに大きくなる。
           ホバー保持で速度が勝手に減衰する量として効く。</li>
-        <li><strong>姿勢ループ</strong>: ∂M<sub>y</sub>/∂u をフィードフォワードで打ち消すと、
-          前進開始時のピッチ外乱が減って位置制御の応答が素直になる。</li>
+        <li><strong>姿勢ループ</strong>: FRD で ∂M<sub>y</sub>/∂u = 2.471e-5 N·m/(m/s)
+          が正、つまり<strong>前進すると機首上げ</strong>。4 発で
+          +99 μN·m/(m/s) なので、
+          対気速度に比例させてピッチのフィードフォワードに入れると
+          前進開始時の外乱が消えて位置制御の応答が素直になる。</li>
         <li><strong>ジャイロは同軸ではなく軸間に出る</strong>:
           J<sub>z</sub>Ω = 4.776e-5 N·m·s なので、
-          ピッチレート 10 rad/s で<em>ロール方向に</em> 478 μN·m が出る。
+          ピッチレート 10 rad/s で<em>ロール方向に</em> 478 μN·m が出る
+          （FRD では機首上げレートが<strong>右ロール</strong>を生む向き）。
           これはホバーの空力トルクの 146 % に達し、
           同軸の空力減衰 ∂M<sub>y</sub>/∂q より 61 倍大きい。
           <strong>速い姿勢運動ではロールとピッチが強く連成する</strong>。
@@ -476,12 +500,12 @@
       <figcaption>前進速度に対する、つり合い回転数・必要軸動力・ハブモーメント合計。</figcaption>
     </figure>
     <div class="table-scroll"><table class="data wide">
-      <thead><tr><th class="num">速度 [m/s]</th><th class="num">前傾 [deg]</th><th class="num">回転数 [rpm]</th><th class="num">軸動力 合計 [W]</th><th class="num">ΣM<sub>y</sub> [mN·m]</th></tr></thead>
+      <thead><tr><th class="num">速度 [m/s]</th><th class="num">前傾 [deg]</th><th class="num">回転数 [rpm]</th><th class="num">軸動力 合計 [W]</th><th class="num">ΣM<sub>y</sub> [mN·m]<br><span class="unit-note">FRD, 正=機首上げ</span></th></tr></thead>
       <tbody><tr><td class="num">0</td><td class="num">0.0</td><td class="num">27,309</td><td class="num">3.73</td><td class="num">0.000</td></tr>
-<tr><td class="num">2</td><td class="num">1.4</td><td class="num">27,211</td><td class="num">3.68</td><td class="num">-0.191</td></tr>
-<tr><td class="num">4</td><td class="num">5.4</td><td class="num">27,085</td><td class="num">3.62</td><td class="num">-0.328</td></tr>
-<tr><td class="num">6</td><td class="num">12.1</td><td class="num">27,312</td><td class="num">3.72</td><td class="num">-0.376</td></tr>
-<tr><td class="num">8</td><td class="num">20.8</td><td class="num">28,539</td><td class="num">4.23</td><td class="num">-0.356</td></tr></tbody>
+<tr><td class="num">2</td><td class="num">1.4</td><td class="num">27,211</td><td class="num">3.68</td><td class="num">0.191</td></tr>
+<tr><td class="num">4</td><td class="num">5.4</td><td class="num">27,085</td><td class="num">3.62</td><td class="num">0.328</td></tr>
+<tr><td class="num">6</td><td class="num">12.1</td><td class="num">27,312</td><td class="num">3.72</td><td class="num">0.376</td></tr>
+<tr><td class="num">8</td><td class="num">20.8</td><td class="num">28,539</td><td class="num">4.23</td><td class="num">0.356</td></tr></tbody>
     </table></div>
     <div class="implication">
       <h3>制御系への含意</h3>
@@ -489,9 +513,13 @@
         <li>前進速度が上がっても<strong>必要回転数はほとんど増えない</strong>。
           並進揚力で推力が上がる分と、前傾で必要推力が増える分がかなり相殺する。
           「前進すると電池が持たない」の主因はプロペラではなく機体の抗力と姿勢角である。</li>
-        <li><strong>ΣM<sub>y</sub> は速度とともに単調に増える。</strong>
-          これは姿勢ループが定常的に打ち消し続けなければならないバイアスで、
-          結果として 4 発の回転数に定常差が付く。その分だけ操作余裕が削られる。</li>
+        <li><strong>ΣM<sub>y</sub>（機首上げ）は 6 m/s 付近で頭打ちになる。</strong>
+          0 → 0.19 → 0.33 → 0.38 → 0.36 mN·m と、6 m/s で最大になってから
+          わずかに減る。速度が増えるほどハブモーメントは大きくなるが、
+          同時に機体が前傾して流入角が 90° から離れていく（8 m/s で 69°）ため、
+          この 2 つの効果が打ち消し合う。
+          いずれにせよ姿勢ループが定常的に打ち消し続けるバイアスであり、
+          結果として 4 発の回転数に定常差が付いて操作余裕が削られる。</li>
         <li>この表は<strong>フィードフォワードのテーブルとして直接使える</strong>。
           速度指令から前傾角と基準回転数を先に与えれば、フィードバックの仕事が減る。</li>
       </ul>
