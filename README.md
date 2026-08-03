@@ -150,6 +150,9 @@ python examples/01_static_thrust_sweep.py     # → results/ に CSV と PNG
   — *`stampfly_1209` プリセットには現時点で較正を適用していない*
 - 取付角 / キャンバ効率 / Reynolds 依存 / 抗力倍率 を調整パラメータに選べる
 - `compare_hypotheses` で「1 点では区別できない仮説」の外挿の食い違いを定量化
+- `consistency_check` は**回転数の無いデータ**（メーカ公表の推力 vs 電気入力）でも
+  「モデルが要求するモータ効率が 1 を超えないか」という反証テストができる
+- `prop_sim.data` に参照データ（Gemfan 1209-4 公表値、出典と既知の矛盾つき）
 
 **後処理**（`prop_sim.postproc`）
 

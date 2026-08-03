@@ -24,5 +24,6 @@ prop-sim = "prop_sim.cli:main"
 [tool.setuptools.packages.find]
 include = ["prop_sim*"]
 
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]

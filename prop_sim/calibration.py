@@ -32,7 +32,15 @@ from .models.base import AeroModel
 from .operating import OperatingPoint
 from .rotor import Rotor
 
-__all__ = ["ThrustMeasurement", "CalibrationResult", "calibrate", "compare_hypotheses"]
+__all__ = [
+    "ThrustMeasurement",
+    "CalibrationResult",
+    "calibrate",
+    "compare_hypotheses",
+    "PowerCurvePoint",
+    "consistency_check",
+    "ideal_power",
+]
 
 G = 9.80665
 _PARAMS = ("collective", "camber", "re_lift", "cd_scale")
@@ -298,3 +306,118 @@ def compare_hypotheses(
         stack.mean(axis=0), 1e-12) * 100
     return {"rpm": rpm_range, "curves": curves, "spread_pct": spread,
             "results": results}
+
+
+# --------------------------------------------------------------------------
+# 回転数のないデータ (推力 + 電気入力) を使った整合性チェック
+# --------------------------------------------------------------------------
+@dataclass
+class PowerCurvePoint:
+    """回転数を含まない試験点 (メーカ公表値によくある形式).
+
+    Parameters
+    ----------
+    thrust_gf:
+        推力 [gf].
+    power_w:
+        電気入力 [W]. ``voltage`` と ``current`` からでもよい.
+    throttle_pct:
+        スロットル [%] (記録用).
+    """
+
+    thrust_gf: float
+    power_w: float | None = None
+    voltage: float | None = None
+    current: float | None = None
+    throttle_pct: float | None = None
+
+    def __post_init__(self) -> None:
+        if self.power_w is None:
+            if self.voltage is None or self.current is None:
+                raise ValueError("power_w か (voltage, current) が必要です")
+            self.power_w = float(self.voltage) * float(self.current)
+
+    @property
+    def thrust_n(self) -> float:
+        return self.thrust_gf * G * 1e-3
+
+
+def ideal_power(thrust_n: float, rotor: Rotor, density: float = 1.225) -> float:
+    """運動量理論の理想誘導動力 [W] = T^1.5 / sqrt(2 rho A).
+
+    **回転数を必要としない**. 実測の電気入力と比べると
+    ``P_ideal / P_elec = FM * eta_motor`` が得られる.
+    """
+    return float(
+        max(thrust_n, 0.0) ** 1.5
+        / np.sqrt(2.0 * density * rotor.geometry.disk_area)
+    )
+
+
+def consistency_check(
+    rotor: Rotor,
+    model: AeroModel,
+    points,
+    *,
+    atmosphere=None,
+    rpm_bracket: tuple[float, float] = (200.0, 200000.0),
+) -> dict:
+    """回転数の無いデータでモデルを反証できるか調べる.
+
+    各点について「モデルがその推力を出すのに必要な回転数」を逆算し,
+    そのときの軸動力から**モータ効率**を求める. 効率が 1 を超えたら
+    そのモデルは物理的にありえない (推力を過大評価しているか, トルクを
+    過小評価している).
+
+    Parameters
+    ----------
+    points:
+        :class:`PowerCurvePoint` のリスト.
+
+    Returns
+    -------
+    dict
+        ``rpm`` (逆算回転数), ``torque_nm``, ``power_shaft_w``,
+        ``motor_efficiency``, ``fm``, ``fm_times_eta`` (= P_ideal/P_elec,
+        回転数によらない実測量), ``falsified`` (効率 > 1 の点があるか).
+    """
+    from scipy.optimize import brentq
+
+    from .atmosphere import SEA_LEVEL
+
+    atmosphere = atmosphere or SEA_LEVEL
+    pts = list(points)
+    rpm, q, ps_, eta, fm, fme = [], [], [], [], [], []
+    for p in pts:
+        def f(n, p=p):
+            op = OperatingPoint(rpm=n, atmosphere=atmosphere)
+            return model.solve(rotor, op).thrust - p.thrust_n
+
+        try:
+            n = brentq(f, *rpm_bracket, xtol=1.0)
+        except ValueError:
+            rpm.append(np.nan); q.append(np.nan); ps_.append(np.nan)
+            eta.append(np.nan); fm.append(np.nan)
+            fme.append(ideal_power(p.thrust_n, rotor, atmosphere.density) / p.power_w)
+            continue
+        op = OperatingPoint(rpm=n, atmosphere=atmosphere)
+        sol = model.solve(rotor, op)
+        rpm.append(n)
+        q.append(sol.torque(rotor.spin))
+        ps_.append(sol.power(op, rotor.spin))
+        eta.append(ps_[-1] / p.power_w)
+        fm.append(sol.coefficients(rotor, op).get("FM", np.nan))
+        fme.append(ideal_power(p.thrust_n, rotor, atmosphere.density) / p.power_w)
+
+    eta = np.asarray(eta)
+    return {
+        "points": pts,
+        "rpm": np.asarray(rpm),
+        "torque_nm": np.asarray(q),
+        "power_shaft_w": np.asarray(ps_),
+        "motor_efficiency": eta,
+        "fm": np.asarray(fm),
+        "fm_times_eta": np.asarray(fme),
+        "falsified": bool(np.any(eta > 1.0)),
+        "max_efficiency": float(np.nanmax(eta)) if eta.size else np.nan,
+    }

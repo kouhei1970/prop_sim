@@ -35,9 +35,12 @@ from .airfoil import (
 from .atmosphere import SEA_LEVEL, Atmosphere
 from .calibration import (
     CalibrationResult,
+    PowerCurvePoint,
     ThrustMeasurement,
     calibrate,
     compare_hypotheses,
+    consistency_check,
+    ideal_power,
 )
 from .frames import COMPONENT_NAMES, Wrench
 from .geometry import PropellerGeometry, from_diameter_pitch
@@ -80,8 +83,11 @@ __all__ = [
     "SEA_LEVEL",
     "ThrustMeasurement",
     "CalibrationResult",
+    "PowerCurvePoint",
     "calibrate",
     "compare_hypotheses",
+    "consistency_check",
+    "ideal_power",
     "Wrench",
     "COMPONENT_NAMES",
     "PropellerGeometry",
