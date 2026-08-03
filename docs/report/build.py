@@ -61,11 +61,20 @@ def derive(s: dict) -> dict:
     dv["dMy_du_e"] = eng(dv["dMy_du"])
     dv["dMy_dq_e"] = eng(dv["dMy_dq"])
     dv["spin_momentum_e"] = eng(dv["spin_momentum"])
+    dv["minus_spin_momentum_e"] = eng(-dv["spin_momentum"])
+    dv["dMx_dq_e"] = eng(dv["dMx_dq"])
+    dv["dMx_dq_aero_e"] = eng(dv["dMx_dq_aero"])
+    dv["gyro_dominance"] = abs(dv["dMx_dq"]) / abs(dv["dMy_dq"])
     dv["heave_tau_s"] = 1.0 / abs(dv["heave_damping_4rotor"])
     dv["gyro_at_10"] = abs(dv["spin_momentum"]) * 10.0 * 1e6
     dv["gyro_at_10_pct"] = 100.0 * dv["gyro_at_10"] / (st["hover_torque_mnm"] * 1e3)
 
     for k, d in fw.items():
+        # 軸流では対称性から面内力・ハブモーメントは厳密にゼロ。
+        # 1e-14 のような数値誤差を "-0" と表示しないよう丸める。
+        for key in ("fx_gf", "mx_unm", "my_unm"):
+            if abs(d[key]) < 1e-6:
+                d[key] = 0.0
         d["fz_loss_pct"] = 100.0 * (1.0 - d["fz_ratio"])
         d["fz_gain_pct"] = 100.0 * (d["fz_ratio"] - 1.0)
         d["my_over_torque_pct"] = 100.0 * abs(d["my_unm"]) / (

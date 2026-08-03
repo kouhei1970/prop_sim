@@ -266,8 +266,17 @@ def part_c(hover_rpm):
     t0 = base.thrust
 
     def wrench(**kw):
+        """ハブに立つ全レンチ (空力 + 慣性).
+
+        ``RotorSolution.wrench`` は**空力だけ**なので, これだけで機体角速度に
+        対する微分を取るとジャイロモーメントが丸ごと落ちる. 慣性項を足して
+        static_sweep と同じ「試験台が受けるレンチ」に揃える.
+        """
         op = ps.OperatingPoint(rpm=hover_rpm, **kw)
-        return model.solve(rotor, op).wrench, op
+        aero = model.solve(rotor, op).wrench
+        inertial = rotor.inertial_wrench(op, psi1=0.0, omega_dot=0.0,
+                                         include_unbalance=False)
+        return aero + inertial, op
 
     # 回転数微分
     d = 200.0
@@ -292,11 +301,18 @@ def part_c(hover_rpm):
     dfz_du = (we.force[2] - w0.force[2]) / dv
     dmy_du = (we.moment[1] - w0.moment[1]) / dv
 
-    # 機体角速度 (ピッチレート q) 微分
+    # 機体角速度 (ピッチレート q) 微分. ジャイロは Mx 側に出る:
+    #   -omega x (Jz Omega ez) = -(0,q,0) x (0,0,JzOmega) = (-q Jz Omega, 0, 0)
     dq = 2.0
     wq, _ = wrench(body_rate=np.array([0.0, dq, 0.0]))
     dmy_dq = (wq.moment[1] - w0.moment[1]) / dq
     dmx_dq = (wq.moment[0] - w0.moment[0]) / dq
+    # 空力だけの寄与も分けて出す (どちらが効いているか示すため)
+    aq = model.solve(rotor, ps.OperatingPoint(
+        rpm=hover_rpm, body_rate=np.array([0.0, dq, 0.0]))).wrench
+    a0 = model.solve(rotor, ps.OperatingPoint(rpm=hover_rpm)).wrench
+    dmy_dq_aero = (aq.moment[1] - a0.moment[1]) / dq
+    dmx_dq_aero = (aq.moment[0] - a0.moment[0]) / dq
 
     # 動的インフローの時定数
     a_disk = rotor.geometry.disk_area
@@ -318,6 +334,8 @@ def part_c(hover_rpm):
         "dMy_du_4rotor_unm": float(N_ROTOR * dmy_du * 1e6),
         "dMy_dq": float(dmy_dq),
         "dMx_dq": float(dmx_dq),
+        "dMy_dq_aero": float(dmy_dq_aero),
+        "dMx_dq_aero": float(dmx_dq_aero),
         "v_hover_induced": vh,
         "inflow_tau_ms": float(tau * 1e3),
         "inflow_bw_hz": float(1.0 / (2 * np.pi * tau)),
@@ -346,34 +364,60 @@ def part_d(hover_rpm):
     fz = dyn.hub_wrench[:, 2] / G * 1e3
     mz = dyn.hub_wrench[:, 5] * 1e3
 
-    # 回転同期のリプルを落として応答だけ見る
+    # ブレード通過のリプルを落とす. 中心化移動平均だとステップの前後に
+    # 応答が滲んで立ち上がり時刻が測れないので, **因果的**な 1 回転移動平均に
+    # して群遅延 (n-1)/2 ぶんを戻す.
     n = max(int(round(200000.0 / (hover_rpm / 60.0 * 4))), 1)
-    k = np.ones(n) / n
-    fz_s = np.convolve(fz, k, mode="same")
+    fz_s = np.convolve(fz, np.ones(n) / n)[: fz.size]
+    lag = (n - 1) // 2
+    fz_s = np.concatenate([fz_s[lag:], np.full(lag, fz_s[-1])])
 
-    m = t >= 0.005
-    f0, f1 = fz_s[t < 0.005].mean(), fz_s[-n:].mean()
-    tgt = f0 + 0.632 * (f1 - f0)
-    idx = np.argmax(fz_s[m] >= tgt) if f1 > f0 else 0
-    t63 = (t[m][idx] - 0.005) * 1e3
-    over = 100.0 * (fz_s[m].max() / f1 - 1.0)
+    t0 = 0.005
+    pre, post = t < t0, t >= t0
+    f0 = fz[pre][n:].mean()                 # ステップ前の定常値
+    f1 = fz_s[-n:].mean()                   # ステップ後の定常値
+    tt, yy = t[post] - t0, fz_s[post]
+
+    # 誘導速度がまだ増えていないので推力は一度行き過ぎ, その後 1 次遅れで
+    # 落ち着く (動的インフローの効果). 立ち上がりではなく行き過ぎ量と
+    # 整定時間で特徴づける.
+    ipk = int(np.argmax(yy))
+    peak, t_peak = float(yy[ipk]), float(tt[ipk] * 1e3)
+    over = 100.0 * (peak / f1 - 1.0)
+    band = np.abs(yy - f1) > 0.02 * abs(f1 - f0)
+    t_settle = float(tt[np.max(np.nonzero(band))] * 1e3) if band.any() else 0.0
+
+    # 行き過ぎのあとの減衰から時定数を読む (ln|y - f1| の傾き)
+    dec = (tt > tt[ipk]) & (np.abs(yy - f1) > 1e-3 * abs(f1))
+    tau_ms = float(
+        -1e3 / np.polyfit(tt[dec], np.log(np.abs(yy[dec] - f1)), 1)[0]
+    ) if dec.sum() > 20 else float("nan")
 
     fig, ax = plt.subplots(1, 2, figsize=(8.2, 3.0))
-    ax[0].plot((t - 0.005) * 1e3, fz, color="0.75", lw=0.7, label="瞬時値")
-    ax[0].plot((t - 0.005) * 1e3, fz_s, color=C[0], lw=1.8, label="1 回転平均")
-    ax[0].axhline(f1, color=C[1], lw=0.8, ls="--")
+    ax[0].plot((t - t0) * 1e3, fz, color="0.78", lw=0.7, label="瞬時値")
+    ax[0].plot((t - t0) * 1e3, fz_s, color=C[0], lw=1.8, label="1 回転平均")
+    ax[0].axhline(f1, color=C[1], lw=0.9, ls="--", label="整定値")
+    ax[0].plot(t_peak, peak, "o", color=C[1], ms=4)
+    ax[0].annotate(f"行き過ぎ {over:+.1f} %", (t_peak, peak),
+                   textcoords="offset points", xytext=(8, 4), fontsize=8,
+                   color=C[1])
     ax[0].set(xlabel="時間 [ms]", ylabel="推力 [gf]",
-              title="回転数 +10 % ステップ (推力)", xlim=(-2, 52))
-    ax[0].legend()
-    ax[1].plot((t - 0.005) * 1e3, mz, color=C[2], lw=1.2)
+              title="回転数 +10 % ステップ (推力)", xlim=(-1, 12))
+    ax[0].legend(loc="lower right")
+    ax[1].plot((t - t0) * 1e3, mz, color=C[2], lw=1.2)
     ax[1].set(xlabel="時間 [ms]", ylabel=r"$M_z$ [mN·m]",
-              title="反トルク (慣性トルクを含む)", xlim=(-2, 52))
+              title="反トルク (慣性トルクを含む)", xlim=(-1, 12))
     save(fig, "step.svg")
 
     summary["dynamic"] = {
-        "step_pct": 10.0, "t63_ms": float(t63), "overshoot_pct": float(over),
-        "thrust_before_gf": float(f0), "thrust_after_gf": float(f1),
-        "bandwidth_hz": float(1.0 / (2 * np.pi * max(t63, 1e-6) * 1e-3)),
+        "step_pct": 10.0,
+        "overshoot_pct": float(over),
+        "t_peak_ms": t_peak,
+        "t_settle_2pct_ms": t_settle,
+        "tau_ms": tau_ms,
+        "thrust_before_gf": float(f0),
+        "thrust_after_gf": float(f1),
+        "thrust_peak_gf": peak,
     }
     dyn.to_csv(DATA / "step_response.csv")
 
