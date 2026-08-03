@@ -418,6 +418,14 @@ def part_c2(hover_rpm):
             / rotor.geometry.diameter),
         # ダクトとして効き始める目安 (delta/R = 2%) を満たす実効ボア
         "bore_for_2pct_mm": float(rotor.geometry.diameter * 1.02 * 1e3),
+        # 外形図の比例読み: 上面図でプロペラ翼端が内円のすぐ内側まで届いており、
+        # 内円 / プロペラ径 は 1.02-1.05 と読める。目視なので幅を持たせる。
+        "bore_read_lo_mm": float(rotor.geometry.diameter * 1.02 * 1e3),
+        "bore_read_hi_mm": float(rotor.geometry.diameter * 1.05 * 1e3),
+        "tip_gap_read_lo_mm": float(rotor.geometry.diameter * 0.01 * 1e3),
+        "tip_gap_read_hi_mm": float(rotor.geometry.diameter * 0.025 * 1e3),
+        "tip_gap_over_radius_read_lo_pct": 2.0,
+        "tip_gap_over_radius_read_hi_pct": 5.0,
         # 隣り合うダクトどうしのすきま (肉厚は不明なので内径基準の上限)
         "duct_gap_mm": float((DIAGONAL_M / np.sqrt(2.0) - DUCT_BORE_M) * 1e3),
         "duct_spacing_ratio": float(DIAGONAL_M / np.sqrt(2.0) / DUCT_BORE_M),
@@ -426,6 +434,54 @@ def part_c2(hover_rpm):
     summary["shroud"]["power_change_pct"] = float(
         100.0 * (summary["shroud"]["power_no_tip_loss_w"]
                  / summary["shroud"]["power_open_w"] - 1.0))
+
+
+# ============================ C3. ダクト断面の縮尺図 (外形図の比例読み)
+def part_c3():
+    """外形図から読んだダクト断面を縮尺どおりに描く.
+
+    外形図 (M5Stack StampFly v1.1) で寸法線があるのは **外径 φ36.2** だけ。
+    上面図ではダクトが二重円に見え、断面は **上が広がり (ベルマウス)、
+    下はほぼ一定径の筒 (スロート)** になっている。
+    プロペラ翼端は上面図で外円の 0.86 倍の位置にあり、実測比
+    31.21/36.2 = 0.862 と一致するので図は縮尺どおりと確認できる。
+    スロート径には寸法が無いので幅を持たせて図示する。
+    """
+    print("C3. ダクト断面の縮尺図")
+    d_out = 36.2
+    d_prop = rotor.geometry.diameter * 1e3
+    h = 5.5                       # ダクト高さ (側面図からの比例読み)
+    fig, ax = plt.subplots(figsize=(6.4, 3.4))
+
+    for d_throat, col, ls in ((32.0, C[3], "-"), (34.2, C[4], "--")):
+        r_t, r_o = d_throat / 2, d_out / 2
+        z_flare = 0.42 * h                     # ベルマウスの高さぶん
+        zz = np.linspace(0, z_flare, 40)
+        # ベルマウス: 上に向かって r_t -> r_o へ 1/4 円弧的に広がる
+        rr = r_t + (r_o - r_t) * np.sin(0.5 * np.pi * zz / z_flare)
+        for s in (+1, -1):
+            ax.plot(s * np.concatenate([[r_t], rr]),
+                    np.concatenate([[-h + z_flare], zz + (-h + z_flare)]),
+                    ls, color=col, lw=1.8,
+                    label=(f"ダクト内壁 (スロート φ{d_throat})"
+                           if s > 0 else None))
+            ax.plot([s * r_t, s * r_t], [-h, -h + z_flare], ls, color=col, lw=1.8)
+
+    # プロペラ回転面
+    ax.plot([-d_prop / 2, d_prop / 2], [-0.45 * h, -0.45 * h], color=C[1],
+            lw=2.6, label=f"プロペラ回転面 φ{d_prop:.2f} (実測)")
+    ax.annotate("", xy=(d_prop / 2, -0.45 * h), xytext=(16.0, -0.45 * h),
+                arrowprops=dict(arrowstyle="<->", color=C[2], lw=1.1))
+    ax.text(14.6, -0.45 * h + 0.35, "δ", color=C[2], fontsize=10, ha="center")
+    ax.axhline(-h, color="0.6", lw=0.8, ls=":")
+    ax.text(0, -h - 0.7, "↓ 流れ", ha="center", fontsize=8, color="0.5")
+    ax.set_aspect("equal")
+    ax.set(xlim=(-20, 20), ylim=(-7.2, 1.2), xlabel="半径方向 [mm]",
+           ylabel="軸方向 [mm]",
+           title="ダクト断面 (外形図の比例読み、縮尺どおり)")
+    ax.legend(fontsize=7.5, loc="upper center", bbox_to_anchor=(0.5, -0.32),
+              ncol=2)
+    save(fig, "duct.svg")
 
 
 # ================================================== D. 過渡応答
@@ -596,6 +652,7 @@ def main():
     part_b(hover_rpm)
     part_c(hover_rpm)
     part_c2(hover_rpm)
+    part_c3()
     part_d(hover_rpm)
     part_e(hover_rpm)
     part_f(hover_rpm)
