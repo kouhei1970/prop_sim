@@ -116,10 +116,37 @@ RANS（滑りメッシュ）や アクチュエータライン LES。実務で�
 - 抗力係数が通常の翼型の 3〜5 倍になる
 
 ため、通常の翼型ポーラ（Re ~ 5×10^5 相当）をそのまま使うと**推力を 20〜25 %、
-ホバー効率 FM を 0.1 以上過大評価する**。既定の `LOW_RE_THIN` はこの領域に
+ホバー効率 FM を 0.1 以上過大評価する**。汎用の `LOW_RE_THIN` はこの領域に
 合わせた薄翼モデルで、`reynolds_ref = 1e4`、`reynolds_exponent = 0.4` として
-Re 依存性も強めてある。`examples/07_stampfly_1209.py` が翼型仮定の感度を
-定量的に出力する。
+Re 依存性も強めてある。
+
+### 翼断面が実測できる場合
+
+ブレードを切って断面形状（キャンバ線 + 厚み分布）が取れるなら、
+`prop_sim.section` で翼型モデルを作れる。
+
+```python
+from prop_sim import SectionShape, airfoil_from_section
+
+sec = SectionShape(x=..., camber=..., thickness=...)   # x/c で正規化
+print(sec.thin_airfoil_properties().summary())          # alpha0, cl_i, cm_ac
+foil = airfoil_from_section(sec, reynolds_ref=1.2e4)
+```
+
+処理は 2 段:
+
+1. **薄翼理論**（非粘性）でキャンバ線から
+   `alpha0 = -(1/pi)∫(dz/dx)(cos θ - 1)dθ`、理想迎角、`cm_ac` を求める
+2. **低 Re の粘性補正**で `LinearAirfoil` のパラメータに落とす
+   - 揚力傾斜 = 2π × η(Re)（Re = 10⁴ で η ≈ 0.63）
+   - `alpha0` × キャンバ効率（既定 0.85。境界層によるデキャンバ）
+   - `cd_min` = 層流平板摩擦 × 厚み形状係数 × 剥離泡ペナルティ（既定 1.6）
+
+補正係数はすべて引数で上書きできる。StampFly 1209 の実例では、断面を実測した
+ことでホバー回転数の推定幅が **±8 % → ±2 %** に縮んだ
+（[docs/STAMPFLY_1209.md](STAMPFLY_1209.md)）。
+
+`examples/07_stampfly_1209.py` が翼型仮定の感度を定量的に出力する。
 
 ## 独自モデルの追加方法
 

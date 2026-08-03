@@ -9,10 +9,18 @@ from __future__ import annotations
 
 import numpy as np
 
-from .airfoil import LOW_RE_THIN, Airfoil
+from .airfoil import Airfoil
 from .geometry import INCH, PropellerGeometry
+from .section import SectionShape, airfoil_from_section
 
-__all__ = ["stampfly_1209", "PRESETS", "get_preset"]
+__all__ = [
+    "stampfly_1209",
+    "stampfly_1209_section",
+    "stampfly_1209_airfoil",
+    "STAMPFLY_1209_SECTION",
+    "PRESETS",
+    "get_preset",
+]
 
 
 # --------------------------------------------------------------------------
@@ -51,6 +59,69 @@ STAMPFLY_1209_SWEEP_DEG = np.array([
     [0.75, 24.9], [0.87, 26.0], [0.93, 32.8], [1.00, 34.5],
 ])
 
+#: 切断面の写真から読み取った翼断面 (x/c, キャンバ z/c, 厚み t/c).
+#: 断面を黒く塗った写真を 2 値化し, 最遠点対を前縁-後縁として
+#: コード系に回転したうえで, 半径方向 120 分割の上下面から
+#: キャンバ線と厚み分布を求め, 多項式で平滑化したもの.
+_STAMPFLY_1209_SECTION = np.array([
+    #  x/c     z/c      t/c
+    [0.0000, 0.00000, 0.00500],
+    [0.0125, 0.00442, 0.05224],
+    [0.0250, 0.00872, 0.07098],
+    [0.0500, 0.01687, 0.09264],
+    [0.0750, 0.02436, 0.10472],
+    [0.1000, 0.03115, 0.11165],
+    [0.1500, 0.04254, 0.11687],
+    [0.2000, 0.05113, 0.11596],
+    [0.2500, 0.05728, 0.11235],
+    [0.3000, 0.06145, 0.10786],
+    [0.3500, 0.06410, 0.10354],
+    [0.4000, 0.06560, 0.09991],
+    [0.4500, 0.06621, 0.09716],
+    [0.5000, 0.06599, 0.09523],
+    [0.5500, 0.06484, 0.09386],
+    [0.6000, 0.06254, 0.09262],
+    [0.6500, 0.05876, 0.09096],
+    [0.7000, 0.05321, 0.08820],
+    [0.7500, 0.04569, 0.08357],
+    [0.8000, 0.03626, 0.07621],
+    [0.8500, 0.02542, 0.06521],
+    [0.9000, 0.01427, 0.04955],
+    [0.9500, 0.00478, 0.02819],
+    [1.0000, 0.00000, 0.02000],
+])
+
+#: 上の表を :class:`~prop_sim.section.SectionShape` にしたもの.
+STAMPFLY_1209_SECTION = SectionShape(
+    x=_STAMPFLY_1209_SECTION[:, 0],
+    camber=_STAMPFLY_1209_SECTION[:, 1],
+    thickness=_STAMPFLY_1209_SECTION[:, 2],
+    name="StampFly 1209 section",
+)
+
+
+def stampfly_1209_section(
+    thickness_scale: float = 1.0, camber_scale: float = 1.0
+) -> SectionShape:
+    """実測翼断面 (投影誤差を補正したい場合はスケールを与える)."""
+    if thickness_scale == 1.0 and camber_scale == 1.0:
+        return STAMPFLY_1209_SECTION
+    return STAMPFLY_1209_SECTION.scaled(thickness_scale, camber_scale)
+
+
+def stampfly_1209_airfoil(reynolds_ref: float = 1.2e4, **kwargs):
+    """実測断面から作った翼型モデル.
+
+    ``reynolds_ref`` の既定 1.2e4 はホバー付近 (3 万 rpm) の 0.75R における
+    Reynolds 数. ``prop_sim.section.airfoil_from_section`` の引数を
+    そのまま渡せる.
+    """
+    kwargs.setdefault("name", "StampFly 1209 (measured section)")
+    return airfoil_from_section(
+        STAMPFLY_1209_SECTION, reynolds_ref=reynolds_ref, **kwargs
+    )
+
+
 #: 写真計測のまとめ
 STAMPFLY_1209_MEASURED = {
     "source": "IMG_3578.jpeg (真上からの写真, 金属定規 77.0 px/mm で校正)",
@@ -61,6 +132,14 @@ STAMPFLY_1209_MEASURED = {
     "projected_area_mm2": 292.9,    # 4 枚 + ハブの投影面積
     "blade_area_ratio": 0.383,      # 投影面積 / ディスク面積
     "tip_sweep_deg": 34.5,
+    "section_source": "IMG_3720.jpeg (切断面を黒塗りした写真)",
+    "section_thickness_max": 0.117,     # t/c
+    "section_thickness_max_x": 0.16,
+    "section_camber_max": 0.066,        # f/c
+    "section_camber_max_x": 0.46,
+    "section_alpha0_deg_inviscid": -5.15,   # 薄翼理論
+    "section_cl_ideal": 0.759,
+    "section_cm_ac": -0.122,
     "estimated_mass_g": 0.26,       # 面積 x 板厚 0.55mm/ハブ 2.0mm x PC 1.20 g/cm^3
     "polar_inertia_kgm2": 1.67e-8,  # 上記質量分布から (= 0.264 m R^2)
 }
@@ -70,7 +149,7 @@ def stampfly_1209(
     *,
     pitch_in: float = 0.9,
     pitch_distribution: str = "geometric",
-    airfoil: Airfoil = LOW_RE_THIN,
+    airfoil: Airfoil | None = None,
     mass: float = 0.26e-3,
     polar_inertia: float | None = 1.67e-8,
     diameter_mm: float = 31.21,
@@ -78,9 +157,10 @@ def stampfly_1209(
 ) -> PropellerGeometry:
     """M5Stack StampFly 用 1209 プロペラ (31 mm, 4 枚).
 
-    平面形 (直径・コード長分布・ハブ径・後退角・面積) は実機の写真から
-    実測した値。ピッチ分布だけは真上からの写真では読み取れないため、
-    型番 "1209" の公称ピッチ 0.9 inch から幾何ピッチ一定として与えている。
+    平面形 (直径・コード長分布・ハブ径・後退角・面積) と翼断面 (キャンバ線・
+    厚み分布) は実機の写真から実測した値。ピッチ分布だけは写真から読み取れ
+    ないため、型番 "1209" の公称ピッチ 0.9 inch から幾何ピッチ一定として
+    与えている。
 
     Parameters
     ----------
@@ -91,7 +171,8 @@ def stampfly_1209(
         ``"constant"``  : 0.75R のねじり角で一定
         ``"washout"``   : 幾何ピッチ一定から翼端で 2 deg 抜く
     airfoil:
-        翼型. 既定は Re ~ 1e4 用の薄翼モデル (:data:`~prop_sim.airfoil.LOW_RE_THIN`).
+        翼型. None なら実測翼断面から作ったモデル
+        (:func:`stampfly_1209_airfoil`) を使う.
         この大きさのプロペラは翼端でも Re = 5e3 - 2e4 にしかならないため,
         通常の翼型ポーラを使うと推力を大きく過大評価する.
     mass, polar_inertia:
@@ -104,6 +185,8 @@ def stampfly_1209(
     ``Rotor(collective_deg=...)`` を較正するのが最も効果的.
     ピッチが 0.1 inch ずれると静止推力は 10% 程度変わる.
     """
+    if airfoil is None:
+        airfoil = stampfly_1209_airfoil()
     radius = 0.5 * diameter_mm * 1e-3
     x_root = float(_STAMPFLY_1209_CHORD[0, 0])
     x = np.linspace(x_root, 1.0, n_stations)

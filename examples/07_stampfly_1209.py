@@ -51,6 +51,18 @@ def main() -> None:
     print(f"  ソリディティ sigma = {geo.solidity:.3f}, "
           f"面積比 = {geo.blade_area()/geo.disk_area:.3f}")
 
+    print("\n翼断面 (切断面写真からの実測 + 薄翼理論)")
+    print(f"  {ps.STAMPFLY_1209_SECTION.thin_airfoil_properties().summary()}")
+    foil = ps.stampfly_1209_airfoil()
+    print(f"  -> 翼型モデル @Re=1.2e4: cl_alpha={foil.cl_alpha:.2f}/rad, "
+          f"alpha0={foil.alpha0_deg:+.2f} deg, cl_max={foil.cl_max:.2f}, "
+          f"cd0={foil.cd0:.4f}")
+    aa = np.deg2rad(np.linspace(-5, 15, 400))
+    cl, cd, _ = foil.coefficients(aa, np.full_like(aa, 1.2e4), None)
+    k = int(np.argmax(cl / cd))
+    print(f"  -> 最大揚抗比 {cl[k]/cd[k]:.1f} @ alpha = {np.rad2deg(aa[k]):.1f} deg "
+          f"(cl = {cl[k]:.2f})")
+
     # ---------------------------------------------------------------- 1
     print("\n" + "=" * 78)
     print("1) 静止推力 — 回転数掃引")
@@ -83,7 +95,17 @@ def main() -> None:
     print(f"3) モデル仮定の感度 ({MASS_G:.1f} g 機体 = 1 発 {MASS_G/4:.2f} gf)")
     print(f"{'仮定':<34}{'hover rpm':>11}{'P/発[W]':>10}{'FM':>8}")
     variants = [
-        ("既定 (低Re翼型, P=0.9in)", ps.stampfly_1209()),
+        ("既定 (実測断面, P=0.9in)", ps.stampfly_1209()),
+        ("断面: キャンバ効率 0.70", ps.stampfly_1209(
+            airfoil=ps.stampfly_1209_airfoil(camber_efficiency=0.70))),
+        ("断面: キャンバ効率 1.00", ps.stampfly_1209(
+            airfoil=ps.stampfly_1209_airfoil(camber_efficiency=1.00))),
+        ("断面: 剥離泡ペナルティ 2.2", ps.stampfly_1209(
+            airfoil=ps.stampfly_1209_airfoil(bubble_penalty=2.2))),
+        ("断面: 投影補正 厚み x0.85", ps.stampfly_1209(
+            airfoil=ps.airfoil_from_section(
+                ps.stampfly_1209_section(thickness_scale=0.85), reynolds_ref=1.2e4))),
+        ("翼型: 汎用の低Re薄翼 (断面不使用)", ps.stampfly_1209(airfoil=ps.LOW_RE_THIN)),
         ("翼型: 平板", ps.stampfly_1209(airfoil=ps.FLAT_PLATE)),
         ("翼型: 高Re相当 (Clark Y)", ps.stampfly_1209(airfoil=ps.CLARK_Y)),
         ("ピッチ P=0.8 in", ps.stampfly_1209(pitch_in=0.8)),

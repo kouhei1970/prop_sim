@@ -38,8 +38,16 @@ from .geometry import PropellerGeometry, from_diameter_pitch
 from .inflow import InflowField
 from .models import BEMT, BET, AeroModel, QuadraticModel, RotorSolution, get_model
 from .operating import OperatingPoint
-from .presets import PRESETS, get_preset, stampfly_1209
+from .presets import (
+    PRESETS,
+    STAMPFLY_1209_SECTION,
+    get_preset,
+    stampfly_1209,
+    stampfly_1209_airfoil,
+    stampfly_1209_section,
+)
 from .rotor import Rotor, Unbalance
+from .section import SectionShape, ThinAirfoilProperties, airfoil_from_section
 
 __version__ = "0.1.0"
 
@@ -58,8 +66,14 @@ __all__ = [
     "PropellerGeometry",
     "from_diameter_pitch",
     "stampfly_1209",
+    "stampfly_1209_airfoil",
+    "stampfly_1209_section",
+    "STAMPFLY_1209_SECTION",
     "get_preset",
     "PRESETS",
+    "SectionShape",
+    "ThinAirfoilProperties",
+    "airfoil_from_section",
     "InflowField",
     "OperatingPoint",
     "Rotor",

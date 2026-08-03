@@ -32,11 +32,12 @@ pip install -e ".[plot]"  # + matplotlib (例のグラフ用)
 
 | 名前 | 内容 |
 |------|------|
-| `stampfly_1209` | M5Stack StampFly 用 1209 (31 mm 4 枚)。平面形は実機写真からの実測 → [docs/STAMPFLY_1209.md](docs/STAMPFLY_1209.md) |
+| `stampfly_1209` | M5Stack StampFly 用 1209 (31 mm 4 枚)。**平面形と翼断面**を実機写真から実測 → [docs/STAMPFLY_1209.md](docs/STAMPFLY_1209.md) |
 
 ```python
-rotor = ps.Rotor(ps.stampfly_1209())          # 既定 P=0.9 in, 低 Re 翼型
+rotor = ps.Rotor(ps.stampfly_1209())          # 既定 P=0.9 in, 実測断面の翼型
 rotor = ps.Rotor(ps.stampfly_1209(pitch_in=1.0, pitch_distribution="washout"))
+ps.STAMPFLY_1209_SECTION.thin_airfoil_properties()   # 実測断面の薄翼理論特性
 ```
 
 ```bash
@@ -117,6 +118,7 @@ python examples/01_static_thrust_sweep.py     # → results/ に CSV と PNG
 **空力**
 
 - 翼素運動量理論（Prandtl 翼端/ハブ損失、Glauert の斜め流入運動量式）
+- 翼断面形状 → 翼型モデルの生成（薄翼理論 + 低 Re 粘性補正、`prop_sim.section`）
 - 方位角方向の線形インフロー分布（Drees / Pitt / Coleman）
 - 360 deg 翼型ポーラ（線形 + Viterna 外挿）、Reynolds・圧縮性補正
 - 動的インフロー（Pitt–Peters 系の見かけ質量に基づく 1 次遅れ）
@@ -165,7 +167,8 @@ python examples/01_static_thrust_sweep.py     # → results/ に CSV と PNG
 持つが、ピッチ分布は公称値からの仮定）。実機と比べる場合は
 
 1. 実測のコード長・ねじり角分布を `PropellerGeometry` に与える
-2. 翼型を `TabulatedAirfoil`（XFOIL / 風洞データ）に置き換える
+2. 翼型を実測断面から作る（`airfoil_from_section`）か、`TabulatedAirfoil`
+   （XFOIL / 風洞データ）に置き換える
 3. 静止推力の 1 点で `collective_deg` を較正する
 
 の順に精度が上がる。とくに 30 mm 級の微小プロペラは翼端でも Re < 2×10⁴ で、
