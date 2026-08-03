@@ -138,7 +138,7 @@ CARD = """<!doctype html>
     <div>
       <div class="eyebrow">Virtual Wind Tunnel</div>
       <div class="rule"></div>
-      <h1 style="margin-top:30px">31&nbsp;mm のプロペラを<br><span class="hl">6 分力</span>で丸ごと測る</h1>
+      <h1 style="margin-top:30px">31&nbsp;mm のプロペラの<br><span class="hl">6 分力</span>を丸ごと測る</h1>
       <div class="sub">{sub}</div>
     </div>
     <div class="stats">

@@ -230,10 +230,10 @@ LANDING = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>prop_sim — 31 mm のプロペラを 6 分力で丸ごと測る</title>
+<title>prop_sim — 31 mm のプロペラの 6 分力を丸ごと測る</title>
 <meta name="description" content="{desc}">
 <meta property="og:type" content="website">
-<meta property="og:title" content="prop_sim — 31 mm のプロペラを 6 分力で丸ごと測る">
+<meta property="og:title" content="prop_sim — 31 mm のプロペラの 6 分力を丸ごと測る">
 <meta property="og:description" content="{desc}">
 <meta property="og:image" content="{base}/social/og-card.png">
 <meta property="og:url" content="{base}/">
@@ -273,7 +273,7 @@ LANDING = """<!doctype html>
   <p class="eyebrow">prop_sim / virtual wind tunnel</p>
   <div class="hero">
     <div>
-      <h1>31&nbsp;mm のプロペラを<br>6 分力で丸ごと測る</h1>
+      <h1>31&nbsp;mm のプロペラの<br>6 分力を丸ごと測る</h1>
       <p class="lede">
         手のひらサイズのドローンのプロペラは、1 秒間に 450 回まわりながら
         たった 9 グラムの推力を生んでいる。その 9 グラムが
