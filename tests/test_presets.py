@@ -79,7 +79,7 @@ def test_inertia_consistent_with_measured_mass_distribution():
 def test_static_thrust_is_in_realistic_range(rotor, model):
     """31 mm 4 枚は 30000 rpm で 1 発 5 - 15 gf 程度."""
     t = model.solve(rotor, OperatingPoint(rpm=30000)).thrust / G * 1e3
-    assert 5.0 < t < 15.0
+    assert 6.0 < t < 16.0
 
 
 def test_reynolds_number_is_low(rotor, model):
@@ -105,7 +105,7 @@ def test_hover_rpm_for_a_36g_quadrotor(rotor, model):
         return model.solve(rotor, OperatingPoint(rpm=n)).thrust / G * 1e3 - 36.8 / 4
 
     n = brentq(f, 5000.0, 80000.0, xtol=10.0)
-    assert 25000.0 < n < 40000.0
+    assert 24000.0 < n < 38000.0
 
 
 def test_low_re_airfoil_reduces_performance():

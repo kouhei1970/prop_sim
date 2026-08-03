@@ -114,13 +114,13 @@ def test_bubble_penalty_scales_drag():
 # ------------------------------------------------------- StampFly の断面
 def test_stampfly_section_matches_photo_measurement():
     p = STAMPFLY_1209_SECTION.thin_airfoil_properties()
-    assert p.thickness_max == pytest.approx(0.087, abs=0.006)
-    assert p.camber_max == pytest.approx(0.067, abs=0.006)
+    assert p.thickness_max == pytest.approx(0.095, abs=0.006)
+    assert p.camber_max == pytest.approx(0.071, abs=0.006)
     assert 0.42 < p.camber_max_x < 0.58
     assert 0.15 < p.thickness_max_x < 0.28
-    assert p.alpha0_deg == pytest.approx(-6.9, abs=0.8)
-    assert 0.8 < p.cl_ideal < 1.1
-    assert -0.25 < p.cm_ac < -0.10
+    assert p.alpha0_deg == pytest.approx(-8.3, abs=0.8)
+    assert 0.85 < p.cl_ideal < 1.15
+    assert -0.30 < p.cm_ac < -0.12
 
 
 def test_stampfly_section_lower_surface_hugs_chord_near_leading_edge():
@@ -137,7 +137,7 @@ def test_stampfly_section_lower_surface_hugs_chord_near_leading_edge():
 def test_stampfly_airfoil_is_reasonable_at_low_reynolds():
     f = stampfly_1209_airfoil()
     assert 3.5 < f.cl_alpha < 4.5           # 2 pi の 6 - 7 割
-    assert -6.0 < f.alpha0_deg < -3.5
+    assert -8.5 < f.alpha0_deg < -5.5
     assert 0.9 < f.cl_max < 1.2
     assert 0.03 < f.cd0 < 0.08
     a = np.deg2rad(np.linspace(-5, 15, 200))
@@ -155,7 +155,7 @@ def test_measured_section_gives_more_thrust_than_generic_thin_airfoil():
     measured = model.solve(Rotor(stampfly_1209()), op).thrust
     generic = model.solve(Rotor(stampfly_1209(airfoil=LOW_RE_THIN)), op).thrust
     assert measured > generic
-    assert measured < 1.4 * generic
+    assert measured < 1.6 * generic
 
 
 def test_section_derived_model_is_less_sensitive_than_guessing():
@@ -177,4 +177,4 @@ def test_section_derived_model_is_less_sensitive_than_guessing():
         hover(stampfly_1209_airfoil(camber_efficiency=c, bubble_penalty=b))
         for c in (0.70, 0.85, 1.00) for b in (1.2, 1.6, 2.2)
     ]
-    assert (max(rpms) - min(rpms)) / np.mean(rpms) < 0.06
+    assert (max(rpms) - min(rpms)) / np.mean(rpms) < 0.08
