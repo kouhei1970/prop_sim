@@ -312,3 +312,4 @@ table.data.wide td:last-child { color: var(--muted); line-height: 1.6; }
 
 table.data td.good { color: var(--accent); font-weight: 600; white-space: nowrap; }
 table.data td.bad  { color: var(--warn);   font-weight: 600; white-space: nowrap; }
+table.data td.muted-cell { color: var(--muted); font-weight: 600; white-space: nowrap; }

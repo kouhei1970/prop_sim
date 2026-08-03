@@ -44,6 +44,9 @@ ARM_M = DIAGONAL_M / 2   # ロータ中心〜機体中心 [m]
 #: 機体構成. StampFly は X 配置で、上から見て 前右/後左 が反時計回り (CCW)、
 #: 前左/後右 が時計回り (CW)。ハブ座標系は z が上向きなので CCW = spin +1。
 LAYOUT = "X"
+#: プロペラガード (リング) の内径 [m]。外形図の φ36.2 をボアとして読んだ場合。
+#: 図の φ36.2 が外径なら肉厚ぶん小さくなるので、翼端すきまはこれより狭い。
+DUCT_BORE_M = 0.0362
 SPIN_BY_ARM = {"front_right": +1, "rear_left": +1,
                "front_left": -1, "rear_right": -1}
 HOVER_GF = MASS_G / N_ROTOR
@@ -402,6 +405,13 @@ def part_c2(hover_rpm):
         "power_no_tip_loss_w": float(notip.solve(rotor, op_b).power(op_b)),
         # 理想ダクト (収縮なし) の運動量理論による同動力での推力比 (2*sigma)^(1/3)
         "ideal_duct_thrust_gain_pct": float(100.0 * (2.0 ** (1.0 / 3.0) - 1.0)),
+        # 外形図から読んだ翼端すきま。ダクトが翼端渦を抑えられるかは
+        # すきま / 翼半径 で決まり、目安は 1 % 以下。
+        "duct_bore_mm": DUCT_BORE_M * 1e3,
+        "tip_gap_mm": float((DUCT_BORE_M - rotor.geometry.diameter) / 2 * 1e3),
+        "tip_gap_over_radius_pct": float(
+            100.0 * (DUCT_BORE_M - rotor.geometry.diameter)
+            / rotor.geometry.diameter),
     }
     summary["shroud"]["power_change_pct"] = float(
         100.0 * (summary["shroud"]["power_no_tip_loss_w"]

@@ -102,6 +102,9 @@
     "power_open_w": 0.9323453995978815,
     "power_no_tip_loss_w": 0.8783328608694906,
     "ideal_duct_thrust_gain_pct": 25.99210498948732,
+    "duct_bore_mm": 36.2,
+    "tip_gap_mm": 2.4950000000000006,
+    "tip_gap_over_radius_pct": 15.988465235501444,
     "power_change_pct": -5.793189814813959
   },
   "dynamic": {
