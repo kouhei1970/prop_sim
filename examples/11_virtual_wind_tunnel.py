@@ -208,15 +208,22 @@ def part_b(hover_rpm):
               title="ハブモーメント")
     save(fig, "forward.svg")
 
-    # 2 次元マップ (等高線)
-    vv = np.arange(0.0, 10.01, 1.0)
-    aa = np.arange(0.0, 90.01, 7.5)
+    # 2 次元マップ (等高線).
+    # static_sweep は引数の**直積**を掃引するので, meshgrid を渡してはいけない
+    # (399 点のつもりが 399 x 399 になる). 1 次元の軸をそのまま渡して
+    # 結果を (v, angle) の順で reshape する.
+    vv = np.arange(0.0, 10.01, 0.5)
+    aa = np.arange(0.0, 90.01, 5.0)
     V, A = np.meshgrid(vv, aa)
-    r = static_sweep(rotor, model, rpm=hover_rpm, v_inf=V.ravel(),
-                     inflow_angle_deg=A.ravel(), n_average=180)
-    fz = (r.columns["thrust"] / t0).reshape(V.shape)
-    fx = (r.columns["Fx_true"] / G * 1e3).reshape(V.shape)
-    my = (r.columns["My_true"] * 1e6).reshape(V.shape)
+    r = static_sweep(rotor, model, rpm=hover_rpm, v_inf=vv,
+                     inflow_angle_deg=aa, n_average=64)
+
+    def grid(col, scale=1.0):
+        return (r.columns[col] * scale).reshape(vv.size, aa.size).T
+
+    fz = grid("thrust", 1.0 / t0)
+    fx = grid("Fx_true", 1e3 / G)
+    my = grid("My_true", 1e6)
 
     fig, ax = plt.subplots(1, 3, figsize=(11, 3.0))
     for k, (z, ttl, fmt) in enumerate([
