@@ -39,7 +39,8 @@ DATA = OUT / "data"
 G = 9.80665
 MASS_G = 36.8            # StampFly の機体重量 [g]
 N_ROTOR = 4
-ARM_M = 0.0405           # ロータ中心〜機体中心 [m] (対角 114 mm 級の想定)
+DIAGONAL_M = 0.065       # モータ間の対角距離 [m] (StampFly 実寸)
+ARM_M = DIAGONAL_M / 2   # ロータ中心〜機体中心 [m]
 #: 機体構成. StampFly は X 配置で、上から見て 前右/後左 が反時計回り (CCW)、
 #: 前左/後右 が時計回り (CW)。ハブ座標系は z が上向きなので CCW = spin +1。
 LAYOUT = "X"
@@ -544,6 +545,15 @@ def main():
         "model": "BEMT",
         "calibrated": False,
         "layout": LAYOUT,
+        "diagonal_mm": DIAGONAL_M * 1e3,
+        "arm_mm": ARM_M * 1e3,
+        # 隣り合うロータの中心間距離と、直径で割った間隔比。
+        # 2 を下回ると干渉が効き始めるとされる。
+        "adjacent_spacing_mm": DIAGONAL_M / np.sqrt(2.0) * 1e3,
+        "spacing_over_diameter": DIAGONAL_M / np.sqrt(2.0)
+                                 / rotor.geometry.diameter,
+        "tip_gap_mm": (DIAGONAL_M / np.sqrt(2.0)
+                       - rotor.geometry.diameter) * 1e3,
         "spin_by_arm": SPIN_BY_ARM,
     }
     (DATA / "summary.json").write_text(

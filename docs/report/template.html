@@ -10,7 +10,7 @@
   <dl class="meta">
     <div><dt>供試体</dt><dd>StampFly 1209 (φ{{meta.diameter_mm|.2f}}&nbsp;mm, {{meta.n_blades|d}} 枚)</dd></div>
     <div><dt>空力モデル</dt><dd>翼素運動量理論 + 実測断面翼型</dd></div>
-    <div><dt>機体諸元</dt><dd>{{meta.mass_g|.1f}}&nbsp;g / {{meta.n_rotor|d}} 発 / {{meta.layout|s}} 配置</dd></div>
+    <div><dt>機体諸元</dt><dd>{{meta.mass_g|.1f}}&nbsp;g / {{meta.n_rotor|d}} 発 / {{meta.layout|s}} 配置 / 対角 {{meta.diagonal_mm|.0f}}&nbsp;mm</dd></div>
     <div><dt>較正</dt><dd class="flag">未適用</dd></div>
   </dl>
 </header>
@@ -96,7 +96,8 @@
   </p>
   <h3>機体構成と回転方向</h3>
   <p>
-    StampFly は <strong>X 配置</strong>で、<strong>上から見て前右／後左が反時計回り（CCW）</strong>、
+    StampFly は <strong>X 配置・モータ間対角 {{meta.diagonal_mm|.0f}} mm</strong>
+    （アーム長 {{meta.arm_mm|.1f}} mm）で、<strong>上から見て前右／後左が反時計回り（CCW）</strong>、
     前左／後右が時計回り（CW）。ハブ座標系は z が上向きなので
     <strong>CCW = <code>spin = +1</code></strong> に対応する。
   </p>
@@ -363,7 +364,8 @@
           <th>ロール操作力 ±500 rpm</th><td class="num">{{derivatives.roll_moment_dn500_mnm|.3f}}</td>
           <td class="num">同左</td><td>mN·m</td>
           <td><strong>X 配置</strong>。4 発すべてが寄与し、有効腕は
-              L·sin45° = {{derivatives.lever_x_mm|.1f}} mm。アーム長 L = {{meta.arm_mm|.1f}} mm 想定で L に比例。
+              L·sin45° = {{derivatives.lever_x_mm|.1f}} mm（対角 {{meta.diagonal_mm|.0f}} mm より
+              アーム長 L = {{meta.arm_mm|.1f}} mm）。L に比例する。
               ピッチも同値（X 配置は対称）</td>
         </tr>
         <tr>
@@ -571,8 +573,16 @@
       （揚力線 + 渦後流モデルとの比較で定量化済み）。</li>
     <li>ボルテックスリング状態（降下率 ≈ 誘導速度）では運動量理論が成立しない。
       急降下時の推力は信用できない。</li>
-    <li>多ロータ間の干渉、機体との干渉は入っていない。
-      実機の 4 発は互いの後流を吸うので、単独ロータより効率が落ちる。</li>
+    <li><strong>多ロータ間の干渉が入っていない。これはこの機体では効く。</strong>
+      対角 {{meta.diagonal_mm|.0f}} mm・X 配置なので隣り合うロータの中心間距離は
+      {{meta.adjacent_spacing_mm|.1f}} mm、直径で割った間隔比は
+      <strong>s/D = {{meta.spacing_over_diameter|.2f}}</strong>（翼端のすきまは
+      {{meta.tip_gap_mm|.1f}} mm しかない）。
+      干渉が無視できるのは概ね s/D &gt; 2 とされており、
+      この機体はそれを大きく下回る。実機の 4 発は互いの後流を吸うので、
+      <strong>本報告の推力・効率は楽観側（過大）</strong>と考えるべきである。
+      とくにホバー効率と、機体が並進するときの前後ロータの非対称
+      （後ろのロータが前のロータの後流に入る）は本モデルの範囲外。</li>
     <li>動的失速を入れていないので、非常に速い姿勢運動での過渡は再現しない。</li>
   </ul>
   <h3>4. 実測で優先的に埋めるべき順番</h3>

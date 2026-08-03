@@ -81,16 +81,16 @@
     "inflow_bw_hz": 332.98904030924695,
     "polar_inertia": 1.67e-08,
     "spin_momentum": 4.7758648777495423e-05,
-    "roll_moment_dn500_mnm": 0.3848122733841857,
-    "roll_moment_plus_dn500_mnm": 0.27210336799376933,
+    "roll_moment_dn500_mnm": 0.308799972468791,
+    "roll_moment_plus_dn500_mnm": 0.21835455456290132,
     "yaw_moment_dn500_mnm": 0.04621031405084824,
-    "roll_moment_dn1000_mnm": 0.7696323900235635,
-    "roll_moment_plus_dn1000_mnm": 0.5442122820064715,
+    "roll_moment_dn1000_mnm": 0.6176062389077979,
+    "roll_moment_plus_dn1000_mnm": 0.4367135596348229,
     "yaw_moment_dn1000_mnm": 0.09242104072869177,
-    "roll_moment_dn2000_mnm": 1.53932846868728,
-    "roll_moment_plus_dn2000_mnm": 1.0884695986822797,
+    "roll_moment_dn2000_mnm": 1.2352635859836196,
+    "roll_moment_plus_dn2000_mnm": 0.8734632582018294,
     "yaw_moment_dn2000_mnm": 0.1848454130945322,
-    "lever_x_mm": 28.637824638055175
+    "lever_x_mm": 22.980970388562792
   },
   "dynamic": {
     "step_pct": 10.0,
@@ -112,7 +112,7 @@
   },
   "vehicle": {
     "cd_a": 0.0035,
-    "arm_m": 0.0405,
+    "arm_m": 0.0325,
     "rows": [
       {
         "u": 0.0,
@@ -164,12 +164,17 @@
   "meta": {
     "mass_g": 36.8,
     "n_rotor": 4,
-    "arm_m": 0.0405,
+    "arm_m": 0.0325,
     "diameter_mm": 31.21,
     "n_blades": 4,
     "model": "BEMT",
     "calibrated": false,
     "layout": "X",
+    "diagonal_mm": 65.0,
+    "arm_mm": 32.5,
+    "adjacent_spacing_mm": 45.961940777125584,
+    "spacing_over_diameter": 1.472667118780057,
+    "tip_gap_mm": 14.751940777125585,
     "spin_by_arm": {
       "front_right": 1,
       "rear_left": 1,
