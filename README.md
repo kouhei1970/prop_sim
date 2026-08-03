@@ -26,6 +26,23 @@ pip install -e ".[plot]"  # + matplotlib (例のグラフ用)
 
 ## 使い方
 
+### プリセット形状
+
+実測に基づくプロペラ形状を同梱している。
+
+| 名前 | 内容 |
+|------|------|
+| `stampfly_1209` | M5Stack StampFly 用 1209 (31 mm 4 枚)。平面形は実機写真からの実測 → [docs/STAMPFLY_1209.md](docs/STAMPFLY_1209.md) |
+
+```python
+rotor = ps.Rotor(ps.stampfly_1209())          # 既定 P=0.9 in, 低 Re 翼型
+rotor = ps.Rotor(ps.stampfly_1209(pitch_in=1.0, pitch_distribution="washout"))
+```
+
+```bash
+python -m prop_sim static --preset stampfly_1209 --rpm 10000:40000:5000
+```
+
 ```python
 import numpy as np
 import prop_sim as ps
@@ -69,6 +86,7 @@ python -m prop_sim dynamic --diameter 10 --pitch 4.7 --rpm 7000 \
 | `examples/04_imbalance_diagnostics.py` | 質量/空力アンバランスの次数分析 |
 | `examples/05_model_comparison.py` | BEMT / BET / 代理モデルの比較と同定 |
 | `examples/06_measurement_error_budget.py` | 計測系の誤差要因の切り分け |
+| `examples/07_stampfly_1209.py` | StampFly 1209 (31 mm 4 枚) の性能推定と計測要求 |
 
 ```bash
 python examples/01_static_thrust_sweep.py     # → results/ に CSV と PNG
@@ -142,15 +160,20 @@ python examples/01_static_thrust_sweep.py     # → results/ に CSV と PNG
 
 ## 精度について
 
-デフォルトのプロペラ形状は "D x P" 表記から生成した**代表的な**分布であり、
-特定メーカーの実測形状ではない。実機と比べる場合は
+`from_diameter_pitch()` が生成するのは "D x P" 表記からの**代表的な**分布であり、
+特定メーカーの実測形状ではない（`stampfly_1209` プリセットは写真実測の平面形を
+持つが、ピッチ分布は公称値からの仮定）。実機と比べる場合は
 
 1. 実測のコード長・ねじり角分布を `PropellerGeometry` に与える
 2. 翼型を `TabulatedAirfoil`（XFOIL / 風洞データ）に置き換える
 3. 静止推力の 1 点で `collective_deg` を較正する
 
-の順に精度が上がる。BEMT 自体の限界（ボルテックスリング状態、大流入角、
-多ロータ干渉、動的失速）は [docs/MODELS.md](docs/MODELS.md) にまとめてある。
+の順に精度が上がる。とくに 30 mm 級の微小プロペラは翼端でも Re < 2×10⁴ で、
+翼型ポーラの選び方だけで推力が ±20 % 動く（`examples/07` に感度を出力）。
+既定では `LOW_RE_THIN`（Re ~ 10⁴ の薄翼相当）を使う。
+
+BEMT 自体の限界（ボルテックスリング状態、大流入角、多ロータ干渉、動的失速）は
+[docs/MODELS.md](docs/MODELS.md) にまとめてある。
 
 ## 開発
 

@@ -25,6 +25,7 @@ __all__ = [
     "NACA0012",
     "CLARK_Y",
     "FLAT_PLATE",
+    "LOW_RE_THIN",
 ]
 
 
@@ -325,6 +326,26 @@ CLARK_Y = LinearAirfoil(
     cd_k=0.022,
     cl_cd0=0.35,
     cm=-0.075,
+)
+
+#: 超低 Reynolds 数 (Re ~ 1e4) の薄翼.
+#: 31 mm 級のマイクロプロペラは翼端でも Re = 5e3 - 2e4 にしかならず,
+#: 層流剥離のせいで揚力傾斜が 2 pi の 6 割程度まで落ち, 抗力は
+#: 通常の翼型の 3 - 5 倍になる. 平板・薄いキャンバ板の低 Re 実測
+#: (Re = 1e4 級) の傾向に合わせた係数.
+LOW_RE_THIN = LinearAirfoil(
+    name="low_Re_thin",
+    cl_alpha=2 * np.pi * 0.62,
+    alpha0_deg=-2.5,
+    cl_max=0.85,
+    cl_min=-0.55,
+    cd0=0.045,
+    cd_k=0.060,
+    cl_cd0=0.30,
+    cm=-0.04,
+    aspect_ratio=3.0,
+    reynolds_ref=1.0e4,
+    reynolds_exponent=0.40,
 )
 
 #: 平板 (翼端付近・薄い部分の近似)

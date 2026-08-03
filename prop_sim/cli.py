@@ -19,6 +19,7 @@ from .drivetrain import Drivetrain
 from .experiments import dynamic_run, static_sweep
 from .geometry import from_diameter_pitch
 from .models import get_model
+from .presets import PRESETS, get_preset
 from .rotor import Rotor, Unbalance
 from .sensor import LoadCell, SensorConfig, TestRig
 
@@ -40,16 +41,19 @@ def _parse_range(text: str) -> np.ndarray:
 
 
 def _build(args) -> tuple[Rotor, object, TestRig]:
-    geo = from_diameter_pitch(
-        args.diameter, args.pitch, n_blades=args.blades,
-        chord_ratio_75=args.chord_ratio,
-    )
+    if args.preset:
+        geo = get_preset(args.preset)
+    else:
+        geo = from_diameter_pitch(
+            args.diameter, args.pitch, n_blades=args.blades,
+            chord_ratio_75=args.chord_ratio,
+        )
     rotor = Rotor(
         geo,
         spin=args.spin,
         collective_deg=args.collective,
         blade_pitch_offsets_deg=(
-            [0.0] * (args.blades - 1) + [args.pitch_imbalance]
+            [0.0] * (geo.n_blades - 1) + [args.pitch_imbalance]
             if args.pitch_imbalance else None
         ),
         unbalance=Unbalance(static=args.unbalance),
@@ -71,6 +75,8 @@ def _build(args) -> tuple[Rotor, object, TestRig]:
 
 def _common(p: argparse.ArgumentParser) -> None:
     g = p.add_argument_group("propeller")
+    g.add_argument("--preset", default=None, choices=sorted(PRESETS),
+                   help="実測プリセット形状 (指定すると --diameter 等は無視)")
     g.add_argument("--diameter", type=float, default=10.0, help="直径 [inch]")
     g.add_argument("--pitch", type=float, default=4.7, help="ピッチ [inch]")
     g.add_argument("--blades", type=int, default=2, help="ブレード枚数")

@@ -26,6 +26,7 @@ from __future__ import annotations
 from .airfoil import (
     CLARK_Y,
     FLAT_PLATE,
+    LOW_RE_THIN,
     NACA0012,
     Airfoil,
     LinearAirfoil,
@@ -37,6 +38,7 @@ from .geometry import PropellerGeometry, from_diameter_pitch
 from .inflow import InflowField
 from .models import BEMT, BET, AeroModel, QuadraticModel, RotorSolution, get_model
 from .operating import OperatingPoint
+from .presets import PRESETS, get_preset, stampfly_1209
 from .rotor import Rotor, Unbalance
 
 __version__ = "0.1.0"
@@ -48,12 +50,16 @@ __all__ = [
     "CLARK_Y",
     "NACA0012",
     "FLAT_PLATE",
+    "LOW_RE_THIN",
     "Atmosphere",
     "SEA_LEVEL",
     "Wrench",
     "COMPONENT_NAMES",
     "PropellerGeometry",
     "from_diameter_pitch",
+    "stampfly_1209",
+    "get_preset",
+    "PRESETS",
     "InflowField",
     "OperatingPoint",
     "Rotor",

@@ -1,0 +1,150 @@
+"""実機プロペラのプリセット.
+
+形状データの出所は各関数の docstring に明記する. 平面形が写真からの
+実測の場合でも, ねじり角 (ピッチ分布) は真上からの写真では読めないため
+公称ピッチからの推定になる — その旨も明記する.
+"""
+
+from __future__ import annotations
+
+import numpy as np
+
+from .airfoil import LOW_RE_THIN, Airfoil
+from .geometry import INCH, PropellerGeometry
+
+__all__ = ["stampfly_1209", "PRESETS", "get_preset"]
+
+
+# --------------------------------------------------------------------------
+# StampFly 1209 (31 mm 4 枚)
+# --------------------------------------------------------------------------
+#: 写真計測によるコード長分布 (r/R, c/R).
+#: 真上から撮影した写真 (定規基準 77.0 px/mm) を色分割し, 半径ごとの
+#: 方位角方向の広がり (円弧長) を求めたうえで, ブレード中心線の後退角
+#: Lambda(r) による cos(Lambda) 補正をかけて「ピッチ軸に直交する弦長」に
+#: 換算したもの.
+_STAMPFLY_1209_CHORD = np.array([
+    #  r/R    c [mm]
+    [0.226, 5.00],
+    [0.300, 5.15],
+    [0.350, 5.30],
+    [0.400, 5.42],
+    [0.450, 5.62],
+    [0.500, 5.80],
+    [0.550, 5.86],
+    [0.600, 5.82],
+    [0.650, 5.68],
+    [0.700, 5.50],
+    [0.750, 5.17],
+    [0.800, 4.82],
+    [0.850, 4.55],
+    [0.900, 4.10],
+    [0.950, 3.35],
+    [0.980, 2.60],
+    [1.000, 1.50],
+])
+
+#: 写真から読み取ったブレード中心線の後退角 [deg] (空力計算には未使用,
+#: 形状の記録として保持する).
+STAMPFLY_1209_SWEEP_DEG = np.array([
+    [0.32, 1.2], [0.45, 6.3], [0.57, 16.0], [0.69, 21.9],
+    [0.75, 24.9], [0.87, 26.0], [0.93, 32.8], [1.00, 34.5],
+])
+
+#: 写真計測のまとめ
+STAMPFLY_1209_MEASURED = {
+    "source": "IMG_3578.jpeg (真上からの写真, 金属定規 77.0 px/mm で校正)",
+    "diameter_mm": 31.21,          # 実測 (外周 99.5 パーセンタイル)
+    "n_blades": 4,
+    "hub_outer_diameter_mm": 7.04,  # 方位角被覆率が 93% を切る半径 x2
+    "max_chord_mm": 5.86,           # r/R = 0.55 付近
+    "projected_area_mm2": 292.9,    # 4 枚 + ハブの投影面積
+    "blade_area_ratio": 0.383,      # 投影面積 / ディスク面積
+    "tip_sweep_deg": 34.5,
+    "estimated_mass_g": 0.26,       # 面積 x 板厚 0.55mm/ハブ 2.0mm x PC 1.20 g/cm^3
+    "polar_inertia_kgm2": 1.67e-8,  # 上記質量分布から (= 0.264 m R^2)
+}
+
+
+def stampfly_1209(
+    *,
+    pitch_in: float = 0.9,
+    pitch_distribution: str = "geometric",
+    airfoil: Airfoil = LOW_RE_THIN,
+    mass: float = 0.26e-3,
+    polar_inertia: float | None = 1.67e-8,
+    diameter_mm: float = 31.21,
+    n_stations: int = 24,
+) -> PropellerGeometry:
+    """M5Stack StampFly 用 1209 プロペラ (31 mm, 4 枚).
+
+    平面形 (直径・コード長分布・ハブ径・後退角・面積) は実機の写真から
+    実測した値。ピッチ分布だけは真上からの写真では読み取れないため、
+    型番 "1209" の公称ピッチ 0.9 inch から幾何ピッチ一定として与えている。
+
+    Parameters
+    ----------
+    pitch_in:
+        公称ピッチ [inch]. 既定は型番の 0.9 inch.
+    pitch_distribution:
+        ``"geometric"``: 幾何ピッチ一定 beta = atan(P / (2 pi r))
+        ``"constant"``  : 0.75R のねじり角で一定
+        ``"washout"``   : 幾何ピッチ一定から翼端で 2 deg 抜く
+    airfoil:
+        翼型. 既定は Re ~ 1e4 用の薄翼モデル (:data:`~prop_sim.airfoil.LOW_RE_THIN`).
+        この大きさのプロペラは翼端でも Re = 5e3 - 2e4 にしかならないため,
+        通常の翼型ポーラを使うと推力を大きく過大評価する.
+    mass, polar_inertia:
+        質量 [kg] と極慣性モーメント [kg m^2]. 既定は写真の面積分布と
+        板厚・樹脂密度の仮定からの推定値.
+
+    Notes
+    -----
+    絶対値の精度を求める場合は, 静止推力を 1 点だけ実測して
+    ``Rotor(collective_deg=...)`` を較正するのが最も効果的.
+    ピッチが 0.1 inch ずれると静止推力は 10% 程度変わる.
+    """
+    radius = 0.5 * diameter_mm * 1e-3
+    x_root = float(_STAMPFLY_1209_CHORD[0, 0])
+    x = np.linspace(x_root, 1.0, n_stations)
+    chord_R = np.interp(
+        x, _STAMPFLY_1209_CHORD[:, 0], _STAMPFLY_1209_CHORD[:, 1]
+    ) * 1e-3 / radius
+
+    pitch = pitch_in * INCH
+    beta_geo = np.arctan2(pitch, 2.0 * np.pi * x * radius)
+    if pitch_distribution == "geometric":
+        beta = beta_geo
+    elif pitch_distribution == "constant":
+        beta = np.full_like(x, float(np.interp(0.75, x, beta_geo)))
+    elif pitch_distribution == "washout":
+        beta = beta_geo - np.deg2rad(2.0) * np.clip((x - 0.5) / 0.5, 0.0, 1.0)
+    else:
+        raise ValueError(f"未知の pitch_distribution: {pitch_distribution}")
+    beta = np.minimum(beta, np.deg2rad(48.0))
+
+    return PropellerGeometry(
+        radius=radius,
+        n_blades=4,
+        r_R=x,
+        chord_R=chord_R,
+        twist_deg=np.rad2deg(beta),
+        airfoils=[airfoil],
+        hub_radius_ratio=x_root,
+        mass=mass,
+        polar_inertia=polar_inertia,
+        name=f"StampFly 1209 (31mm x4, P={pitch_in:g}in)",
+    )
+
+
+PRESETS = {
+    "stampfly_1209": stampfly_1209,
+}
+
+
+def get_preset(name: str, **kwargs) -> PropellerGeometry:
+    """名前からプリセット形状を生成する."""
+    key = name.lower().replace("-", "_")
+    if key not in PRESETS:
+        raise KeyError(f"未知のプリセット '{name}'. 利用可能: {sorted(PRESETS)}")
+    return PRESETS[key](**kwargs)
