@@ -143,6 +143,7 @@
       <tr><td><a href="#run-d">D</a></td><td>回転数ステップ</td><td>+10 % 階段入力</td><td>行き過ぎ量・整定時間</td></tr>
       <tr><td><a href="#run-e">E</a></td><td>時間領域の変動</td><td>6 m/s, 流入角 75°</td><td>次数スペクトル</td></tr>
       <tr><td><a href="#run-f">F</a></td><td>機体つり合い</td><td>前進速度 0–8 m/s</td><td>回転数・動力・モーメント</td></tr>
+      <tr><td><a href="#run-g">G</a></td><td>実装用テーブル</td><td>λ 0–0.25 × μ 0–0.15</td><td>f<sub>T</sub>, f<sub>Q</sub> の 2 次元表</td></tr>
     </tbody>
   </table>
 </nav>
@@ -551,6 +552,79 @@
           速度指令から前傾角と基準回転数を先に与えれば、フィードバックの仕事が減る。</li>
       </ul>
     </div>
+  </div>
+</section>
+
+<!-- ================================================================= RUN G -->
+<section class="run" id="run-g">
+  <div class="rail"><span class="run-id">Run G</span><span class="sym">f<sub>T</sub>(λ,μ)</span></div>
+  <div class="body">
+    <h2>実装用テーブル — 速度が付いたときの推力・トルク補正</h2>
+    <p>
+      Run B で見たとおり、機体が動くと同じ回転数でも推力が変わる。これを
+      制御コードに載せる形にしたのがこの節である。
+    </p>
+    <pre><code>T(Ω, V) = C<sub>T0</sub> · f<sub>T</sub>(λ, μ) · Ω²
+Q(Ω, V) = C<sub>Q0</sub> · f<sub>Q</sub>(λ, μ) · Ω²
+
+  λ = V<sub>軸</sub>  / (Ω R)   シャフト軸方向の速度比（正 = 上昇）
+  μ = V<sub>面内</sub> / (Ω R)   ディスク面内の速度比</code></pre>
+    <p>
+      <strong>λ と μ は回転数によらない。</strong>
+      {{table.rpm_checked_lo|,.0f}}–{{table.rpm_checked_hi|,.0f}} rpm で同じ表を作り直して比べたところ、
+      ばらつきは<strong>最大 {{table.rpm_spread_max_pct|.2f}} %</strong>だった。
+      つまり<strong>2 次元テーブル 1 枚で全回転数を覆える</strong>。
+      回転数ごとにテーブルを持つ必要はない。
+    </p>
+    <figure>
+      {{fig:kt_table.svg}}
+      <figcaption>左・中: 軸方向速度比 λ に対する推力・トルクの補正係数（曲線は面内速度比 μ ごと）。
+        右: f<sub>T</sub> の 2 次元マップ。赤が推力の増える並進揚力域、青が推力の落ちる上昇域。</figcaption>
+    </figure>
+    <table class="data wide">
+      <tbody>
+        <tr><th>C<sub>T0</sub></th><td class="num">{{table.ct0_e|s}}</td><td>N·s²</td>
+            <td>λ = μ = 0（静止）での値。<strong>未較正なので ±20 % の幅がある</strong></td></tr>
+        <tr><th>C<sub>Q0</sub></th><td class="num">{{table.cq0_e|s}}</td><td>N·m·s²</td><td>同上</td></tr>
+        <tr><th>f<sub>T</sub> の範囲</th><td class="num">{{table.ft_min|.3f}} – {{table.ft_max|.3f}}</td><td>—</td>
+            <td>λ ≤ {{table.lambda_max|.2f}}（ホバー回転数で上昇 11 m/s 相当）、
+                μ ≤ {{table.mu_max|.2f}}（横進 6.7 m/s 相当）の範囲。
+                <strong>推力は最大 {{table.ft_loss_pct|.0f}} % 落ち、最大 {{table.ft_gain_pct|.0f}} % 増える</strong></td></tr>
+        <tr><th>f<sub>Q</sub> の範囲</th><td class="num">{{table.fq_min|.3f}} – {{table.fq_max|.3f}}</td><td>—</td>
+            <td>トルクは減る方向にしか動かない</td></tr>
+        <tr><th>表の大きさ</th><td class="num">{{table.n_lambda|d}} × {{table.n_mu|d}}</td><td>点</td>
+            <td>λ 刻み {{table.lambda_step|.3f}}、μ 刻み {{table.mu_step|.3f}}。float で {{table.bytes|d}} バイト</td></tr>
+      </tbody>
+    </table>
+    <p>
+      <strong>C<sub>T0</sub> の絶対値には較正の不確かさが乗るが、f<sub>T</sub> は比なので乗らない。</strong>
+      較正で C<sub>T0</sub> だけを直せば、テーブルはそのまま使える。
+    </p>
+    <div class="implication">
+      <h3>実装のしかた</h3>
+      <ul>
+        <li><strong>そのまま貼れる C の配列</strong>を
+          <a href="data/kt_table.h"><code>data/kt_table.h</code></a> に置いた。
+          2 次元の線形補間で引けばよい。CSV 版は
+          <a href="data/kt_table.csv"><code>kt_table.csv</code></a> /
+          <a href="data/kq_table.csv"><code>kq_table.csv</code></a>。</li>
+        <li><strong>λ, μ は機体速度と姿勢から出せる。</strong>
+          機体速度を機体座標系に直し、ロータ軸（機体 z）成分が V<sub>軸</sub>、
+          残りの面内成分が V<sub>面内</sub>。対気速度が要るので、
+          対地速度しか無い場合は風の推定が別途要る。</li>
+        <li><strong>いちばん効くのは高度ループ</strong>。ホバー回転数のまま上昇すると
+          <strong>1.1 m/s で f<sub>T</sub> = 0.96、4.5 m/s で 0.78、
+          11 m/s で 0.29</strong> まで落ちる（λ = 0.025 / 0.10 / 0.25）。
+          補正しないと上昇指令に対して推力が足りず、積分項が張り付く。</li>
+        <li>μ の項（並進揚力）は<strong>水平加速の開始時に高度が持ち上がる</strong>
+          挙動を説明する。前進と同時に f<sub>T</sub> が 1 を超える。</li>
+      </ul>
+    </div>
+    <p class="note">
+      <strong>降下（λ &lt; 0）は表に入れていない。</strong>
+      ボルテックスリング状態で運動量理論が成立せず、BEMT の値が信用できないため。
+      降下時は保守的に f<sub>T</sub> = 1 に固定するのが安全である。
+    </p>
   </div>
 </section>
 

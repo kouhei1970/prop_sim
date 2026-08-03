@@ -1,0 +1,2997 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg fill="currentColor" xmlns:xlink="http://www.w3.org/1999/xlink" width="668.482734pt" height="230.766734pt" viewBox="0 0 668.482734 230.766734" xmlns="http://www.w3.org/2000/svg" version="1.1"><style>svg{color:#16202b}@media(prefers-color-scheme:dark){svg{color:#e7edf4}}</style>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-08-03T11:32:29.352982</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 230.766734 
+L 668.482734 230.766734 
+L 668.482734 0 
+L 0 0 
+L 0 230.766734 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 40.968945 194.566734 
+L 221.498357 194.566734 
+L 221.498357 22.702734 
+L 40.968945 22.702734 
+L 40.968945 194.566734 
+z
+" style="fill: none"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 49.174828 194.566734 
+L 49.174828 22.702734 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="m271a993f80" d="M 0 0 
+L 0 3.5 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m271a993f80" x="49.174828" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <!-- 0.00 -->
+      <g transform="translate(40.174828 209.48568) scale(0.09 -0.09)">
+       <defs>
+        <path id="IPAGothic-d6" d="M 1600 4934 
+Q 2844 4934 2844 2566 
+Q 2844 197 1600 197 
+Q 359 197 359 2566 
+Q 359 4934 1600 4934 
+z
+M 975 1453 
+L 2119 4063 
+Q 1938 4494 1594 4494 
+Q 884 4494 884 2566 
+Q 884 1909 975 1453 
+z
+M 1081 1075 
+Q 1256 638 1600 638 
+Q 2319 638 2319 2572 
+Q 2319 3213 2228 3675 
+L 1081 1075 
+z
+" transform="scale(0.015625)"/>
+        <path id="IPAGothic-d4" d="M 588 831 
+L 1444 831 
+L 1444 -25 
+L 588 -25 
+L 588 831 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 81.998357 194.566734 
+L 81.998357 22.702734 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m271a993f80" x="81.998357" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <!-- 0.05 -->
+      <g transform="translate(72.998357 209.48568) scale(0.09 -0.09)">
+       <defs>
+        <path id="IPAGothic-db" d="M 566 4806 
+L 2691 4806 
+L 2691 4359 
+L 1013 4359 
+L 944 2888 
+Q 1259 3250 1738 3250 
+Q 2250 3250 2588 2816 
+Q 2909 2397 2909 1772 
+Q 2909 1238 2697 844 
+Q 2341 197 1591 197 
+Q 538 197 328 1375 
+L 841 1375 
+Q 947 644 1588 644 
+Q 2000 644 2228 997 
+Q 2422 1294 2422 1766 
+Q 2422 2184 2259 2456 
+Q 2059 2822 1653 2822 
+Q 1156 2822 859 2225 
+L 456 2309 
+L 566 4806 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 114.821886 194.566734 
+L 114.821886 22.702734 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m271a993f80" x="114.821886" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <!-- 0.10 -->
+      <g transform="translate(105.821886 209.48568) scale(0.09 -0.09)">
+       <defs>
+        <path id="IPAGothic-d7" d="M 1428 325 
+L 1428 4153 
+Q 1188 3991 756 3809 
+L 756 4325 
+Q 1256 4509 1563 4806 
+L 1953 4806 
+L 1953 325 
+L 1428 325 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d7" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 147.645416 194.566734 
+L 147.645416 22.702734 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m271a993f80" x="147.645416" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <!-- 0.15 -->
+      <g transform="translate(138.645416 209.48568) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d7" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 180.468945 194.566734 
+L 180.468945 22.702734 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#m271a993f80" x="180.468945" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <!-- 0.20 -->
+      <g transform="translate(171.468945 209.48568) scale(0.09 -0.09)">
+       <defs>
+        <path id="IPAGothic-d8" d="M 2900 325 
+L 250 325 
+Q 441 1553 1528 2453 
+Q 1963 2806 2116 3034 
+Q 2316 3319 2316 3706 
+Q 2316 4022 2175 4219 
+Q 1994 4494 1631 4494 
+Q 894 4494 825 3406 
+L 322 3406 
+Q 359 4056 628 4428 
+Q 981 4928 1644 4928 
+Q 2106 4928 2425 4659 
+Q 2828 4313 2828 3713 
+Q 2828 2875 1881 2156 
+Q 1072 1541 909 800 
+L 2900 800 
+L 2900 325 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d8" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_11">
+      <path d="M 213.292475 194.566734 
+L 213.292475 22.702734 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#m271a993f80" x="213.292475" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <!-- 0.25 -->
+      <g transform="translate(204.292475 209.48568) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d8" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="text_7">
+     <!-- λ = V軸 / (Ω R) -->
+     <g transform="translate(92.983651 222.48568) scale(0.09 -0.09)">
+      <defs>
+       <path id="IPAGothic-320" d="M 1925 325 
+L 1234 325 
+Q 2525 2038 3475 3384 
+Q 3466 3966 3378 4206 
+Q 3275 4481 2981 4481 
+Q 2591 4481 2113 3903 
+L 1816 4331 
+Q 2534 4934 3025 4934 
+Q 3706 4934 3897 4275 
+Q 3966 4022 3966 3469 
+Q 3966 2463 4122 1869 
+Q 4316 1119 4850 325 
+L 4184 325 
+Q 3666 1334 3513 2628 
+L 1925 325 
+z
+" transform="scale(0.015625)"/>
+       <path id="IPAGothic-c6" transform="scale(0.015625)"/>
+       <path id="IPAGothic-e3" d="M 313 3263 
+L 2884 3263 
+L 2884 2816 
+L 313 2816 
+L 313 3263 
+z
+M 313 2047 
+L 2884 2047 
+L 2884 1600 
+L 313 1600 
+L 313 2047 
+z
+" transform="scale(0.015625)"/>
+       <path id="IPAGothic-fc" d="M 219 4806 
+L 788 4806 
+L 1600 950 
+L 2413 4806 
+L 2984 4806 
+L 1941 325 
+L 1263 325 
+L 219 4806 
+z
+" transform="scale(0.015625)"/>
+       <path id="IPAGothic-7eb" d="M 1503 3688 
+L 1503 4122 
+L 422 4122 
+L 422 4506 
+L 1503 4506 
+L 1503 5313 
+L 1919 5313 
+L 1919 4506 
+L 3038 4506 
+L 3038 4122 
+L 1919 4122 
+L 1919 3688 
+L 2900 3688 
+L 2900 1547 
+L 1919 1547 
+L 1919 1094 
+L 3122 1094 
+L 3122 709 
+L 1919 709 
+L 1919 -447 
+L 1503 -447 
+L 1503 709 
+L 313 709 
+L 313 1094 
+L 1503 1094 
+L 1503 1547 
+L 550 1547 
+L 550 3688 
+L 1503 3688 
+z
+M 1522 3347 
+L 934 3347 
+L 934 2797 
+L 1522 2797 
+L 1522 3347 
+z
+M 1906 3347 
+L 1906 2797 
+L 2522 2797 
+L 2522 3347 
+L 1906 3347 
+z
+M 1522 2472 
+L 934 2472 
+L 934 1888 
+L 1522 1888 
+L 1522 2472 
+z
+M 1906 2472 
+L 1906 1888 
+L 2522 1888 
+L 2522 2472 
+L 1906 2472 
+z
+M 4378 4116 
+L 4378 5209 
+L 4800 5209 
+L 4800 4116 
+L 5913 4116 
+L 5913 -366 
+L 5503 -366 
+L 5503 0 
+L 3709 0 
+L 3709 -391 
+L 3300 -391 
+L 3300 4116 
+L 4378 4116 
+z
+M 3709 3725 
+L 3709 2316 
+L 4391 2316 
+L 4391 3725 
+L 3709 3725 
+z
+M 3709 1931 
+L 3709 397 
+L 4391 397 
+L 4391 1931 
+L 3709 1931 
+z
+M 4788 3725 
+L 4788 2316 
+L 5503 2316 
+L 5503 3725 
+L 4788 3725 
+z
+M 4788 1931 
+L 4788 397 
+L 5503 397 
+L 5503 1931 
+L 4788 1931 
+z
+" transform="scale(0.015625)"/>
+       <path id="IPAGothic-d5" d="M 2750 5259 
+L 3006 5147 
+L 441 -403 
+L 184 -288 
+L 2750 5259 
+z
+" transform="scale(0.015625)"/>
+       <path id="IPAGothic-ce" d="M 2219 -434 
+Q 997 769 997 2441 
+Q 997 4097 2219 5300 
+L 2719 5300 
+Q 1478 4078 1478 2425 
+Q 1478 788 2719 -434 
+L 2219 -434 
+z
+" transform="scale(0.015625)"/>
+       <path id="IPAGothic-315" d="M 2388 825 
+L 2388 1075 
+Q 1122 1622 1122 2900 
+Q 1122 3588 1550 4141 
+Q 2172 4934 3200 4934 
+Q 3828 4934 4353 4594 
+Q 5281 3994 5281 2894 
+Q 5281 1631 4013 1075 
+L 4013 825 
+L 5378 825 
+L 5378 325 
+L 3513 325 
+L 3513 1266 
+Q 3863 1409 4094 1613 
+Q 4684 2134 4684 2891 
+Q 4684 3409 4384 3825 
+Q 3950 4441 3200 4441 
+Q 2625 4441 2203 4038 
+Q 1716 3581 1716 2891 
+Q 1716 1738 2888 1266 
+L 2888 325 
+L 1025 325 
+L 1025 825 
+L 2388 825 
+z
+" transform="scale(0.015625)"/>
+       <path id="IPAGothic-f8" d="M 447 4806 
+L 1556 4806 
+Q 2097 4806 2438 4563 
+Q 2872 4244 2872 3641 
+Q 2872 2759 2034 2500 
+L 2994 325 
+L 2406 325 
+L 1534 2416 
+L 947 2416 
+L 947 325 
+L 447 325 
+L 447 4806 
+z
+M 947 4331 
+L 947 2875 
+L 1484 2875 
+Q 1766 2875 1975 2991 
+Q 2359 3191 2359 3628 
+Q 2359 4331 1478 4331 
+L 947 4331 
+z
+" transform="scale(0.015625)"/>
+       <path id="IPAGothic-cf" d="M 481 -434 
+Q 1722 788 1722 2434 
+Q 1722 4069 481 5300 
+L 981 5300 
+Q 2203 4097 2203 2434 
+Q 2203 769 981 -434 
+L 481 -434 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#IPAGothic-320"/>
+      <use xlink:href="#IPAGothic-c6" transform="translate(100 0)"/>
+      <use xlink:href="#IPAGothic-e3" transform="translate(150 0)"/>
+      <use xlink:href="#IPAGothic-c6" transform="translate(200 0)"/>
+      <use xlink:href="#IPAGothic-fc" transform="translate(250 0)"/>
+      <use xlink:href="#IPAGothic-7eb" transform="translate(300 0)"/>
+      <use xlink:href="#IPAGothic-c6" transform="translate(400 0)"/>
+      <use xlink:href="#IPAGothic-d5" transform="translate(450 0)"/>
+      <use xlink:href="#IPAGothic-c6" transform="translate(500 0)"/>
+      <use xlink:href="#IPAGothic-ce" transform="translate(550 0)"/>
+      <use xlink:href="#IPAGothic-315" transform="translate(600 0)"/>
+      <use xlink:href="#IPAGothic-c6" transform="translate(700 0)"/>
+      <use xlink:href="#IPAGothic-f8" transform="translate(750 0)"/>
+      <use xlink:href="#IPAGothic-cf" transform="translate(800 0)"/>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_13">
+      <path d="M 40.968945 185.633277 
+L 221.498357 185.633277 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_14">
+      <defs>
+       <path id="mf3f0e9b4db" d="M 0 0 
+L -3.5 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="40.968945" y="185.633277" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <!-- 0.3 -->
+      <g transform="translate(20.468945 189.592749) scale(0.09 -0.09)">
+       <defs>
+        <path id="IPAGothic-d9" d="M 1113 2931 
+L 1431 2931 
+Q 1841 2931 1994 3047 
+Q 2281 3269 2281 3713 
+Q 2281 4500 1566 4500 
+Q 972 4500 838 3828 
+L 331 3828 
+Q 400 4250 625 4525 
+Q 969 4934 1566 4934 
+Q 2066 4934 2391 4647 
+Q 2775 4309 2775 3731 
+Q 2775 2953 2078 2713 
+Q 2919 2388 2919 1528 
+Q 2919 978 2606 625 
+Q 2231 197 1575 197 
+Q 959 197 594 619 
+Q 325 928 269 1472 
+L 794 1472 
+Q 859 638 1575 638 
+Q 1906 638 2131 825 
+Q 2413 1066 2413 1528 
+Q 2413 2522 1431 2522 
+L 1113 2522 
+L 1113 2931 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d9" transform="translate(100 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_15">
+      <path d="M 40.968945 165.679285 
+L 221.498357 165.679285 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="40.968945" y="165.679285" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <!-- 0.4 -->
+      <g transform="translate(20.468945 169.638758) scale(0.09 -0.09)">
+       <defs>
+        <path id="IPAGothic-da" d="M 1966 4806 
+L 2509 4806 
+L 2509 1869 
+L 3041 1869 
+L 3041 1434 
+L 2509 1434 
+L 2509 325 
+L 2034 325 
+L 2034 1434 
+L 159 1434 
+L 159 1881 
+L 1966 4806 
+z
+M 2034 4109 
+L 641 1869 
+L 2034 1869 
+L 2034 4109 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-da" transform="translate(100 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_17">
+      <path d="M 40.968945 145.725293 
+L 221.498357 145.725293 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="40.968945" y="145.725293" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <!-- 0.5 -->
+      <g transform="translate(20.468945 149.684766) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-db" transform="translate(100 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_19">
+      <path d="M 40.968945 125.771302 
+L 221.498357 125.771302 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_20">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="40.968945" y="125.771302" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <!-- 0.6 -->
+      <g transform="translate(20.468945 129.730774) scale(0.09 -0.09)">
+       <defs>
+        <path id="IPAGothic-dc" d="M 2322 3809 
+Q 2225 4488 1713 4488 
+Q 1269 4488 1028 3950 
+Q 803 3447 794 2588 
+Q 1159 3119 1725 3119 
+Q 2194 3119 2519 2772 
+Q 2903 2369 2903 1709 
+Q 2903 1159 2641 750 
+Q 2284 200 1638 200 
+Q 1050 200 697 738 
+Q 319 1328 319 2375 
+Q 319 3488 650 4172 
+Q 1028 4934 1706 4934 
+Q 2634 4934 2847 3809 
+L 2322 3809 
+z
+M 1644 2703 
+Q 1272 2703 1047 2363 
+Q 875 2094 875 1691 
+Q 875 1328 997 1075 
+Q 1209 641 1650 641 
+Q 2003 641 2219 959 
+Q 2409 1241 2409 1697 
+Q 2409 2113 2244 2375 
+Q 2041 2703 1644 2703 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-dc" transform="translate(100 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_21">
+      <path d="M 40.968945 105.81731 
+L 221.498357 105.81731 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_22">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="40.968945" y="105.81731" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <!-- 0.7 -->
+      <g transform="translate(20.468945 109.776783) scale(0.09 -0.09)">
+       <defs>
+        <path id="IPAGothic-dd" d="M 319 4806 
+L 2878 4806 
+L 2878 4441 
+Q 1978 2213 1528 325 
+L 947 325 
+Q 1434 2050 2328 4319 
+L 319 4319 
+L 319 4806 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-dd" transform="translate(100 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_23">
+      <path d="M 40.968945 85.863319 
+L 221.498357 85.863319 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_24">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="40.968945" y="85.863319" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_13">
+      <!-- 0.8 -->
+      <g transform="translate(20.468945 89.822791) scale(0.09 -0.09)">
+       <defs>
+        <path id="IPAGothic-de" d="M 1050 2741 
+Q 403 3056 403 3750 
+Q 403 4084 563 4359 
+Q 900 4934 1600 4934 
+Q 1950 4934 2253 4750 
+Q 2797 4416 2797 3750 
+Q 2797 3056 2150 2741 
+Q 2978 2422 2978 1541 
+Q 2978 1038 2697 678 
+Q 2322 197 1600 197 
+Q 988 197 616 550 
+Q 225 922 225 1541 
+Q 225 2422 1050 2741 
+z
+M 1600 4525 
+Q 1278 4525 1075 4294 
+Q 891 4078 891 3756 
+Q 891 3544 969 3372 
+Q 1159 2956 1606 2956 
+Q 1863 2956 2041 3116 
+Q 2309 3347 2309 3756 
+Q 2309 4156 2041 4378 
+Q 1856 4525 1600 4525 
+z
+M 1594 2497 
+Q 1178 2497 931 2191 
+Q 725 1925 725 1541 
+Q 725 1172 925 925 
+Q 1172 619 1600 619 
+Q 2031 619 2281 925 
+Q 2478 1172 2478 1541 
+Q 2478 2022 2184 2278 
+Q 1947 2497 1594 2497 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-de" transform="translate(100 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_25">
+      <path d="M 40.968945 65.909327 
+L 221.498357 65.909327 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_26">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="40.968945" y="65.909327" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_14">
+      <!-- 0.9 -->
+      <g transform="translate(20.468945 69.8688) scale(0.09 -0.09)">
+       <defs>
+        <path id="IPAGothic-df" d="M 909 1363 
+Q 988 666 1569 666 
+Q 2431 666 2422 2500 
+Q 2063 1972 1519 1972 
+Q 859 1972 531 2588 
+Q 347 2947 347 3419 
+Q 347 4019 672 4459 
+Q 1022 4934 1569 4934 
+Q 2888 4934 2888 2706 
+Q 2888 197 1575 197 
+Q 975 197 628 716 
+Q 450 984 384 1363 
+L 909 1363 
+z
+M 1591 4494 
+Q 834 4494 834 3431 
+Q 834 3038 969 2778 
+Q 1169 2394 1591 2394 
+Q 1859 2394 2069 2631 
+Q 2338 2938 2338 3431 
+Q 2338 3925 2125 4213 
+Q 1922 4494 1591 4494 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-df" transform="translate(100 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_27">
+      <path d="M 40.968945 45.955336 
+L 221.498357 45.955336 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_28">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="40.968945" y="45.955336" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_15">
+      <!-- 1.0 -->
+      <g transform="translate(20.468945 49.914808) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d7"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(100 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_29">
+      <path d="M 40.968945 26.001344 
+L 221.498357 26.001344 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_30">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="40.968945" y="26.001344" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_16">
+      <!-- 1.1 -->
+      <g transform="translate(20.468945 29.960817) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d7"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d7" transform="translate(100 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="text_17">
+     <!-- $f_T$ -->
+     <g transform="translate(15.118945 112.279734) rotate(-90) scale(0.09 -0.09)">
+      <defs>
+       <path id="DejaVuSans-Oblique-49" d="M 3059 4863 
+L 2969 4384 
+L 2419 4384 
+Q 2106 4384 1964 4261 
+Q 1822 4138 1753 3809 
+L 1691 3500 
+L 2638 3500 
+L 2553 3053 
+L 1606 3053 
+L 1013 0 
+L 434 0 
+L 1031 3053 
+L 481 3053 
+L 563 3500 
+L 1113 3500 
+L 1159 3744 
+Q 1278 4363 1576 4613 
+Q 1875 4863 2516 4863 
+L 3059 4863 
+z
+" transform="scale(0.015625)"/>
+       <path id="DejaVuSans-Oblique-37" d="M 378 4666 
+L 4325 4666 
+L 4225 4134 
+L 2559 4134 
+L 1759 0 
+L 1125 0 
+L 1925 4134 
+L 275 4134 
+L 378 4666 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#DejaVuSans-Oblique-49" transform="translate(0 0.015625)"/>
+      <use xlink:href="#DejaVuSans-Oblique-37" transform="translate(35.205078 -14.984326) scale(0.7)"/>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_31">
+    <path d="M 49.174828 45.955336 
+L 65.586592 54.565776 
+L 81.998357 63.861224 
+L 98.410122 76.522466 
+L 114.821886 90.104265 
+L 131.233651 104.395368 
+L 147.645416 119.406258 
+L 164.057181 135.144353 
+L 180.468945 151.614187 
+L 196.88071 168.817719 
+L 213.292475 186.754734 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: #2563eb; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_32">
+    <path d="M 49.174828 43.645829 
+L 65.586592 52.245419 
+L 81.998357 62.354818 
+L 98.410122 74.411419 
+L 114.821886 87.761303 
+L 131.233651 102.20592 
+L 147.645416 117.460399 
+L 164.057181 133.416631 
+L 180.468945 150.080721 
+L 196.88071 167.456334 
+L 213.292475 185.545052 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: #dc2626; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_33">
+    <path d="M 49.174828 37.469773 
+L 65.586592 45.864415 
+L 81.998357 56.478675 
+L 98.410122 68.625899 
+L 114.821886 81.982043 
+L 131.233651 96.430975 
+L 147.645416 111.928544 
+L 164.057181 128.344892 
+L 180.468945 145.534947 
+L 196.88071 163.360501 
+L 213.292475 181.806398 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: #059669; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_34">
+    <path d="M 49.174828 30.514734 
+L 65.586592 36.669251 
+L 81.998357 47.225412 
+L 98.410122 59.656439 
+L 114.821886 73.34893 
+L 131.233651 88.091432 
+L 147.645416 103.843793 
+L 164.057181 120.504844 
+L 180.468945 138.01307 
+L 196.88071 156.294634 
+L 213.292475 175.11666 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: #d97706; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_35">
+    <path d="M 40.968945 45.955336 
+L 221.498357 45.955336 
+" clip-path="url(#pabdaab37d0)" style="fill: none; stroke: currentColor; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 40.968945 194.566734 
+L 40.968945 22.702734 
+" style="fill: none; stroke: currentColor; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 40.968945 194.566734 
+L 221.498357 194.566734 
+" style="fill: none; stroke: currentColor; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_18">
+    <!-- 推力の補正係数 -->
+    <g transform="translate(93.433651 16.702734) scale(0.108 -0.108)">
+     <defs>
+      <path id="IPAGothic-935" d="M 3244 4063 
+L 4244 4063 
+Q 4484 4581 4653 5228 
+L 5125 5100 
+Q 4913 4484 4691 4063 
+L 5906 4063 
+L 5906 3666 
+L 4647 3666 
+L 4647 2822 
+L 5747 2822 
+L 5747 2438 
+L 4647 2438 
+L 4647 1594 
+L 5747 1594 
+L 5747 1216 
+L 4647 1216 
+L 4647 319 
+L 6047 319 
+L 6047 -91 
+L 3244 -91 
+L 3244 -481 
+L 2816 -481 
+L 2816 3188 
+L 2791 3128 
+Q 2581 2744 2366 2463 
+L 2084 2797 
+Q 2813 3728 3166 5284 
+L 3616 5144 
+Q 3428 4494 3244 4063 
+z
+M 3244 319 
+L 4231 319 
+L 4231 1216 
+L 3244 1216 
+L 3244 319 
+z
+M 3244 1594 
+L 4231 1594 
+L 4231 2438 
+L 3244 2438 
+L 3244 1594 
+z
+M 3244 2822 
+L 4231 2822 
+L 4231 3666 
+L 3244 3666 
+L 3244 2822 
+z
+M 1184 4084 
+L 1184 5313 
+L 1613 5313 
+L 1613 4084 
+L 2328 4084 
+L 2328 3669 
+L 1613 3669 
+L 1613 2241 
+Q 1997 2341 2334 2453 
+L 2359 2069 
+Q 1809 1884 1631 1831 
+L 1613 1825 
+L 1613 44 
+Q 1613 -194 1522 -294 
+Q 1413 -403 1081 -403 
+Q 738 -403 519 -366 
+L 441 97 
+Q 741 38 978 38 
+Q 1184 38 1184 219 
+L 1184 1703 
+L 1144 1697 
+Q 738 1584 409 1509 
+L 275 1941 
+Q 722 2022 1138 2119 
+Q 1147 2122 1166 2125 
+Q 1175 2128 1184 2131 
+L 1184 3669 
+L 372 3669 
+L 372 4084 
+L 1184 4084 
+z
+" transform="scale(0.015625)"/>
+      <path id="IPAGothic-ea2" d="M 3303 3944 
+L 5650 3944 
+Q 5622 1247 5428 356 
+Q 5303 -231 4647 -231 
+Q 4159 -231 3456 -147 
+L 3378 416 
+Q 4022 263 4453 263 
+Q 4881 263 4947 616 
+Q 5103 1509 5134 3303 
+L 5141 3509 
+L 3291 3509 
+Q 3231 2200 2738 1281 
+Q 2194 297 878 -416 
+L 525 -6 
+Q 2709 963 2778 3450 
+L 641 3450 
+L 641 3891 
+L 2784 3891 
+L 2784 5147 
+L 3303 5147 
+L 3303 3944 
+z
+" transform="scale(0.015625)"/>
+      <path id="IPAGothic-282" d="M 3119 469 
+Q 5275 766 5275 2425 
+Q 5275 3453 4413 3922 
+Q 4041 4113 3547 4159 
+Q 3394 2525 2850 1400 
+Q 2322 306 1722 306 
+Q 1384 306 1084 666 
+Q 609 1244 609 2003 
+Q 609 3025 1397 3794 
+Q 2184 4563 3431 4563 
+Q 4306 4563 4928 4122 
+Q 5813 3506 5813 2425 
+Q 5813 438 3431 6 
+L 3119 469 
+z
+M 3053 4147 
+Q 2378 4044 1891 3641 
+Q 1097 2981 1097 1991 
+Q 1097 1366 1434 978 
+Q 1581 813 1719 813 
+Q 2022 813 2416 1625 
+Q 2909 2638 3053 4147 
+z
+" transform="scale(0.015625)"/>
+      <path id="IPAGothic-d3f" d="M 1600 2394 
+L 1691 2338 
+Q 1703 2325 1766 2288 
+Q 1938 2509 2188 2925 
+L 2509 2709 
+Q 2297 2431 1997 2119 
+Q 2328 1875 2522 1697 
+L 2259 1359 
+Q 1956 1672 1600 1997 
+L 1600 -447 
+L 1172 -447 
+L 1172 2159 
+Q 909 1819 494 1403 
+L 256 1794 
+Q 1275 2719 1747 3816 
+L 403 3816 
+L 403 4231 
+L 1153 4231 
+L 1153 5306 
+L 1581 5306 
+L 1581 4231 
+L 2047 4231 
+L 2297 4034 
+Q 2003 3319 1600 2741 
+L 1600 2394 
+z
+M 4384 4019 
+L 4384 3419 
+L 5778 3419 
+L 5778 25 
+Q 5778 -391 5306 -391 
+Q 4994 -391 4806 -363 
+L 4728 56 
+Q 5006 19 5209 19 
+Q 5363 19 5363 206 
+L 5363 1031 
+L 4378 1031 
+L 4378 -288 
+L 3969 -288 
+L 3969 1031 
+L 3034 1031 
+L 3034 -447 
+L 2613 -447 
+L 2613 3419 
+L 3963 3419 
+L 3963 4019 
+L 2350 4019 
+L 2350 4403 
+L 3963 4403 
+L 3963 5313 
+L 4384 5313 
+L 4384 4403 
+L 5338 4403 
+Q 5331 4422 5306 4459 
+Q 5113 4750 4813 5050 
+L 5144 5247 
+Q 5416 4997 5681 4641 
+L 5350 4403 
+L 6047 4403 
+L 6047 4019 
+L 4384 4019 
+z
+M 3969 3047 
+L 3034 3047 
+L 3034 2413 
+L 3969 2413 
+L 3969 3047 
+z
+M 4378 3047 
+L 4378 2413 
+L 5363 2413 
+L 5363 3047 
+L 4378 3047 
+z
+M 3969 2047 
+L 3034 2047 
+L 3034 1391 
+L 3969 1391 
+L 3969 2047 
+z
+M 4378 2047 
+L 4378 1391 
+L 5363 1391 
+L 5363 2047 
+L 4378 2047 
+z
+" transform="scale(0.015625)"/>
+      <path id="IPAGothic-964" d="M 3547 409 
+L 5916 409 
+L 5916 -31 
+L 481 -31 
+L 481 409 
+L 1441 409 
+L 1441 3231 
+L 1934 3231 
+L 1934 409 
+L 3059 409 
+L 3059 4288 
+L 750 4288 
+L 750 4728 
+L 5659 4728 
+L 5659 4288 
+L 3547 4288 
+L 3547 2669 
+L 5353 2669 
+L 5353 2241 
+L 3547 2241 
+L 3547 409 
+z
+" transform="scale(0.015625)"/>
+      <path id="IPAGothic-619" d="M 3672 2763 
+Q 4203 3306 4741 4013 
+L 5131 3750 
+Q 4428 2884 3641 2194 
+L 4288 2219 
+Q 4478 2228 4819 2247 
+Q 5084 2259 5197 2266 
+Q 5016 2553 4741 2891 
+L 5094 3097 
+Q 5569 2553 5984 1822 
+L 5600 1547 
+Q 5478 1788 5394 1938 
+Q 4747 1866 4050 1828 
+L 4050 -447 
+L 3603 -447 
+L 3603 1803 
+L 3066 1778 
+Q 2728 1759 2028 1741 
+L 1888 2175 
+L 2003 2175 
+L 2175 2175 
+L 2450 2181 
+L 3066 2181 
+L 3103 2219 
+Q 3266 2363 3372 2469 
+Q 2813 3084 2247 3556 
+L 2572 3884 
+Q 2888 3600 2919 3569 
+Q 3309 3963 3659 4472 
+Q 2938 4384 2234 4338 
+L 2059 4747 
+Q 3884 4844 5266 5163 
+L 5619 4784 
+Q 4719 4597 3794 4484 
+L 4106 4269 
+Q 3725 3781 3297 3372 
+L 3206 3281 
+Q 3441 3034 3672 2763 
+z
+M 1578 3675 
+L 1578 -447 
+L 1125 -447 
+L 1125 2741 
+Q 834 2250 544 1856 
+L 294 2253 
+Q 1213 3503 1603 5244 
+L 2044 5141 
+Q 1841 4322 1578 3675 
+z
+M 1875 122 
+Q 2391 684 2700 1441 
+L 3116 1253 
+Q 2794 447 2241 -206 
+L 1875 122 
+z
+M 5447 -72 
+Q 5009 716 4478 1313 
+L 4844 1544 
+Q 5453 934 5856 244 
+L 5447 -72 
+z
+" transform="scale(0.015625)"/>
+      <path id="IPAGothic-945" d="M 2847 1553 
+Q 2741 1006 2425 534 
+Q 2622 444 3091 203 
+L 2809 -188 
+Q 2541 0 2144 209 
+Q 1569 -291 703 -500 
+L 422 -125 
+Q 1263 19 1747 406 
+Q 1219 650 734 816 
+Q 978 1175 1147 1503 
+L 1172 1553 
+L 359 1553 
+L 359 1925 
+L 1344 1925 
+Q 1406 2066 1569 2475 
+L 1691 2450 
+L 1691 3372 
+Q 1250 2738 550 2303 
+L 275 2663 
+Q 1019 3013 1528 3641 
+L 378 3641 
+L 378 4006 
+L 1691 4006 
+L 1691 5313 
+L 2113 5313 
+L 2113 4006 
+L 3297 4006 
+L 3297 3641 
+L 2113 3641 
+L 2113 3513 
+Q 2659 3291 3175 2963 
+L 2956 2584 
+Q 2553 2922 2113 3159 
+L 2113 2372 
+L 1966 2372 
+Q 1928 2288 1872 2141 
+Q 1806 1975 1784 1925 
+L 3378 1925 
+L 3378 1553 
+L 2847 1553 
+z
+M 2419 1553 
+L 1613 1553 
+Q 1478 1269 1313 997 
+Q 1559 909 2047 703 
+Q 2313 1047 2419 1553 
+z
+M 4363 1163 
+Q 3953 1781 3738 2638 
+Q 3575 2281 3428 2016 
+L 3103 2406 
+Q 3675 3444 3916 5291 
+L 4363 5200 
+Q 4284 4666 4197 4197 
+L 6009 4197 
+L 6009 3775 
+L 5503 3775 
+Q 5397 2275 4869 1191 
+Q 5419 503 6144 75 
+L 5822 -378 
+Q 5188 106 4631 788 
+Q 4113 34 3341 -463 
+L 3031 -78 
+Q 3888 406 4363 1163 
+z
+M 4588 1594 
+Q 4938 2388 5059 3775 
+L 4100 3775 
+Q 4041 3519 3972 3288 
+Q 3981 3250 3991 3194 
+Q 4175 2256 4588 1594 
+z
+M 1003 4116 
+Q 878 4544 638 4934 
+L 1053 5094 
+Q 1247 4788 1438 4269 
+L 1003 4116 
+z
+M 2316 4269 
+Q 2550 4688 2688 5131 
+L 3128 4997 
+Q 2966 4588 2675 4128 
+L 2316 4269 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#IPAGothic-935"/>
+     <use xlink:href="#IPAGothic-ea2" transform="translate(100 0)"/>
+     <use xlink:href="#IPAGothic-282" transform="translate(200 0)"/>
+     <use xlink:href="#IPAGothic-d3f" transform="translate(300 0)"/>
+     <use xlink:href="#IPAGothic-964" transform="translate(400 0)"/>
+     <use xlink:href="#IPAGothic-619" transform="translate(500 0)"/>
+     <use xlink:href="#IPAGothic-945" transform="translate(600 0)"/>
+    </g>
+   </g>
+   <g id="legend_1">
+    <g id="text_19">
+     <!-- μ = V面内 / (Ω R) -->
+     <g transform="translate(48.168945 138.28568) scale(0.09 -0.09)">
+      <defs>
+       <path id="IPAGothic-321" d="M 2169 3366 
+L 2706 3366 
+Q 2350 2097 2350 1566 
+Q 2350 716 2888 716 
+Q 3303 716 3572 1259 
+Q 3856 1831 4141 3366 
+L 4691 3366 
+Q 4225 1613 4225 1088 
+Q 4225 716 4469 716 
+Q 4831 716 5141 1425 
+L 5503 1125 
+Q 5053 197 4416 197 
+Q 3922 197 3828 906 
+Q 3416 197 2847 197 
+Q 2288 197 2106 966 
+Q 1894 172 1759 -594 
+L 1203 -594 
+L 2169 3366 
+z
+" transform="scale(0.015625)"/>
+       <path id="IPAGothic-de3" d="M 3063 3616 
+L 5628 3616 
+L 5628 -447 
+L 5175 -447 
+L 5175 -97 
+L 1222 -97 
+L 1222 -447 
+L 769 -447 
+L 769 3616 
+L 2619 3616 
+Q 2781 4025 2869 4434 
+L 353 4434 
+L 353 4856 
+L 6044 4856 
+L 6044 4434 
+L 3381 4434 
+L 3369 4397 
+Q 3222 3963 3063 3616 
+z
+M 2178 3219 
+L 1222 3219 
+L 1222 300 
+L 2178 300 
+L 2178 3219 
+z
+M 2600 3219 
+L 2600 2509 
+L 3772 2509 
+L 3772 3219 
+L 2600 3219 
+z
+M 4194 3219 
+L 4194 300 
+L 5175 300 
+L 5175 3219 
+L 4194 3219 
+z
+M 2600 2138 
+L 2600 1428 
+L 3772 1428 
+L 3772 2138 
+L 2600 2138 
+z
+M 2600 1056 
+L 2600 300 
+L 3772 300 
+L 3772 1056 
+L 2600 1056 
+z
+" transform="scale(0.015625)"/>
+       <path id="IPAGothic-bc5" d="M 2941 4172 
+L 2941 5153 
+L 3416 5153 
+L 3416 4172 
+L 5653 4172 
+L 5653 238 
+Q 5653 -75 5488 -191 
+Q 5353 -288 5006 -288 
+Q 4509 -288 3941 -244 
+L 3863 256 
+Q 4528 166 4928 166 
+Q 5178 166 5178 416 
+L 5178 3756 
+L 3403 3756 
+Q 3375 3356 3306 3006 
+Q 4225 2341 5013 1522 
+L 4634 1163 
+Q 3953 1934 3191 2584 
+Q 2816 1472 1628 881 
+L 1328 1272 
+Q 2388 1744 2709 2591 
+Q 2881 3034 2928 3756 
+L 1219 3756 
+L 1219 -366 
+L 738 -366 
+L 738 4172 
+L 2941 4172 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#IPAGothic-321"/>
+      <use xlink:href="#IPAGothic-c6" transform="translate(100 0)"/>
+      <use xlink:href="#IPAGothic-e3" transform="translate(150 0)"/>
+      <use xlink:href="#IPAGothic-c6" transform="translate(200 0)"/>
+      <use xlink:href="#IPAGothic-fc" transform="translate(250 0)"/>
+      <use xlink:href="#IPAGothic-de3" transform="translate(300 0)"/>
+      <use xlink:href="#IPAGothic-bc5" transform="translate(400 0)"/>
+      <use xlink:href="#IPAGothic-c6" transform="translate(500 0)"/>
+      <use xlink:href="#IPAGothic-d5" transform="translate(550 0)"/>
+      <use xlink:href="#IPAGothic-c6" transform="translate(600 0)"/>
+      <use xlink:href="#IPAGothic-ce" transform="translate(650 0)"/>
+      <use xlink:href="#IPAGothic-315" transform="translate(700 0)"/>
+      <use xlink:href="#IPAGothic-c6" transform="translate(800 0)"/>
+      <use xlink:href="#IPAGothic-f8" transform="translate(850 0)"/>
+      <use xlink:href="#IPAGothic-cf" transform="translate(900 0)"/>
+     </g>
+    </g>
+    <g id="line2d_36">
+     <path d="M 71.718945 147.605797 
+L 79.718945 147.605797 
+L 87.718945 147.605797 
+" style="fill: none; stroke: #2563eb; stroke-width: 1.8; stroke-linecap: square"/>
+    </g>
+    <g id="text_20">
+     <!-- 0.00 -->
+     <g transform="translate(94.118945 150.405797) scale(0.08 -0.08)">
+      <use xlink:href="#IPAGothic-d6"/>
+      <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+      <use xlink:href="#IPAGothic-d6" transform="translate(100 0)"/>
+      <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+     </g>
+    </g>
+    <g id="line2d_37">
+     <path d="M 71.718945 159.605797 
+L 79.718945 159.605797 
+L 87.718945 159.605797 
+" style="fill: none; stroke: #dc2626; stroke-width: 1.8; stroke-linecap: square"/>
+    </g>
+    <g id="text_21">
+     <!-- 0.05 -->
+     <g transform="translate(94.118945 162.405797) scale(0.08 -0.08)">
+      <use xlink:href="#IPAGothic-d6"/>
+      <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+      <use xlink:href="#IPAGothic-d6" transform="translate(100 0)"/>
+      <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+     </g>
+    </g>
+    <g id="line2d_38">
+     <path d="M 71.718945 171.605797 
+L 79.718945 171.605797 
+L 87.718945 171.605797 
+" style="fill: none; stroke: #059669; stroke-width: 1.8; stroke-linecap: square"/>
+    </g>
+    <g id="text_22">
+     <!-- 0.10 -->
+     <g transform="translate(94.118945 174.405797) scale(0.08 -0.08)">
+      <use xlink:href="#IPAGothic-d6"/>
+      <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+      <use xlink:href="#IPAGothic-d7" transform="translate(100 0)"/>
+      <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+     </g>
+    </g>
+    <g id="line2d_39">
+     <path d="M 71.718945 183.605797 
+L 79.718945 183.605797 
+L 87.718945 183.605797 
+" style="fill: none; stroke: #d97706; stroke-width: 1.8; stroke-linecap: square"/>
+    </g>
+    <g id="text_23">
+     <!-- 0.15 -->
+     <g transform="translate(94.118945 186.405797) scale(0.08 -0.08)">
+      <use xlink:href="#IPAGothic-d6"/>
+      <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+      <use xlink:href="#IPAGothic-d7" transform="translate(100 0)"/>
+      <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_5">
+    <path d="M 257.604239 194.566734 
+L 438.133651 194.566734 
+L 438.133651 22.702734 
+L 257.604239 22.702734 
+L 257.604239 194.566734 
+z
+" style="fill: none"/>
+   </g>
+   <g id="matplotlib.axis_3">
+    <g id="xtick_7">
+     <g id="line2d_40">
+      <path d="M 265.810122 194.566734 
+L 265.810122 22.702734 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_41">
+      <g>
+       <use xlink:href="#m271a993f80" x="265.810122" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_24">
+      <!-- 0.00 -->
+      <g transform="translate(256.810122 209.48568) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_42">
+      <path d="M 298.633651 194.566734 
+L 298.633651 22.702734 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_43">
+      <g>
+       <use xlink:href="#m271a993f80" x="298.633651" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_25">
+      <!-- 0.05 -->
+      <g transform="translate(289.633651 209.48568) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_44">
+      <path d="M 331.457181 194.566734 
+L 331.457181 22.702734 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_45">
+      <g>
+       <use xlink:href="#m271a993f80" x="331.457181" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_26">
+      <!-- 0.10 -->
+      <g transform="translate(322.457181 209.48568) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d7" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_10">
+     <g id="line2d_46">
+      <path d="M 364.28071 194.566734 
+L 364.28071 22.702734 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_47">
+      <g>
+       <use xlink:href="#m271a993f80" x="364.28071" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_27">
+      <!-- 0.15 -->
+      <g transform="translate(355.28071 209.48568) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d7" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_11">
+     <g id="line2d_48">
+      <path d="M 397.104239 194.566734 
+L 397.104239 22.702734 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_49">
+      <g>
+       <use xlink:href="#m271a993f80" x="397.104239" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_28">
+      <!-- 0.20 -->
+      <g transform="translate(388.104239 209.48568) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d8" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_12">
+     <g id="line2d_50">
+      <path d="M 429.927769 194.566734 
+L 429.927769 22.702734 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_51">
+      <g>
+       <use xlink:href="#m271a993f80" x="429.927769" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_29">
+      <!-- 0.25 -->
+      <g transform="translate(420.927769 209.48568) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d8" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="text_30">
+     <!-- λ = V軸 / (Ω R) -->
+     <g transform="translate(309.618945 222.48568) scale(0.09 -0.09)">
+      <use xlink:href="#IPAGothic-320"/>
+      <use xlink:href="#IPAGothic-c6" transform="translate(100 0)"/>
+      <use xlink:href="#IPAGothic-e3" transform="translate(150 0)"/>
+      <use xlink:href="#IPAGothic-c6" transform="translate(200 0)"/>
+      <use xlink:href="#IPAGothic-fc" transform="translate(250 0)"/>
+      <use xlink:href="#IPAGothic-7eb" transform="translate(300 0)"/>
+      <use xlink:href="#IPAGothic-c6" transform="translate(400 0)"/>
+      <use xlink:href="#IPAGothic-d5" transform="translate(450 0)"/>
+      <use xlink:href="#IPAGothic-c6" transform="translate(500 0)"/>
+      <use xlink:href="#IPAGothic-ce" transform="translate(550 0)"/>
+      <use xlink:href="#IPAGothic-315" transform="translate(600 0)"/>
+      <use xlink:href="#IPAGothic-c6" transform="translate(700 0)"/>
+      <use xlink:href="#IPAGothic-f8" transform="translate(750 0)"/>
+      <use xlink:href="#IPAGothic-cf" transform="translate(800 0)"/>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_4">
+    <g id="ytick_10">
+     <g id="line2d_52">
+      <path d="M 257.604239 179.412114 
+L 438.133651 179.412114 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_53">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="257.604239" y="179.412114" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_31">
+      <!-- 0.65 -->
+      <g transform="translate(232.604239 183.371586) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-dc" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_11">
+     <g id="line2d_54">
+      <path d="M 257.604239 158.141059 
+L 438.133651 158.141059 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_55">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="257.604239" y="158.141059" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_32">
+      <!-- 0.70 -->
+      <g transform="translate(232.604239 162.100532) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-dd" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_12">
+     <g id="line2d_56">
+      <path d="M 257.604239 136.870005 
+L 438.133651 136.870005 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_57">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="257.604239" y="136.870005" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_33">
+      <!-- 0.75 -->
+      <g transform="translate(232.604239 140.829478) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-dd" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_13">
+     <g id="line2d_58">
+      <path d="M 257.604239 115.598951 
+L 438.133651 115.598951 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_59">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="257.604239" y="115.598951" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_34">
+      <!-- 0.80 -->
+      <g transform="translate(232.604239 119.558424) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-de" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_14">
+     <g id="line2d_60">
+      <path d="M 257.604239 94.327897 
+L 438.133651 94.327897 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_61">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="257.604239" y="94.327897" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_35">
+      <!-- 0.85 -->
+      <g transform="translate(232.604239 98.28737) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-de" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_15">
+     <g id="line2d_62">
+      <path d="M 257.604239 73.056843 
+L 438.133651 73.056843 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_63">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="257.604239" y="73.056843" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_36">
+      <!-- 0.90 -->
+      <g transform="translate(232.604239 77.016315) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-df" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_16">
+     <g id="line2d_64">
+      <path d="M 257.604239 51.785789 
+L 438.133651 51.785789 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_65">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="257.604239" y="51.785789" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_37">
+      <!-- 0.95 -->
+      <g transform="translate(232.604239 55.745261) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-df" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_17">
+     <g id="line2d_66">
+      <path d="M 257.604239 30.514734 
+L 438.133651 30.514734 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-opacity: 0.25; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_67">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="257.604239" y="30.514734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_38">
+      <!-- 1.00 -->
+      <g transform="translate(232.604239 34.474207) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d7"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="text_39">
+     <!-- $f_Q$ -->
+     <g transform="translate(226.354239 112.864734) rotate(-90) scale(0.09 -0.09)">
+      <defs>
+       <path id="DejaVuSans-Oblique-34" d="M 2309 -84 
+Q 2275 -88 2237 -89 
+Q 2200 -91 2125 -91 
+Q 1250 -91 756 411 
+Q 263 913 263 1797 
+Q 263 2319 452 2844 
+Q 641 3369 978 3788 
+Q 1369 4269 1858 4509 
+Q 2347 4750 2938 4750 
+Q 3794 4750 4287 4245 
+Q 4781 3741 4781 2869 
+Q 4781 1928 4265 1147 
+Q 3750 366 2919 44 
+L 3553 -825 
+L 2847 -825 
+L 2309 -84 
+z
+M 2919 4238 
+Q 2400 4238 2003 3986 
+Q 1606 3734 1313 3219 
+Q 1125 2891 1026 2522 
+Q 928 2153 928 1778 
+Q 928 1128 1239 775 
+Q 1550 422 2119 422 
+Q 2631 422 3032 676 
+Q 3434 931 3719 1434 
+Q 3909 1772 4009 2142 
+Q 4109 2513 4109 2881 
+Q 4109 3528 3796 3883 
+Q 3484 4238 2919 4238 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#DejaVuSans-Oblique-49" transform="translate(0 0.015625)"/>
+      <use xlink:href="#DejaVuSans-Oblique-34" transform="translate(35.205078 -14.984326) scale(0.7)"/>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_68">
+    <path d="M 265.810122 30.514734 
+L 282.221886 32.631918 
+L 298.633651 35.498826 
+L 315.045416 43.97242 
+L 331.457181 55.07818 
+L 347.868945 68.737068 
+L 364.28071 85.263974 
+L 380.692475 104.987346 
+L 397.104239 128.245919 
+L 413.516004 155.385319 
+L 429.927769 186.754734 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: #2563eb; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_69">
+    <path d="M 265.810122 31.427639 
+L 282.221886 32.694716 
+L 298.633651 36.205295 
+L 315.045416 43.270959 
+L 331.457181 53.515551 
+L 347.868945 67.01706 
+L 364.28071 83.660828 
+L 380.692475 103.582236 
+L 397.104239 127.106718 
+L 413.516004 154.568037 
+L 429.927769 186.304926 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: #dc2626; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_70">
+    <path d="M 265.810122 33.671369 
+L 282.221886 32.487153 
+L 298.633651 34.908127 
+L 315.045416 40.723002 
+L 331.457181 49.878986 
+L 347.868945 62.542231 
+L 364.28071 78.959354 
+L 380.692475 99.246923 
+L 397.104239 123.470032 
+L 413.516004 151.700046 
+L 429.927769 184.17362 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: #059669; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_71">
+    <path d="M 265.810122 36.748252 
+L 282.221886 31.163941 
+L 298.633651 31.174717 
+L 315.045416 35.498237 
+L 331.457181 43.730313 
+L 347.868945 55.802905 
+L 364.28071 71.888699 
+L 380.692475 92.029683 
+L 397.104239 116.344165 
+L 413.516004 145.012843 
+L 429.927769 177.793462 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: #d97706; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_72">
+    <path d="M 257.604239 30.514734 
+L 438.133651 30.514734 
+" clip-path="url(#pd25f303601)" style="fill: none; stroke: currentColor; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 257.604239 194.566734 
+L 257.604239 22.702734 
+" style="fill: none; stroke: currentColor; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 257.604239 194.566734 
+L 438.133651 194.566734 
+" style="fill: none; stroke: currentColor; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_40">
+    <!-- トルクの補正係数 -->
+    <g transform="translate(304.668945 16.702734) scale(0.108 -0.108)">
+     <defs>
+      <path id="IPAGothic-2cf" d="M 2284 4997 
+L 2803 4997 
+L 2803 3206 
+Q 4088 2619 5216 1888 
+L 4878 1369 
+Q 3816 2178 2803 2688 
+L 2803 -184 
+L 2284 -184 
+L 2284 4997 
+z
+" transform="scale(0.015625)"/>
+      <path id="IPAGothic-2f2" d="M 353 331 
+Q 1313 994 1544 2022 
+Q 1684 2650 1684 4397 
+L 2203 4397 
+L 2203 4153 
+L 2203 4116 
+Q 2203 2259 1934 1491 
+Q 1619 588 744 -38 
+L 353 331 
+z
+M 3125 4666 
+L 3650 4666 
+L 3650 769 
+Q 4875 1488 5672 2731 
+L 5997 2278 
+Q 5075 966 3516 63 
+L 3125 359 
+L 3125 4666 
+z
+" transform="scale(0.015625)"/>
+      <path id="IPAGothic-2b6" d="M 4844 4191 
+L 5184 3941 
+Q 4619 1013 2028 -225 
+L 1656 184 
+Q 2838 675 3616 1625 
+Q 4359 2531 4600 3731 
+L 2778 3731 
+Q 2184 2681 1319 1959 
+L 941 2309 
+Q 2234 3353 2803 5022 
+L 3297 4881 
+Q 3234 4672 3016 4191 
+L 4844 4191 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#IPAGothic-2cf"/>
+     <use xlink:href="#IPAGothic-2f2" transform="translate(100 0)"/>
+     <use xlink:href="#IPAGothic-2b6" transform="translate(200 0)"/>
+     <use xlink:href="#IPAGothic-282" transform="translate(300 0)"/>
+     <use xlink:href="#IPAGothic-d3f" transform="translate(400 0)"/>
+     <use xlink:href="#IPAGothic-964" transform="translate(500 0)"/>
+     <use xlink:href="#IPAGothic-619" transform="translate(600 0)"/>
+     <use xlink:href="#IPAGothic-945" transform="translate(700 0)"/>
+    </g>
+   </g>
+  </g>
+  <g id="axes_3">
+   <g id="patch_8">
+    <path d="M 474.239534 194.566734 
+L 624.078945 194.566734 
+L 624.078945 22.702734 
+L 474.239534 22.702734 
+L 474.239534 194.566734 
+z
+" style="fill: none"/>
+   </g>
+   <g id="QuadContourSet_1">
+    <path d="M 499.212769 23.485505 
+L 521.756656 22.702734 
+L 499.212769 22.702734 
+L 474.239534 22.702734 
+L 474.239534 23.777262 
+z
+" clip-path="url(#pc87ac61d53)" style="fill: #0f437b"/>
+    <path d="M 499.212769 34.932378 
+L 524.186004 33.994088 
+L 549.159239 32.456216 
+L 574.132475 30.29207 
+L 599.10571 27.471826 
+L 624.078945 24.032006 
+L 624.078945 22.702734 
+L 599.10571 22.702734 
+L 574.132475 22.702734 
+L 549.159239 22.702734 
+L 524.186004 22.702734 
+L 521.756656 22.702734 
+L 499.212769 23.485505 
+L 474.239534 23.777262 
+L 474.239534 35.248645 
+z
+" clip-path="url(#pc87ac61d53)" style="fill: #2369ad"/>
+    <path d="M 499.212769 46.653307 
+L 524.186004 45.594172 
+L 549.159239 43.868131 
+L 574.132475 41.501197 
+L 587.337157 39.889134 
+L 599.10571 38.514666 
+L 624.078945 34.964005 
+L 624.078945 24.032006 
+L 599.10571 27.471826 
+L 574.132475 30.29207 
+L 549.159239 32.456216 
+L 524.186004 33.994088 
+L 499.212769 34.932378 
+L 474.239534 35.248645 
+L 474.239534 39.889134 
+L 474.239534 47.011267 
+z
+" clip-path="url(#pc87ac61d53)" style="fill: #3b88be"/>
+    <path d="M 499.212769 58.650006 
+L 524.186004 57.451592 
+L 528.970103 57.075534 
+L 549.159239 55.571375 
+L 574.132475 53.044309 
+L 599.10571 49.85138 
+L 624.078945 46.073586 
+L 624.078945 39.889134 
+L 624.078945 34.964005 
+L 599.10571 38.514666 
+L 587.337157 39.889134 
+L 574.132475 41.501197 
+L 549.159239 43.868131 
+L 524.186004 45.594172 
+L 499.212769 46.653307 
+L 474.239534 47.011267 
+L 474.239534 57.075534 
+L 474.239534 59.056212 
+z
+" clip-path="url(#pc87ac61d53)" style="fill: #68abd0"/>
+    <path d="M 499.212769 71.106048 
+L 524.186004 69.799243 
+L 549.159239 67.688204 
+L 574.132475 64.865128 
+L 599.10571 61.396092 
+L 624.078945 57.339956 
+L 624.078945 57.075534 
+L 624.078945 46.073586 
+L 599.10571 49.85138 
+L 574.132475 53.044309 
+L 549.159239 55.571375 
+L 528.970103 57.075534 
+L 524.186004 57.451592 
+L 499.212769 58.650006 
+L 474.239534 59.056212 
+L 474.239534 71.549499 
+z
+" clip-path="url(#pc87ac61d53)" style="fill: #a0cce2"/>
+    <path d="M 499.212769 83.98941 
+L 524.186004 82.496691 
+L 549.159239 80.101204 
+L 574.132475 76.956246 
+L 591.897829 74.261934 
+L 599.10571 73.229851 
+L 624.078945 69.092281 
+L 624.078945 57.339956 
+L 599.10571 61.396092 
+L 574.132475 64.865128 
+L 549.159239 67.688204 
+L 524.186004 69.799243 
+L 499.212769 71.106048 
+L 474.239534 71.549499 
+L 474.239534 74.261934 
+L 474.239534 84.497545 
+z
+" clip-path="url(#pc87ac61d53)" style="fill: #cce2ef"/>
+    <path d="M 499.212769 97.284096 
+L 524.186004 95.57354 
+L 549.159239 92.86135 
+L 559.239612 91.448334 
+L 574.132475 89.490237 
+L 599.10571 85.618427 
+L 624.078945 81.17932 
+L 624.078945 74.261934 
+L 624.078945 69.092281 
+L 599.10571 73.229851 
+L 591.897829 74.261934 
+L 574.132475 76.956246 
+L 549.159239 80.101204 
+L 524.186004 82.496691 
+L 499.212769 83.98941 
+L 474.239534 84.497545 
+L 474.239534 91.448334 
+L 474.239534 97.868352 
+z
+" clip-path="url(#pc87ac61d53)" style="fill: #e9f0f4"/>
+    <path d="M 499.212769 111.04969 
+L 524.186004 109.086159 
+L 527.917857 108.634734 
+L 549.159239 106.224344 
+L 574.132475 102.651224 
+L 599.10571 98.456717 
+L 624.078945 93.649262 
+L 624.078945 91.448334 
+L 624.078945 81.17932 
+L 599.10571 85.618427 
+L 574.132475 89.490237 
+L 559.239612 91.448334 
+L 549.159239 92.86135 
+L 524.186004 95.57354 
+L 499.212769 97.284096 
+L 474.239534 97.868352 
+L 474.239534 108.634734 
+L 474.239534 111.724027 
+z
+" clip-path="url(#pc87ac61d53)" style="fill: #f9ede5"/>
+    <path d="M 484.320749 125.821134 
+L 499.212769 125.378874 
+L 524.186004 123.331076 
+L 549.159239 120.34053 
+L 574.132475 116.457632 
+L 599.10571 111.848088 
+L 614.286471 108.634734 
+L 624.078945 106.711581 
+L 624.078945 93.649262 
+L 599.10571 98.456717 
+L 574.132475 102.651224 
+L 549.159239 106.224344 
+L 527.917857 108.634734 
+L 524.186004 109.086159 
+L 499.212769 111.04969 
+L 474.239534 111.724027 
+L 474.239534 125.821134 
+L 474.239534 126.137671 
+z
+" clip-path="url(#pc87ac61d53)" style="fill: #fcd7c2"/>
+    <path d="M 499.212769 140.49861 
+L 524.186004 138.539929 
+L 549.159239 135.362323 
+L 574.132475 131.09734 
+L 599.10571 125.935442 
+L 599.591265 125.821134 
+L 624.078945 120.536931 
+L 624.078945 108.634734 
+L 624.078945 106.711581 
+L 614.286471 108.634734 
+L 599.10571 111.848088 
+L 574.132475 116.457632 
+L 549.159239 120.34053 
+L 524.186004 123.331076 
+L 499.212769 125.378874 
+L 484.320749 125.821134 
+L 474.239534 126.137671 
+L 474.239534 141.287532 
+z
+" clip-path="url(#pc87ac61d53)" style="fill: #f6b191"/>
+    <path d="M 499.212769 157.028462 
+L 524.186004 155.127066 
+L 549.159239 151.66263 
+L 574.132475 146.851054 
+L 590.410058 143.007534 
+L 599.10571 141.161878 
+L 624.078945 135.159099 
+L 624.078945 125.821134 
+L 624.078945 120.536931 
+L 599.591265 125.821134 
+L 599.10571 125.935442 
+L 574.132475 131.09734 
+L 549.159239 135.362323 
+L 524.186004 138.539929 
+L 499.212769 140.49861 
+L 474.239534 141.287532 
+L 474.239534 143.007534 
+L 474.239534 157.413834 
+z
+" clip-path="url(#pc87ac61d53)" style="fill: #e58368"/>
+    <path d="M 498.293932 177.380334 
+L 499.212769 177.337955 
+L 524.186004 174.504691 
+L 549.159239 170.104116 
+L 574.132475 164.309475 
+L 588.953928 160.193934 
+L 599.10571 157.753861 
+L 624.078945 150.914985 
+L 624.078945 143.007534 
+L 624.078945 135.159099 
+L 599.10571 141.161878 
+L 590.410058 143.007534 
+L 574.132475 146.851054 
+L 549.159239 151.66263 
+L 524.186004 155.127066 
+L 499.212769 157.028462 
+L 474.239534 157.413834 
+L 474.239534 160.193934 
+L 474.239534 177.380334 
+L 474.239534 178.635503 
+z
+" clip-path="url(#pc87ac61d53)" style="fill: #ce4f45"/>
+    <path d="M 499.212769 194.566734 
+L 524.186004 194.566734 
+L 539.676835 194.566734 
+L 549.159239 192.509373 
+L 574.132475 185.364577 
+L 596.470937 177.380334 
+L 599.10571 176.640917 
+L 624.078945 168.759122 
+L 624.078945 160.193934 
+L 624.078945 150.914985 
+L 599.10571 157.753861 
+L 588.953928 160.193934 
+L 574.132475 164.309475 
+L 549.159239 170.104116 
+L 524.186004 174.504691 
+L 499.212769 177.337955 
+L 498.293932 177.380334 
+L 474.239534 178.635503 
+L 474.239534 194.566734 
+z
+" clip-path="url(#pc87ac61d53)" style="fill: #b41c2d"/>
+    <path d="M 549.159239 194.566734 
+L 574.132475 194.566734 
+L 599.10571 194.566734 
+L 624.078945 194.566734 
+L 624.078945 177.380334 
+L 624.078945 168.759122 
+L 599.10571 176.640917 
+L 596.470937 177.380334 
+L 574.132475 185.364577 
+L 549.159239 192.509373 
+L 539.676835 194.566734 
+z
+" clip-path="url(#pc87ac61d53)" style="fill: #810823"/>
+   </g>
+   <g id="matplotlib.axis_5">
+    <g id="xtick_13">
+     <g id="line2d_73">
+      <g>
+       <use xlink:href="#m271a993f80" x="474.239534" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_41">
+      <!-- 0.00 -->
+      <g transform="translate(465.239534 209.48568) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_14">
+     <g id="line2d_74">
+      <g>
+       <use xlink:href="#m271a993f80" x="524.186004" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_42">
+      <!-- 0.05 -->
+      <g transform="translate(515.186004 209.48568) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_15">
+     <g id="line2d_75">
+      <g>
+       <use xlink:href="#m271a993f80" x="574.132475" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_43">
+      <!-- 0.10 -->
+      <g transform="translate(565.132475 209.48568) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d7" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_16">
+     <g id="line2d_76">
+      <g>
+       <use xlink:href="#m271a993f80" x="624.078945" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_44">
+      <!-- 0.15 -->
+      <g transform="translate(615.078945 209.48568) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d7" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="text_45">
+     <!-- μ -->
+     <g transform="translate(544.659239 222.48568) scale(0.09 -0.09)">
+      <use xlink:href="#IPAGothic-321"/>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_6">
+    <g id="ytick_18">
+     <g id="line2d_77">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="474.239534" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_46">
+      <!-- 0.00 -->
+      <g transform="translate(449.239534 198.526207) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_19">
+     <g id="line2d_78">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="474.239534" y="160.193934" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_47">
+      <!-- 0.05 -->
+      <g transform="translate(449.239534 164.153407) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_20">
+     <g id="line2d_79">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="474.239534" y="125.821134" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_48">
+      <!-- 0.10 -->
+      <g transform="translate(449.239534 129.780607) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d7" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_21">
+     <g id="line2d_80">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="474.239534" y="91.448334" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_49">
+      <!-- 0.15 -->
+      <g transform="translate(449.239534 95.407807) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d7" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_22">
+     <g id="line2d_81">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="474.239534" y="57.075534" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_50">
+      <!-- 0.20 -->
+      <g transform="translate(449.239534 61.035007) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d8" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_23">
+     <g id="line2d_82">
+      <g>
+       <use xlink:href="#mf3f0e9b4db" x="474.239534" y="22.702734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_51">
+      <!-- 0.25 -->
+      <g transform="translate(449.239534 26.662207) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d8" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-db" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="text_52">
+     <!-- λ -->
+     <g transform="translate(444.158479 113.134734) rotate(-90) scale(0.09 -0.09)">
+      <use xlink:href="#IPAGothic-320"/>
+     </g>
+    </g>
+   </g>
+   <g id="QuadContourSet_2">
+    <path clip-path="url(#pc87ac61d53)" style="fill: none; stroke: currentColor; stroke-opacity: 0.55; stroke-width: 0.5"/>
+    <path d="M 521.756656 22.702734 
+L 508.444572 23.164958 
+M 489.977567 23.593398 
+L 474.239534 23.777262 
+" clip-path="url(#pc87ac61d53)" style="fill: none; stroke: currentColor; stroke-opacity: 0.55; stroke-width: 0.5"/>
+    <path d="M 624.078945 31.320006 
+L 599.10571 34.833719 
+L 574.132475 37.728678 
+L 558.369278 39.139243 
+M 539.937962 40.587304 
+L 524.186004 41.646832 
+L 499.212769 42.676562 
+L 474.239534 43.024443 
+" clip-path="url(#pc87ac61d53)" style="fill: none; stroke: currentColor; stroke-opacity: 0.55; stroke-width: 0.5"/>
+    <path d="M 624.078945 49.825314 
+L 599.10571 53.644211 
+L 574.132475 56.892013 
+L 572.333513 57.075534 
+L 558.358247 58.579615 
+M 539.943895 60.306868 
+L 524.186004 61.567476 
+L 499.212769 62.80202 
+L 474.239534 63.220641 
+" clip-path="url(#pc87ac61d53)" style="fill: none; stroke: currentColor; stroke-opacity: 0.55; stroke-width: 0.5"/>
+    <path d="M 624.078945 69.092281 
+L 599.10571 73.229851 
+L 591.897829 74.261934 
+L 574.132475 76.956246 
+L 558.344834 78.944433 
+M 539.952735 80.984312 
+L 524.186004 82.496691 
+L 499.212769 83.98941 
+L 474.239534 84.497545 
+" clip-path="url(#pc87ac61d53)" style="fill: none; stroke: currentColor; stroke-opacity: 0.55; stroke-width: 0.5"/>
+    <path d="M 624.078945 89.412589 
+L 612.736159 91.448334 
+L 599.10571 94.060689 
+L 574.132475 98.225533 
+L 558.331451 100.46819 
+M 539.963222 102.799584 
+L 524.186004 104.565975 
+L 499.212769 106.385001 
+L 474.239534 107.006712 
+" clip-path="url(#pc87ac61d53)" style="fill: none; stroke: currentColor; stroke-opacity: 0.55; stroke-width: 0.5"/>
+    <path d="M 624.078945 111.232207 
+L 599.10571 116.541 
+L 574.132475 121.20452 
+L 552.313768 124.608966 
+M 533.950851 127.005346 
+L 524.186004 128.264565 
+L 499.212769 130.402002 
+L 474.239534 131.187625 
+" clip-path="url(#pc87ac61d53)" style="fill: none; stroke: currentColor; stroke-opacity: 0.55; stroke-width: 0.5"/>
+    <path d="M 624.078945 135.159099 
+L 599.10571 141.161878 
+L 590.410058 143.007534 
+L 574.132475 146.851054 
+L 558.279002 149.905532 
+M 539.984223 152.935443 
+L 524.186004 155.127066 
+L 499.212769 157.028462 
+L 474.239534 157.413834 
+" clip-path="url(#pc87ac61d53)" style="fill: none; stroke: currentColor; stroke-opacity: 0.55; stroke-width: 0.5"/>
+    <path d="M 624.078945 162.261736 
+L 599.10571 170.225742 
+L 574.132475 177.233118 
+L 573.513491 177.380334 
+L 558.132233 181.896793 
+M 540.069875 186.504103 
+L 524.186004 189.951153 
+L 499.212769 193.299121 
+L 474.239534 194.566734 
+" clip-path="url(#pc87ac61d53)" style="fill: none; stroke: currentColor; stroke-opacity: 0.55; stroke-width: 0.5"/>
+    <path clip-path="url(#pc87ac61d53)" style="fill: none; stroke: currentColor; stroke-opacity: 0.55; stroke-width: 0.5"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 474.239534 194.566734 
+L 474.239534 22.702734 
+" style="fill: none; stroke: currentColor; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 474.239534 194.566734 
+L 624.078945 194.566734 
+" style="fill: none; stroke: currentColor; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_53">
+    <!-- $f_T(\lambda, \mu)$ -->
+    <g transform="translate(531.177239 16.702734) scale(0.108 -0.108)">
+     <defs>
+      <path id="DejaVuSans-b" d="M 1984 4856 
+Q 1566 4138 1362 3434 
+Q 1159 2731 1159 2009 
+Q 1159 1288 1364 580 
+Q 1569 -128 1984 -844 
+L 1484 -844 
+Q 1016 -109 783 600 
+Q 550 1309 550 2009 
+Q 550 2706 781 3412 
+Q 1013 4119 1484 4856 
+L 1984 4856 
+z
+" transform="scale(0.015625)"/>
+      <path id="DejaVuSans-Oblique-34f" d="M 2350 4316 
+L 3125 0 
+L 2516 0 
+L 2038 2588 
+L 328 0 
+L -281 0 
+L 1903 3356 
+L 1794 3975 
+Q 1725 4369 1391 4369 
+L 1091 4369 
+L 1184 4863 
+L 1550 4856 
+Q 2253 4847 2350 4316 
+z
+" transform="scale(0.015625)"/>
+      <path id="DejaVuSans-f" d="M 750 794 
+L 1409 794 
+L 1409 256 
+L 897 -744 
+L 494 -744 
+L 750 256 
+L 750 794 
+z
+" transform="scale(0.015625)"/>
+      <path id="DejaVuSans-Oblique-350" d="M -84 -1331 
+L 856 3500 
+L 1434 3500 
+L 1009 1322 
+Q 997 1256 987 1175 
+Q 978 1094 978 1013 
+Q 978 722 1161 565 
+Q 1344 409 1684 409 
+Q 2147 409 2431 671 
+Q 2716 934 2816 1459 
+L 3213 3500 
+L 3788 3500 
+L 3266 809 
+Q 3253 750 3248 706 
+Q 3244 663 3244 628 
+Q 3244 531 3283 486 
+Q 3322 441 3406 441 
+Q 3438 441 3492 456 
+Q 3547 472 3647 513 
+L 3559 50 
+Q 3422 -19 3297 -55 
+Q 3172 -91 3053 -91 
+Q 2847 -91 2730 40 
+Q 2613 172 2613 403 
+Q 2438 153 2195 31 
+Q 1953 -91 1625 -91 
+Q 1334 -91 1117 43 
+Q 900 178 831 397 
+L 494 -1331 
+L -84 -1331 
+z
+" transform="scale(0.015625)"/>
+      <path id="DejaVuSans-c" d="M 513 4856 
+L 1013 4856 
+Q 1481 4119 1714 3412 
+Q 1947 2706 1947 2009 
+Q 1947 1309 1714 600 
+Q 1481 -109 1013 -844 
+L 513 -844 
+Q 928 -128 1133 580 
+Q 1338 1288 1338 2009 
+Q 1338 2731 1133 3434 
+Q 928 4138 513 4856 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#DejaVuSans-Oblique-49" transform="translate(0 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-37" transform="translate(35.205078 -14.984326) scale(0.7)"/>
+     <use xlink:href="#DejaVuSans-b" transform="translate(80.698242 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-34f" transform="translate(119.711914 0.015625)"/>
+     <use xlink:href="#DejaVuSans-f" transform="translate(178.891602 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-350" transform="translate(230.161133 0.015625)"/>
+     <use xlink:href="#DejaVuSans-c" transform="translate(293.78418 0.015625)"/>
+    </g>
+   </g>
+   <g id="text_54">
+    <g clip-path="url(#pc87ac61d53)">
+     <!-- 0.30 -->
+     <g style="opacity: 0.55" transform="translate(492.265263 26.278961) rotate(-1.103166) scale(0.07 -0.07)">
+      <use xlink:href="#IPAGothic-d6"/>
+      <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+      <use xlink:href="#IPAGothic-d9" transform="translate(100 0)"/>
+      <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+     </g>
+    </g>
+   </g>
+   <g id="text_55">
+    <g clip-path="url(#pc87ac61d53)">
+     <!-- 0.40 -->
+     <g style="opacity: 0.55" transform="translate(542.347322 43.076555) rotate(-3.734833) scale(0.07 -0.07)">
+      <use xlink:href="#IPAGothic-d6"/>
+      <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+      <use xlink:href="#IPAGothic-da" transform="translate(100 0)"/>
+      <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+     </g>
+    </g>
+   </g>
+   <g id="text_56">
+    <g clip-path="url(#pc87ac61d53)">
+     <!-- 0.50 -->
+     <g style="opacity: 0.55" transform="translate(542.386759 62.764141) rotate(-4.451691) scale(0.07 -0.07)">
+      <use xlink:href="#IPAGothic-d6"/>
+      <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+      <use xlink:href="#IPAGothic-db" transform="translate(100 0)"/>
+      <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+     </g>
+    </g>
+   </g>
+   <g id="text_57">
+    <g clip-path="url(#pc87ac61d53)">
+     <!-- 0.60 -->
+     <g style="opacity: 0.55" transform="translate(542.432474 83.390865) rotate(-5.259585) scale(0.07 -0.07)">
+      <use xlink:href="#IPAGothic-d6"/>
+      <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+      <use xlink:href="#IPAGothic-dc" transform="translate(100 0)"/>
+      <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+     </g>
+    </g>
+   </g>
+   <g id="text_58">
+    <g clip-path="url(#pc87ac61d53)">
+     <!-- 0.70 -->
+     <g style="opacity: 0.55" transform="translate(542.47636 105.147936) rotate(-6.013815) scale(0.07 -0.07)">
+      <use xlink:href="#IPAGothic-d6"/>
+      <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+      <use xlink:href="#IPAGothic-dd" transform="translate(100 0)"/>
+      <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+     </g>
+    </g>
+   </g>
+   <g id="text_59">
+    <g clip-path="url(#pc87ac61d53)">
+     <!-- 0.80 -->
+     <g style="opacity: 0.55" transform="translate(536.447263 129.191341) rotate(-5.94768) scale(0.07 -0.07)">
+      <use xlink:href="#IPAGothic-d6"/>
+      <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+      <use xlink:href="#IPAGothic-de" transform="translate(100 0)"/>
+      <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+     </g>
+    </g>
+   </g>
+   <g id="text_60">
+    <g clip-path="url(#pc87ac61d53)">
+     <!-- 0.90 -->
+     <g style="opacity: 0.55" transform="translate(542.586581 155.250302) rotate(-7.826907) scale(0.07 -0.07)">
+      <use xlink:href="#IPAGothic-d6"/>
+      <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+      <use xlink:href="#IPAGothic-df" transform="translate(100 0)"/>
+      <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+     </g>
+    </g>
+   </g>
+   <g id="text_61">
+    <g clip-path="url(#pc87ac61d53)">
+     <!-- 1.00 -->
+     <g style="opacity: 0.55" transform="translate(542.861815 188.582948) rotate(-11.953845) scale(0.07 -0.07)">
+      <use xlink:href="#IPAGothic-d7"/>
+      <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+      <use xlink:href="#IPAGothic-d6" transform="translate(100 0)"/>
+      <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+  <g id="axes_4">
+   <g id="patch_11">
+    <path d="M 627.689534 194.566734 
+L 636.282734 194.566734 
+L 636.282734 22.702734 
+L 627.689534 22.702734 
+L 627.689534 194.566734 
+z
+" style="fill: none"/>
+   </g>
+   <g id="QuadMesh_1">
+    <path d="M 627.689534 194.566734 
+L 636.282734 194.566734 
+L 636.282734 182.290734 
+L 627.689534 182.290734 
+L 627.689534 194.566734 
+" clip-path="url(#p0461f17acd)" style="fill: #0f437b"/>
+    <path d="M 627.689534 182.290734 
+L 636.282734 182.290734 
+L 636.282734 170.014734 
+L 627.689534 170.014734 
+L 627.689534 182.290734 
+" clip-path="url(#p0461f17acd)" style="fill: #2369ad"/>
+    <path d="M 627.689534 170.014734 
+L 636.282734 170.014734 
+L 636.282734 157.738734 
+L 627.689534 157.738734 
+L 627.689534 170.014734 
+" clip-path="url(#p0461f17acd)" style="fill: #3b88be"/>
+    <path d="M 627.689534 157.738734 
+L 636.282734 157.738734 
+L 636.282734 145.462734 
+L 627.689534 145.462734 
+L 627.689534 157.738734 
+" clip-path="url(#p0461f17acd)" style="fill: #68abd0"/>
+    <path d="M 627.689534 145.462734 
+L 636.282734 145.462734 
+L 636.282734 133.186734 
+L 627.689534 133.186734 
+L 627.689534 145.462734 
+" clip-path="url(#p0461f17acd)" style="fill: #a0cce2"/>
+    <path d="M 627.689534 133.186734 
+L 636.282734 133.186734 
+L 636.282734 120.910734 
+L 627.689534 120.910734 
+L 627.689534 133.186734 
+" clip-path="url(#p0461f17acd)" style="fill: #cce2ef"/>
+    <path d="M 627.689534 120.910734 
+L 636.282734 120.910734 
+L 636.282734 108.634734 
+L 627.689534 108.634734 
+L 627.689534 120.910734 
+" clip-path="url(#p0461f17acd)" style="fill: #e9f0f4"/>
+    <path d="M 627.689534 108.634734 
+L 636.282734 108.634734 
+L 636.282734 96.358734 
+L 627.689534 96.358734 
+L 627.689534 108.634734 
+" clip-path="url(#p0461f17acd)" style="fill: #f9ede5"/>
+    <path d="M 627.689534 96.358734 
+L 636.282734 96.358734 
+L 636.282734 84.082734 
+L 627.689534 84.082734 
+L 627.689534 96.358734 
+" clip-path="url(#p0461f17acd)" style="fill: #fcd7c2"/>
+    <path d="M 627.689534 84.082734 
+L 636.282734 84.082734 
+L 636.282734 71.806734 
+L 627.689534 71.806734 
+L 627.689534 84.082734 
+" clip-path="url(#p0461f17acd)" style="fill: #f6b191"/>
+    <path d="M 627.689534 71.806734 
+L 636.282734 71.806734 
+L 636.282734 59.530734 
+L 627.689534 59.530734 
+L 627.689534 71.806734 
+" clip-path="url(#p0461f17acd)" style="fill: #e58368"/>
+    <path d="M 627.689534 59.530734 
+L 636.282734 59.530734 
+L 636.282734 47.254734 
+L 627.689534 47.254734 
+L 627.689534 59.530734 
+" clip-path="url(#p0461f17acd)" style="fill: #ce4f45"/>
+    <path d="M 627.689534 47.254734 
+L 636.282734 47.254734 
+L 636.282734 34.978734 
+L 627.689534 34.978734 
+L 627.689534 47.254734 
+" clip-path="url(#p0461f17acd)" style="fill: #b41c2d"/>
+    <path d="M 627.689534 34.978734 
+L 636.282734 34.978734 
+L 636.282734 22.702734 
+L 627.689534 22.702734 
+L 627.689534 34.978734 
+" clip-path="url(#p0461f17acd)" style="fill: #810823"/>
+   </g>
+   <g id="matplotlib.axis_7"/>
+   <g id="matplotlib.axis_8">
+    <g id="ytick_24">
+     <g id="line2d_83">
+      <defs>
+       <path id="m4014b26094" d="M 0 0 
+L 3.5 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m4014b26094" x="636.282734" y="194.566734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_62">
+      <!-- 0.24 -->
+      <g transform="translate(643.282734 198.526207) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d8" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-da" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_25">
+     <g id="line2d_84">
+      <g>
+       <use xlink:href="#m4014b26094" x="636.282734" y="170.014734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_63">
+      <!-- 0.36 -->
+      <g transform="translate(643.282734 173.974207) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d9" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-dc" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_26">
+     <g id="line2d_85">
+      <g>
+       <use xlink:href="#m4014b26094" x="636.282734" y="145.462734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_64">
+      <!-- 0.48 -->
+      <g transform="translate(643.282734 149.422207) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-da" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-de" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_27">
+     <g id="line2d_86">
+      <g>
+       <use xlink:href="#m4014b26094" x="636.282734" y="120.910734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_65">
+      <!-- 0.60 -->
+      <g transform="translate(643.282734 124.870207) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-dc" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_28">
+     <g id="line2d_87">
+      <g>
+       <use xlink:href="#m4014b26094" x="636.282734" y="96.358734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_66">
+      <!-- 0.72 -->
+      <g transform="translate(643.282734 100.318207) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-dd" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-d8" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_29">
+     <g id="line2d_88">
+      <g>
+       <use xlink:href="#m4014b26094" x="636.282734" y="71.806734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_67">
+      <!-- 0.84 -->
+      <g transform="translate(643.282734 75.766207) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-de" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-da" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_30">
+     <g id="line2d_89">
+      <g>
+       <use xlink:href="#m4014b26094" x="636.282734" y="47.254734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_68">
+      <!-- 0.96 -->
+      <g transform="translate(643.282734 51.214207) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d6"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-df" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-dc" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_31">
+     <g id="line2d_90">
+      <g>
+       <use xlink:href="#m4014b26094" x="636.282734" y="22.702734" style="stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_69">
+      <!-- 1.08 -->
+      <g transform="translate(643.282734 26.662207) scale(0.09 -0.09)">
+       <use xlink:href="#IPAGothic-d7"/>
+       <use xlink:href="#IPAGothic-d4" transform="translate(50 0)"/>
+       <use xlink:href="#IPAGothic-d6" transform="translate(100 0)"/>
+       <use xlink:href="#IPAGothic-de" transform="translate(150 0)"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="LineCollection_1"/>
+   <g id="patch_12">
+    <path d="M 627.689534 194.566734 
+L 631.986134 194.566734 
+L 636.282734 194.566734 
+L 636.282734 22.702734 
+L 631.986134 22.702734 
+L 627.689534 22.702734 
+L 627.689534 194.566734 
+z
+" style="fill: none; stroke: currentColor; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pabdaab37d0">
+   <rect x="40.968945" y="22.702734" width="180.529412" height="171.864"/>
+  </clipPath>
+  <clipPath id="pd25f303601">
+   <rect x="257.604239" y="22.702734" width="180.529412" height="171.864"/>
+  </clipPath>
+  <clipPath id="pc87ac61d53">
+   <rect x="474.239534" y="22.702734" width="149.839412" height="171.864"/>
+  </clipPath>
+  <clipPath id="p0461f17acd">
+   <rect x="627.689534" y="22.702734" width="8.5932" height="171.864"/>
+  </clipPath>
+ </defs>
+</svg>

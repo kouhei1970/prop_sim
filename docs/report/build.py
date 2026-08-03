@@ -34,13 +34,40 @@ DESCRIPTION = (
 )
 
 
+def load_table() -> dict:
+    """kt_table.json を読んでテンプレート用の派生量を足す."""
+    path = DATA / "kt_table.json"
+    if not path.is_file():
+        raise SystemExit(
+            f"{path} がありません。先に examples/12_thrust_torque_table.py を実行してください")
+    d = json.loads(path.read_text())
+
+    def eng(x, n=4):
+        return f"{x:.{n}e}".replace("e-0", "e-").replace("e+0", "e+")
+
+    d["ct0_e"] = eng(d["ct0_n_s2"])
+    d["cq0_e"] = eng(d["cq0_nm_s2"])
+    d["n_lambda"], d["n_mu"] = len(d["lambda"]), len(d["mu"])
+    d["lambda_step"] = d["lambda"][1] - d["lambda"][0]
+    d["mu_step"] = d["mu"][1] - d["mu"][0]
+    d["lambda_max"], d["mu_max"] = d["lambda"][-1], d["mu"][-1]
+    d["bytes"] = 4 * 2 * d["n_lambda"] * d["n_mu"]
+    d["ft_loss_pct"] = 100.0 * (1.0 - d["ft_min"])
+    d["ft_gain_pct"] = 100.0 * (d["ft_max"] - 1.0)
+    d["rpm_checked_lo"] = min(d["rpm_checked"])
+    d["rpm_checked_hi"] = max(d["rpm_checked"])
+    return d
+
+
 def load_summary() -> dict:
     path = DATA / "summary.json"
     if not path.is_file():
         raise SystemExit(
             f"{path} がありません。先に examples/11_virtual_wind_tunnel.py を実行してください")
     s = json.loads(path.read_text())
-    return derive(s)
+    s = derive(s)
+    s["table"] = load_table()
+    return s
 
 
 def derive(s: dict) -> dict:
