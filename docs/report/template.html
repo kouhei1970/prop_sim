@@ -10,7 +10,7 @@
   <dl class="meta">
     <div><dt>供試体</dt><dd>StampFly 1209 (φ{{meta.diameter_mm|.2f}}&nbsp;mm, {{meta.n_blades|d}} 枚)</dd></div>
     <div><dt>空力モデル</dt><dd>翼素運動量理論 + 実測断面翼型</dd></div>
-    <div><dt>機体諸元</dt><dd>{{meta.mass_g|.1f}}&nbsp;g / {{meta.n_rotor|d}} 発</dd></div>
+    <div><dt>機体諸元</dt><dd>{{meta.mass_g|.1f}}&nbsp;g / {{meta.n_rotor|d}} 発 / {{meta.layout|s}} 配置</dd></div>
     <div><dt>較正</dt><dd class="flag">未適用</dd></div>
   </dl>
 </header>
@@ -93,6 +93,27 @@
     <strong>FRD</strong>（StampFly のファームと同じ系）で示す。
     付属の CSV / <code>summary.json</code> は<strong>ハブ系のまま</strong>なので、
     読み込む際は上表で変換すること。
+  </p>
+  <h3>機体構成と回転方向</h3>
+  <p>
+    StampFly は <strong>X 配置</strong>で、<strong>上から見て前右／後左が反時計回り（CCW）</strong>、
+    前左／後右が時計回り（CW）。ハブ座標系は z が上向きなので
+    <strong>CCW = <code>spin = +1</code></strong> に対応する。
+  </p>
+  <table class="data wide">
+    <thead><tr><th>アーム</th><th>回転（上から見て）</th><th><code>spin</code></th><th>反トルクの向き（FRD）</th></tr></thead>
+    <tbody>
+      <tr><th>前右</th><td>反時計回り (CCW)</td><td class="num">+1</td><td>機首右</td></tr>
+      <tr><th>後左</th><td>反時計回り (CCW)</td><td class="num">+1</td><td>機首右</td></tr>
+      <tr><th>前左</th><td>時計回り (CW)</td><td class="num">−1</td><td>機首左</td></tr>
+      <tr><th>後右</th><td>時計回り (CW)</td><td class="num">−1</td><td>機首左</td></tr>
+    </tbody>
+  </table>
+  <p>
+    <strong>逆回転が 2 発ずつあること</strong>が、本報告の 2 つの結論の前提になっている。
+    ホバー時にヨーの反トルクが打ち消し合うこと、そして前進飛行で
+    ハブモーメントのロール成分 M<sub>x</sub> が打ち消し合ってピッチ成分 M<sub>y</sub> だけが
+    残ること（Run B-3）である。
   </p>
   <p>
     掃引条件との対応: <code>inflow_angle_deg = 90</code>, <code>inflow_azimuth_deg = 0</code> が
@@ -339,14 +360,22 @@
               ジャイロ項が正しく入っていることが確認できる</td>
         </tr>
         <tr>
-          <th>差動 ±500 rpm のロール</th><td class="num">{{derivatives.roll_moment_dn500_mnm|.3f}}</td>
+          <th>ロール操作力 ±500 rpm</th><td class="num">{{derivatives.roll_moment_dn500_mnm|.3f}}</td>
           <td class="num">同左</td><td>mN·m</td>
-          <td>アーム長 {{meta.arm_mm|.0f}} mm 想定。姿勢操作力の見積り</td>
+          <td><strong>X 配置</strong>。4 発すべてが寄与し、有効腕は
+              L·sin45° = {{derivatives.lever_x_mm|.1f}} mm。アーム長 L = {{meta.arm_mm|.1f}} mm 想定で L に比例。
+              ピッチも同値（X 配置は対称）</td>
         </tr>
         <tr>
-          <th>差動 ±2000 rpm のロール</th><td class="num">{{derivatives.roll_moment_dn2000_mnm|.3f}}</td>
+          <th>ロール操作力 ±2000 rpm</th><td class="num">{{derivatives.roll_moment_dn2000_mnm|.3f}}</td>
           <td class="num">同左</td><td>mN·m</td>
           <td>同上</td>
+        </tr>
+        <tr>
+          <th>ヨー操作力 ±500 rpm</th><td class="num">{{derivatives.yaw_moment_dn500_mnm|.4f}}</td>
+          <td class="num">符号反転</td><td>mN·m</td>
+          <td>CCW ペア（前右・後左）と CW ペアの反トルク差。
+              <strong>ロールの {{derivatives.yaw_over_roll_pct|.0f}} % しかない</strong></td>
         </tr>
       </tbody>
     </table>
@@ -363,6 +392,14 @@
           {{derivatives.dMy_du_4rotor_frd_unm|+.0f}} μN·m/(m/s) なので、
           対気速度に比例させてピッチのフィードフォワードに入れると
           前進開始時の外乱が消えて位置制御の応答が素直になる。</li>
+        <li><strong>ヨーが圧倒的に弱い。</strong> 同じ ±500 rpm の差動でも、
+          ロールが {{derivatives.roll_moment_dn500_mnm|.3f}} mN·m なのに対し
+          ヨーは {{derivatives.yaw_moment_dn500_mnm|.4f}} mN·m と
+          <strong>{{derivatives.yaw_over_roll_pct|.0f}} %</strong> しかない。
+          ロールは推力差 × 腕で効くのに対し、ヨーは反トルク差だけで、
+          その交換比が k<sub>Q</sub>/k<sub>T</sub> = {{static.k_q_over_k_t_mm|.2f}} mm =
+          有効腕 {{derivatives.lever_x_mm|.1f}} mm の 1/{{derivatives.lever_over_kqkt|.0f}} しかないため。
+          ヨーだけ帯域を落とすか、ヨー飽和を優先度の低い軸として扱う設計が要る。</li>
         <li><strong>ジャイロは同軸ではなく軸間に出る</strong>:
           J<sub>z</sub>Ω = {{derivatives.spin_momentum_e|s}} N·m·s なので、
           ピッチレート 10 rad/s で<em>ロール方向に</em> {{derivatives.gyro_at_10|.0f}} μN·m が出る

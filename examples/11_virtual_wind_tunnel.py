@@ -40,6 +40,11 @@ G = 9.80665
 MASS_G = 36.8            # StampFly の機体重量 [g]
 N_ROTOR = 4
 ARM_M = 0.0405           # ロータ中心〜機体中心 [m] (対角 114 mm 級の想定)
+#: 機体構成. StampFly は X 配置で、上から見て 前右/後左 が反時計回り (CCW)、
+#: 前左/後右 が時計回り (CW)。ハブ座標系は z が上向きなので CCW = spin +1。
+LAYOUT = "X"
+SPIN_BY_ARM = {"front_right": +1, "rear_left": +1,
+               "front_left": -1, "rear_right": -1}
 HOVER_GF = MASS_G / N_ROTOR
 
 rotor = ps.Rotor(ps.stampfly_1209())
@@ -342,12 +347,23 @@ def part_c(hover_rpm):
         "polar_inertia": float(rotor.geometry.polar_inertia),
         "spin_momentum": float(rotor.geometry.polar_inertia * om0),
     }
-    # ロール/ピッチ操作力: 対角 2 発の回転数を ±dN 振る
+    # 操作力 (X 配置). 4 発すべてがロール・ピッチに寄与し, 腕の
+    # ロール/ピッチ軸まわりの有効長は L*sin(45°) = L/sqrt(2) になる。
+    #   ロール = 2 * (T+ - T-) * L/sqrt(2) = sqrt(2) * (T+ - T-) * L
+    # 同じ Δrpm なら + 配置 (2 発 x 腕 L) の sqrt(2) 倍になる。
+    # ヨーは反トルクの差なので回転方向の割り付けで決まる。
+    lever = ARM_M / np.sqrt(2.0)
     for dn in (500.0, 1000.0, 2000.0):
-        tp = model.solve(rotor, ps.OperatingPoint(rpm=hover_rpm + dn)).thrust
-        tm = model.solve(rotor, ps.OperatingPoint(rpm=hover_rpm - dn)).thrust
-        summary["derivatives"][f"roll_moment_dn{dn:.0f}_mnm"] = float(
-            (tp - tm) * ARM_M * 1e3)
+        sp = model.solve(rotor, ps.OperatingPoint(rpm=hover_rpm + dn))
+        sm = model.solve(rotor, ps.OperatingPoint(rpm=hover_rpm - dn))
+        d = summary["derivatives"]
+        d[f"roll_moment_dn{dn:.0f}_mnm"] = float(2.0 * (sp.thrust - sm.thrust)
+                                                 * lever * 1e3)
+        d[f"roll_moment_plus_dn{dn:.0f}_mnm"] = float((sp.thrust - sm.thrust)
+                                                      * ARM_M * 1e3)
+        d[f"yaw_moment_dn{dn:.0f}_mnm"] = float(2.0 * abs(sp.torque() - sm.torque())
+                                                * 1e3)
+    summary["derivatives"]["lever_x_mm"] = float(lever * 1e3)
 
 
 # ================================================== D. 過渡応答
@@ -527,6 +543,8 @@ def main():
         "n_blades": int(rotor.geometry.n_blades),
         "model": "BEMT",
         "calibrated": False,
+        "layout": LAYOUT,
+        "spin_by_arm": SPIN_BY_ARM,
     }
     (DATA / "summary.json").write_text(
         json.dumps(summary, indent=2, ensure_ascii=False))

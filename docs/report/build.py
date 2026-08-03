@@ -79,6 +79,13 @@ def derive(s: dict) -> dict:
     dv["dT_dw_frd"] = dv["dT_dw"]                 # 2 回反転して不変
     dv["spin_momentum_frd_e"] = eng(dv["spin_momentum"])
     st["hover_torque_frd_mnm"] = -st["hover_torque_mnm"]
+
+    # 操作力: ヨーはロールよりどれだけ弱いか (クアッドの弱点)
+    dv["yaw_over_roll_pct"] = 100.0 * dv["yaw_moment_dn500_mnm"] / dv[
+        "roll_moment_dn500_mnm"]
+    dv["roll_x_over_plus"] = dv["roll_moment_dn500_mnm"] / dv[
+        "roll_moment_plus_dn500_mnm"]
+    dv["lever_over_kqkt"] = dv["lever_x_mm"] / st["k_q_over_k_t_mm"]
     dv["heave_tau_s"] = 1.0 / abs(dv["heave_damping_4rotor"])
     dv["gyro_at_10"] = abs(dv["spin_momentum"]) * 10.0 * 1e6
     dv["gyro_at_10_pct"] = 100.0 * dv["gyro_at_10"] / (st["hover_torque_mnm"] * 1e3)
