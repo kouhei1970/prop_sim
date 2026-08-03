@@ -3,9 +3,9 @@
 回転するプロペラの **6 分力 (Fx, Fy, Fz, Mx, My, Mz)** を計測する実験を、
 空力から 6 分力計の出力までまるごとシミュレートする Python パッケージ。
 
-- 空力モデルは **翼素運動量理論 (BEMT)** を既定とし、代理モデル・翼素理論
-  （一様インフロー）と差し替え可能。渦法・CFD も同じインターフェイスで
-  追加できる → [docs/MODELS.md](docs/MODELS.md)
+- 空力モデルは **Lv0（Ct/Cq 多項式）から Lv3（揚力線+渦後流）まで**を実装し、
+  同じインターフェイスで差し替えられる。既定は **翼素運動量理論 (BEMT)**。
+  外部 CFD/実測データの取り込み口もある → [docs/MODELS.md](docs/MODELS.md)
 - **静的データ**（回転数・風速・流入角の掃引）と
   **動的データ**（時間領域、1/rev・B/rev・過渡応答）の両方を出力
 - 「真値」だけでなく **6 分力計を通した計測値**（軸間干渉・ノイズ・
@@ -88,6 +88,7 @@ python -m prop_sim dynamic --diameter 10 --pitch 4.7 --rpm 7000 \
 | `examples/05_model_comparison.py` | BEMT / BET / 代理モデルの比較と同定 |
 | `examples/06_measurement_error_budget.py` | 計測系の誤差要因の切り分け |
 | `examples/07_stampfly_1209.py` | StampFly 1209 (31 mm 4 枚) の性能推定と計測要求 |
+| `examples/08_algorithm_comparison.py` | Lv0〜LvS の総当たり比較（精度・コスト・BEMT の誤差分解） |
 
 ```bash
 python examples/01_static_thrust_sweep.py     # → results/ に CSV と PNG
@@ -118,6 +119,8 @@ python examples/01_static_thrust_sweep.py     # → results/ に CSV と PNG
 **空力**
 
 - 翼素運動量理論（Prandtl 翼端/ハブ損失、Glauert の斜め流入運動量式）
+- 揚力線 + 渦後流（Biot–Savart、軸流のみ）— BEMT の検証用の参照解
+- 応答曲面による代理モデル / 外部 CFD・実測データの取り込み
 - 翼断面形状 → 翼型モデルの生成（薄翼理論 + 低 Re 粘性補正、`prop_sim.section`）
 - 方位角方向の線形インフロー分布（Drees / Pitt / Coleman）
 - 360 deg 翼型ポーラ（線形 + Viterna 外挿）、Reynolds・圧縮性補正
@@ -159,6 +162,23 @@ python examples/01_static_thrust_sweep.py     # → results/ に CSV と PNG
 斜め流入ではブレード 1 枚あたりは 1/rev で変動するが、B 枚合わせた
 ハブ荷重には **B の倍数の次数だけが残る**（回転系 → 静止系の次数変換）。
 シミュレータはこの性質を正しく再現する。
+
+## モデルどうしの比較
+
+10x4.7 2 枚・6000 rpm ホバーで実際に走らせた結果（`examples/08`）:
+
+| モデル | 推力 [N] | BEMT との差 | コスト |
+|--------|---------|-----------|-------|
+| Lv0 Ct/Cq 多項式 | 4.329 | +0.8 % | 216 µs |
+| Lv1 BET（翼端損失なし） | 4.542 | +5.8 % | 26 ms |
+| Lv2 BEMT | 4.293 | — | 22 ms |
+| Lv3 揚力線+渦後流（旋回込み） | 4.096 | **−4.6 %** | 0.56 s |
+| Lv3 同（旋回を無視） | 4.267 | **−0.6 %** | 1.1 s |
+| LvS 応答曲面（BEMT から同定） | 4.266 | −0.6 % | 260 µs |
+
+下 2 行の差が **BEMT の誤差分解**になっている。BEMT が無視している後流の
+旋回が推力を 4 % 押し上げており、残る近似（アニュラス独立 + Prandtl 翼端損失）
+の誤差は 0.6 % しかない。
 
 ## 精度について
 

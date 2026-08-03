@@ -229,6 +229,9 @@ class Rotor:
         vi = inflow.induced(r_R[None, :], psi[:, None])
 
         u_t = op.omega * rr + v_t
+        if inflow.has_swirl:
+            # 後流の旋回はブレードの進行方向に空気を連れ回すので相対速度を減らす
+            u_t = u_t - inflow.induced_swirl(r_R[None, :], psi[:, None])
         u_p = v_z + vi
         u = np.hypot(u_t, u_p)
 

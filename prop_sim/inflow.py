@@ -68,6 +68,10 @@ class InflowField:
         線形スキュー係数.
     psi_edge:
         面内速度の方位角 [rad].
+    swirl:
+        旋回誘導速度 [m/s] (ブレードの進行方向と同じ向きを正 = 相対速度を
+        減らす向き). 運動量理論系のモデルでは 0, 渦法では後流の回転から
+        直接求まる. None なら 0 とみなす.
     """
 
     r_R: np.ndarray
@@ -75,6 +79,7 @@ class InflowField:
     kx: float = 0.0
     ky: float = 0.0
     psi_edge: float = 0.0
+    swirl: np.ndarray | None = None
     converged: bool = True
     iterations: int = 0
     warnings: tuple[str, ...] = field(default_factory=tuple)
@@ -82,6 +87,8 @@ class InflowField:
     def __post_init__(self) -> None:
         self.r_R = np.asarray(self.r_R, dtype=float)
         self.v0 = np.asarray(self.v0, dtype=float)
+        if self.swirl is not None:
+            self.swirl = np.asarray(self.swirl, dtype=float)
         # 面積重み (mean_v0 用, 総和 1 に正規化した台形則)
         x = self.r_R
         w = np.zeros_like(x)
@@ -112,9 +119,21 @@ class InflowField:
         factor = 1.0 - self.kx * r_R * np.cos(dpsi) + self.ky * r_R * np.sin(dpsi)
         return v * np.clip(factor, -1.0, 3.0)
 
+    def induced_swirl(self, r_R: np.ndarray, psi: np.ndarray) -> np.ndarray:
+        """旋回誘導速度 [m/s]. 与えられていなければ 0."""
+        if self.swirl is None:
+            return np.zeros(np.broadcast_shapes(
+                np.shape(r_R), np.shape(psi)))
+        return np.interp(np.asarray(r_R, dtype=float), self.r_R, self.swirl)
+
+    @property
+    def has_swirl(self) -> bool:
+        return self.swirl is not None
+
     def scaled(self, factor: float) -> "InflowField":
         return InflowField(
             self.r_R, self.v0 * factor, self.kx, self.ky, self.psi_edge,
+            self.swirl if self.swirl is None else self.swirl * factor,
             self.converged, self.iterations, self.warnings,
         )
 

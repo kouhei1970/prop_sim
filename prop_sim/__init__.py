@@ -36,7 +36,18 @@ from .atmosphere import SEA_LEVEL, Atmosphere
 from .frames import COMPONENT_NAMES, Wrench
 from .geometry import PropellerGeometry, from_diameter_pitch
 from .inflow import InflowField
-from .models import BEMT, BET, AeroModel, QuadraticModel, RotorSolution, get_model
+from .models import (
+    BEMT,
+    BET,
+    AeroModel,
+    LiftingLine,
+    QuadraticModel,
+    RotorSolution,
+    SurrogateModel,
+    SurrogateSamples,
+    get_model,
+    register_model,
+)
 from .operating import OperatingPoint
 from .presets import (
     PRESETS,
@@ -83,6 +94,10 @@ __all__ = [
     "BEMT",
     "BET",
     "QuadraticModel",
+    "LiftingLine",
+    "SurrogateModel",
+    "SurrogateSamples",
+    "register_model",
     "get_model",
     "__version__",
 ]
