@@ -572,99 +572,105 @@
     2 次元計算は剥離せん断層の 3 次元不安定を表現できず剥離を過大に出す傾向があるので、
     この 70 % もいくらか誇張されている可能性がある。
   </p>
-  <h3>3. 実機はシュラウド付き — ここが一番大きい差</h3>
+  <h3>3. 実機はシュラウド付き — 本報告で最大の未知数</h3>
   <p>
-    StampFly は各プロペラが<strong>薄い筒状のリングでガードされている</strong>。
-    これは<strong>シュラウド（覆い付き）ロータ</strong>であって、
-    本報告がモデル化している<strong>開放ロータとは別の流れ場</strong>になる。
-    本パッケージはシュラウドを扱えないので、以下は「どちら向きに、どれくらい
-    ずれうるか」の見積りである。
-  </p>
-  <p>
-    <strong>ただし外形図から翼端すきまを読むと、このリングは
-    「ダクト」としてはほとんど働かない。</strong>
-    リング内径 φ{{shroud.duct_bore_mm|.1f}} mm に対しプロペラ直径は
-    {{meta.diameter_mm|.2f}} mm なので、片側の翼端すきまは
-    <strong>δ = {{shroud.tip_gap_mm|.2f}} mm、翼半径の
-    {{shroud.tip_gap_over_radius_pct|.0f}} %</strong> ある。
-    ダクトが翼端渦を抑えて推力を稼ぐには δ/R を <strong>1 % 程度</strong>まで
-    詰める必要があり、5 % を超えると効果はほぼ消える。
-    {{shroud.tip_gap_over_radius_pct|.0f}} % は<strong>桁で外れている</strong>。
-    （図の φ{{shroud.duct_bore_mm|.1f}} が外径なら肉厚ぶんすきまは狭くなるが、
-    肉厚 1.5 mm と見ても δ/R = 6 % で、結論は変わらない。）
+    StampFly は各プロペラが<strong>リング状のダクトで囲まれている</strong>。
+    外形図の上面ではこのダクトが<strong>二重円</strong>に見え、
+    <strong>下に向かって細くなるテーパ形状</strong>になっている。
+    つまり<strong>入口が絞られた、ダクテッドファンに近い断面</strong>であり、
+    本報告がモデル化している開放ロータとは別の流れ場になる。
   </p>
   <h4>外形図から読めた寸法</h4>
   <table class="data wide">
     <thead><tr><th>項目</th><th class="num">値</th><th>出どころ</th></tr></thead>
     <tbody>
       <tr><th>モータ間対角</th><td class="num">{{meta.diagonal_mm|.0f}} mm</td><td>寸法線あり</td></tr>
-      <tr><th>リング内径</th><td class="num">φ{{shroud.duct_bore_mm|.1f}} mm</td><td>寸法線あり</td></tr>
-      <tr><th>翼端すきま δ</th><td class="num">{{shroud.tip_gap_mm|.2f}} mm</td>
-          <td>上 2 つとプロペラ実測 φ{{meta.diameter_mm|.2f}} mm から計算。<strong>δ/R = {{shroud.tip_gap_over_radius_pct|.0f}} %</strong></td></tr>
-      <tr><th>隣のリングとのすきま</th><td class="num">{{shroud.duct_gap_mm|.1f}} mm</td>
-          <td>同上（内径基準なので実際は肉厚ぶん狭い）</td></tr>
-      <tr><th>4 発の外形</th><td class="num">{{shroud.footprint_mm|.0f}} mm</td><td>同上</td></tr>
+      <tr><th>ダクト入口内径</th><td class="num">φ{{shroud.duct_bore_mm|.1f}} mm</td><td>寸法線あり（上端＝いちばん太いところ）</td></tr>
       <tr><th>全高</th><td class="num">32 mm</td><td>寸法線あり（脚の底から上載せ部品の頂部まで）</td></tr>
-      <tr><th class="est">リング高さ</th><td class="num est">≈ 5〜6 mm</td>
-          <td><strong>寸法線が無く、側面図の比率からの推定</strong>。全高 32 / 25.5 mm を
-              スケールにして読んだ値で ±1 mm 程度の不確かさがある。
-              <strong>L/D ≈ 0.15</strong></td></tr>
+      <tr><th>隣のダクトとのすきま</th><td class="num">{{shroud.duct_gap_mm|.1f}} mm</td><td>対角と入口内径から計算</td></tr>
+      <tr><th>4 発の外形</th><td class="num">{{shroud.footprint_mm|.0f}} mm</td><td>同上</td></tr>
+      <tr><th class="est">ダクト高さ</th><td class="num est">≈ 5〜6 mm</td>
+          <td><strong>寸法線が無く、側面図の比率からの推定</strong>（±1 mm 程度）。L/D ≈ 0.15</td></tr>
+      <tr><th class="est">回転面での実効ボア</th><td class="num est">不明</td>
+          <td><strong>寸法線が無い。下細りなので φ{{shroud.duct_bore_mm|.1f}} より小さい。
+              この値が以下の議論をすべて左右する</strong></td></tr>
     </tbody>
   </table>
   <p>
-    リング高さだけは寸法が振られていないので比例読みになるが、
-    <strong>4〜7 mm のどこであっても L/D = 0.11〜0.19</strong> で、
-    ダクトとして効き始める目安の <strong>L/D ≳ 0.5</strong> には遠く届かない。
-    翼端すきま δ/R = {{shroud.tip_gap_over_radius_pct|.0f}} % と合わせて、
-    <strong>結論はリング高さの読みに依存しない</strong>。
+    寸法線のある φ{{shroud.duct_bore_mm|.1f}} mm は<strong>入口（上端）の径</strong>で、
+    プロペラ回転面での実効ボアは<strong>それより小さい。そしてその値は図に寸法が無い</strong>。
+    したがって翼端すきまは
   </p>
+  <table class="data wide">
+    <thead><tr><th>回転面での実効ボア</th><th class="num">δ</th><th class="num">δ/R</th><th>翼端損失の回収</th></tr></thead>
+    <tbody>
+      <tr><td>φ{{shroud.duct_bore_mm|.1f}} mm（入口径のまま = <strong>上限</strong>）</td>
+          <td class="num">{{shroud.tip_gap_max_mm|.2f}} mm</td>
+          <td class="num">{{shroud.tip_gap_over_radius_max_pct|.0f}} %</td>
+          <td class="muted-cell">ほぼ無し</td></tr>
+      <tr><td>φ33.0 mm</td><td class="num">0.89 mm</td><td class="num">5.7 %</td>
+          <td class="muted-cell">わずか</td></tr>
+      <tr><td>φ32.0 mm</td><td class="num">0.39 mm</td><td class="num">2.5 %</td>
+          <td>部分的</td></tr>
+      <tr><td>φ{{shroud.bore_for_2pct_mm|.1f}} mm</td><td class="num">0.20 mm</td><td class="num">1.2 %</td>
+          <td class="good">大きい</td></tr>
+    </tbody>
+  </table>
+  <p>
+    ダクトが翼端渦を抑えて効くには δ/R を <strong>1〜2 % 程度</strong>まで詰める必要がある。
+    <strong>実機がこの表のどこに乗るのかは、外形図からは決められない。</strong>
+  </p>
+
   <h4>効果の内訳</h4>
   <table class="data wide">
     <thead><tr><th>効果</th><th>向き</th><th>見積り</th></tr></thead>
     <tbody>
       <tr>
-        <th>翼端渦の抑制</th><td class="muted-cell">ほぼ無し</td>
-        <td>翼端損失を完全に消せた極限なら同回転数で推力
-            +{{shroud.thrust_gain_pct|.1f}} %（FM {{shroud.fm_open|.3f}} →
-            {{shroud.fm_no_tip_loss|.3f}}、ホバー回転数 {{shroud.hover_rpm_change_pct|+.1f}} %、
-            軸動力 {{shroud.power_change_pct|+.1f}} %）だが、
-            <strong>δ/R = {{shroud.tip_gap_over_radius_pct|.0f}} % ではこれをほぼ回収できない</strong>。
-            上限として置いておく値</td>
+        <th>翼端渦の抑制</th><td class="unknown-cell">不明</td>
+        <td>翼端損失を完全に消せた極限で同回転数の推力
+            <strong>+{{shroud.thrust_gain_pct|.1f}} %</strong>
+            （FM {{shroud.fm_open|.3f}} → {{shroud.fm_no_tip_loss|.3f}}、
+            ホバー回転数 {{shroud.hover_rpm_change_pct|+.1f}} %、
+            軸動力 {{shroud.power_change_pct|+.1f}} %）。
+            実際にどれだけ回収できるかは上表の δ/R 次第で、
+            <strong>0 % からこの上限までの幅がある</strong></td>
       </tr>
       <tr>
-        <th>ダクトのリップ吸引</th><td class="muted-cell">ほぼ無し</td>
-        <td>理想ダクトなら運動量理論で同動力で最大
-            +{{shroud.ideal_duct_thrust_gain_pct|.0f}} % だが、これは
-            <strong>丸みのある入口リップ・十分な長さ・小さい翼端すきま</strong>が
-            そろって初めて出る。薄く鋭いリングで、しかもすきまが翼半径の
-            {{shroud.tip_gap_over_radius_pct|.0f}} % では流れがダクトを満たさない</td>
+        <th>ダクトのリップ吸引</th><td class="unknown-cell">不明</td>
+        <td>理想ダクト（流れがダクトを満たす）なら運動量理論で同動力の推力が
+            <strong>+{{shroud.ideal_duct_thrust_gain_pct|.0f}} %</strong> 級。
+            <strong>入口が絞られた形状は流れの付着に有利</strong>なので、
+            単純な平板リングよりは効く可能性が高い。
+            ただしリング高さ L/D ≈ 0.15 は短く、ディフューザも無い</td>
       </tr>
       <tr>
         <th>前進飛行での運動量抗力とピッチアップ</th><td class="bad">モーメント ↑</td>
-        <td><strong>ここが要注意。</strong> 斜め流入ではシュラウドが
-            環状翼／鈍頭体として働き、追加の抗力と<strong>強い機首上げモーメント</strong>を
-            生む。ダクテッドファンが開放ロータより前進飛行のピッチアップが
-            大きいことはよく知られている。
-            したがって <strong>Run B・Run C の M<sub>y</sub> と
-            ∂M<sub>y</sub>/∂u は下限</strong>と考えるべきで、実機はもっと強い</td>
+        <td>斜め流入ではダクトが環状翼／鈍頭体として働き、追加の抗力と
+            <strong>強い機首上げモーメント</strong>を生む。ダクテッドファンが
+            開放ロータより前進飛行のピッチアップが大きいことはよく知られている。
+            <strong>Run B・Run C の M<sub>y</sub> と ∂M<sub>y</sub>/∂u は下限</strong>で、
+            実機はもっと強い</td>
       </tr>
       <tr>
         <th>機体抗力の増加</th><td class="bad">必要動力 ↑</td>
-        <td>リング自体が前面投影面積を持つ。Run F で仮定した
-            C<sub>D</sub>A = {{vehicle.cd_a|.4f}} m² はこれを含んだつもりの
-            粗い見積りだが、実測で置き換えるべき値</td>
+        <td>ダクト自体が前面投影面積を持つ。Run F で仮定した
+            C<sub>D</sub>A = {{vehicle.cd_a|.4f}} m² は粗い見積りで、実測で置き換えるべき値</td>
       </tr>
     </tbody>
   </table>
   <p>
-    <strong>まとめると、このリングは推力を稼ぐダクトではなく機械的なガードである。</strong>
-    翼端すきまが大きすぎて空力的な利得はほとんど無く、
-    残るのは<strong>前進飛行での抗力とピッチアップ、それに機体抗力の増加</strong>という
-    マイナス側だけになる。したがって
-    <strong>本報告はホバー性能で保守的にはならず、前進飛行のモーメントでは楽観的</strong>、
-    つまり<strong>どちらの側でも実機の方が厳しい</strong>と読むべきである。
-    ロータ間干渉（s/D = {{meta.spacing_over_diameter|.2f}}）とは<strong>別の現象</strong>で、
+    <strong>まとめると、シュラウドの効きは決められない。</strong>
+    翼端すきま次第で「ほぼ機械ガード」から「推力を 2〜3 割稼ぐダクト」まで
+    振れ、しかも前進飛行のモーメントは確実に増える方向である。
+    較正の不確かさ（±20 %）と同等かそれ以上の幅があり、
+    <strong>本報告で最大の未知数</strong>と考えてよい。
+    ロータ間干渉（s/D = {{meta.spacing_over_diameter|.2f}}）とは別の現象で、
     実機では両方が同時に効いている。
+  </p>
+  <p>
+    これを決めるのに要るのは<strong>ノギス 1 本で測れる 2 つの寸法</strong>である
+    — ダクトの<strong>最小内径</strong>と、<strong>プロペラ回転面がダクトのどの高さに来るか</strong>。
+    この 2 つが分かれば δ/R が確定し、上の幅は大きく縮む。
   </p>
 
   <h3>4. モデルそのものの限界</h3>

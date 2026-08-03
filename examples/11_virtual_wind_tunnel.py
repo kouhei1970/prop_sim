@@ -44,9 +44,12 @@ ARM_M = DIAGONAL_M / 2   # ロータ中心〜機体中心 [m]
 #: 機体構成. StampFly は X 配置で、上から見て 前右/後左 が反時計回り (CCW)、
 #: 前左/後右 が時計回り (CW)。ハブ座標系は z が上向きなので CCW = spin +1。
 LAYOUT = "X"
-#: プロペラガード (リング) の内径 [m]。外形図の φ36.2 をボアとして読んだ場合。
-#: 図の φ36.2 が外径なら肉厚ぶん小さくなるので、翼端すきまはこれより狭い。
-DUCT_BORE_M = 0.0362
+#: プロペラガード (ダクト) の **入口 (上端) 内径** [m]。外形図の φ36.2。
+#: ダクトは上面図で二重円に見え、**下に向かって細くなるテーパ形状**なので、
+#: プロペラ回転面での実効ボアはこれより小さい。その値は図に寸法が無い。
+#: したがって φ36.2 から出す翼端すきまは **上限** にしかならない。
+DUCT_INLET_BORE_M = 0.0362
+DUCT_BORE_M = DUCT_INLET_BORE_M
 SPIN_BY_ARM = {"front_right": +1, "rear_left": +1,
                "front_left": -1, "rear_right": -1}
 HOVER_GF = MASS_G / N_ROTOR
@@ -408,10 +411,13 @@ def part_c2(hover_rpm):
         # 外形図から読んだ翼端すきま。ダクトが翼端渦を抑えられるかは
         # すきま / 翼半径 で決まり、目安は 1 % 以下。
         "duct_bore_mm": DUCT_BORE_M * 1e3,
-        "tip_gap_mm": float((DUCT_BORE_M - rotor.geometry.diameter) / 2 * 1e3),
-        "tip_gap_over_radius_pct": float(
+        # 入口径から出した翼端すきま = **上限**。テーパのぶん実際は小さい。
+        "tip_gap_max_mm": float((DUCT_BORE_M - rotor.geometry.diameter) / 2 * 1e3),
+        "tip_gap_over_radius_max_pct": float(
             100.0 * (DUCT_BORE_M - rotor.geometry.diameter)
             / rotor.geometry.diameter),
+        # ダクトとして効き始める目安 (delta/R = 2%) を満たす実効ボア
+        "bore_for_2pct_mm": float(rotor.geometry.diameter * 1.02 * 1e3),
         # 隣り合うダクトどうしのすきま (肉厚は不明なので内径基準の上限)
         "duct_gap_mm": float((DIAGONAL_M / np.sqrt(2.0) - DUCT_BORE_M) * 1e3),
         "duct_spacing_ratio": float(DIAGONAL_M / np.sqrt(2.0) / DUCT_BORE_M),

@@ -317,3 +317,4 @@ h4 { font-size: 0.82rem; font-family: var(--mono); letter-spacing: 0.1em;
      text-transform: uppercase; color: var(--muted); font-weight: 500;
      margin: 1.8rem 0 0.5rem; }
 table.data .est { color: var(--warn); }
+table.data td.unknown-cell { color: var(--warn); font-weight: 700; white-space: nowrap; }
