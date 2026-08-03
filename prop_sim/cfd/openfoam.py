@@ -18,15 +18,22 @@
 
 格子
 ----
-断面まわりの **O 型格子**を blockMesh で生成する. 断面を N 点で離散化し,
-各周方向区間ごとに 1 ブロック (半径方向 n_r セル) を置く. 後縁に厚みが
-ある断面 (射出成型のマイクロプロペラは 1-3 %c ある) では O 型格子が
-そのまま使えて素直.
+断面まわりの **O 型格子**を :mod:`prop_sim.cfd.mesh` で生成し,
+``constant/polyMesh`` を直接書く. blockMesh は薄くキャンバの大きい断面で
+破綻するため既定では使わない (理由は :mod:`prop_sim.cfd.mesh` の docstring).
+``mesh="blockmesh"`` で従来の経路も残してある (星形の断面でのみ有効).
 
 解法
 ----
 Re が 10^4 前後なので層流. 定常 ``simpleFoam`` で解き, 残差が落ちない
 (剥離による非定常) 場合は ``pimpleFoam`` に切り替えて時間平均をとる.
+収束したかどうかは :func:`solver_converged` で判定でき, 係数辞書の
+``converged`` にも入れてある (途中経過を定常解と誤解しないように).
+
+荷重
+----
+``forceCoeffs`` functionObject ではなく :mod:`prop_sim.cfd.foam_io` で
+書き出された場から積分する (理由はそちらの docstring).
 
 制限
 ----
@@ -64,6 +71,7 @@ __all__ = [
     "run_polar",
     "read_force_coefficients",
     "integrate_coefficients",
+    "solver_converged",
 ]
 
 _ENV_CANDIDATES = (
@@ -521,7 +529,23 @@ def integrate_coefficients(
         "Cd_pressure": float(np.mean(fp)), "Cd_viscous": float(np.mean(fv)),
         "n_samples": float(len(times)), "t_end": float(times[-1]),
     }
+    out["converged"] = solver_converged(case_dir, c.solver)
     return out
+
+
+def solver_converged(case_dir, solver: str = "simpleFoam") -> bool | None:
+    """定常計算が収束したか. 判定できないときは ``None``.
+
+    ``simpleFoam`` が ``endTime`` まで走り切った (= 残差が落ちなかった)
+    場合, 得られる場は「定常解」ではなく途中経過なので, 黙って係数だけ
+    返すと誤解を招く. 非定常ソルバでは収束の概念が無いので ``None``.
+    """
+    if solver == "simpleFoam":
+        log = Path(case_dir) / f"log.{solver}"
+        if not log.is_file():
+            return None
+        return "solution converged" in log.read_text()
+    return None
 
 
 def read_force_coefficients(
@@ -586,7 +610,7 @@ def run_polar(
     workdir.mkdir(parents=True, exist_ok=True)
     alphas = np.atleast_1d(np.asarray(alphas_deg, dtype=float))
     base = config or AirfoilCaseConfig()
-    cl, cd, cm, cls_, cds, cases = [], [], [], [], [], []
+    cl, cd, cm, cls_, cds, cases, conv = [], [], [], [], [], [], []
     for a in alphas:
         cfg = AirfoilCaseConfig(**{**base.__dict__, "alpha_deg": float(a),
                                    "reynolds": float(reynolds)})
@@ -604,6 +628,10 @@ def run_polar(
         cls_.append(c.get("Cl_std", np.nan))
         cds.append(c.get("Cd_std", np.nan))
         cases.append(cdir)
+        conv.append(c.get("converged"))
+        if c.get("converged") is False and progress:  # pragma: no cover
+            print(f"    警告: alpha={a:+.2f} は定常解に収束していません "
+                  "(pimpleFoam に切り替えて時間平均するべき)", flush=True)
         if not keep_cases:
             for sub in cdir.glob("[0-9]*"):
                 if sub.is_dir() and sub.name != "0":
@@ -612,7 +640,7 @@ def run_polar(
     return {
         "alpha_deg": alphas, "cl": cl, "cd": cd, "cm": cm,
         "cl_std": np.asarray(cls_), "cd_std": np.asarray(cds),
-        "reynolds": reynolds, "cases": cases,
+        "reynolds": reynolds, "cases": cases, "converged": conv,
         "airfoil": TabulatedAirfoil(
             alpha_deg=alphas, cl=cl, cd=cd, cm=cm,
             name=f"{section.name} CFD Re={reynolds:.0f}",

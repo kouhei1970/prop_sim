@@ -16,6 +16,7 @@ from .openfoam import (
     polygon_centroid,
     read_force_coefficients,
     run_polar,
+    solver_converged,
     surface_points,
 )
 
@@ -31,6 +32,7 @@ __all__ = [
     "build_blockmesh_dict",
     "read_force_coefficients",
     "integrate_coefficients",
+    "solver_converged",
     "run_polar",
     "PolyMesh",
     "read_volume_field",
