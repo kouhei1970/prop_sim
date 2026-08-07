@@ -226,10 +226,44 @@ python examples/01_static_thrust_sweep.py     # → results/ に CSV と PNG
 BEMT 自体の限界（ボルテックスリング状態、大流入角、多ロータ干渉、動的失速）は
 [docs/MODELS.md](docs/MODELS.md) にまとめてある。
 
+## UWB 測位ライブラリ (`uwb_loc`)
+
+同じリポジトリに、**チップ非依存の UWB 屋内測位ライブラリ**を同梱している。
+各 UWB 用に書いた HAL から観測をもらい、位置・共分散・品質指標を返す。
+
+```bash
+python -m uwb_loc ui     # ブラウザ UI (ハードがなくてもアルゴリズムを比較できる)
+python -m uwb_loc sim --nlos 0.2
+```
+
+```python
+import uwb_loc as ul
+
+hal = ul.JsonLinesHal.from_serial("/dev/ttyUSB0", 115200)   # or 自前の UwbHal
+for fix in ul.Pipeline(hal, level="Lv3").run():
+    print(fix.position, fix.sigma, fix.gdop)
+```
+
+空力モデルと同じく **Lv0〜Lv3 を同一インターフェイスで差し替えられる**。
+
+| Lv | 中身 | 想定 |
+|---|---|---|
+| Lv0 | LLS 三辺測量 (閉形式) | 動作確認・初期値 |
+| Lv1 | 重み付き非線形最小二乗 + χ² ゲート | 見通しの良い環境 |
+| Lv2 | Beck 厳密解 + Huber-IRLS + 片側損失 | NLOS のある屋内 |
+| Lv3 | 密結合 EKF (CV/CA) | 移動体・ドローン |
+
+依存は numpy だけ (scipy 不使用)。GDOP/CRLB による配置検討、アンテナ遅延の推定、
+相互測距からのアンカー自己測量まで含む。
+
+- 使い方 → [docs/UWB.md](docs/UWB.md)
+- HAL とのデータ交換仕様 → [docs/UWB_PROTOCOL.md](docs/UWB_PROTOCOL.md)
+- アルゴリズムの選定理由 → [docs/UWB_POSITIONING.md](docs/UWB_POSITIONING.md)
+
 ## 開発
 
 ```bash
-python -m pytest -q      # 198 件。OpenFOAM が無くても全部通る
+python -m pytest -q      # 246 件。OpenFOAM が無くても全部通る
 ```
 
 テストは数値の一致だけでなく、運動量理論との整合、rpm^2 則、回転方向の

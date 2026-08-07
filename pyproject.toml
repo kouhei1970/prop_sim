@@ -17,12 +17,18 @@ dependencies = [
 [project.optional-dependencies]
 plot = ["matplotlib>=3.7"]
 dev = ["pytest>=7.0", "matplotlib>=3.7"]
+# JsonLinesHal.from_serial を使うときだけ必要 (ファイル/TCP なら不要).
+serial = ["pyserial>=3.5"]
 
 [project.scripts]
 prop-sim = "prop_sim.cli:main"
+uwb-loc = "uwb_loc.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["prop_sim*"]
+include = ["prop_sim*", "uwb_loc*"]
+
+[tool.setuptools.package-data]
+uwb_loc = ["ui/static/*"]
 
 
 [tool.pytest.ini_options]
