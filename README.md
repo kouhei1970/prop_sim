@@ -257,6 +257,7 @@ for fix in ul.Pipeline(hal, level="Lv3").run():
 相互測距からのアンカー自己測量まで含む。
 
 - 使い方 → [docs/UWB.md](docs/UWB.md)
+- アルゴリズムの導出 → [docs/UWB_ALGORITHMS.md](docs/UWB_ALGORITHMS.md)
 - HAL とのデータ交換仕様 → [docs/UWB_PROTOCOL.md](docs/UWB_PROTOCOL.md)
 - アルゴリズムの選定理由 → [docs/UWB_POSITIONING.md](docs/UWB_POSITIONING.md)
 
